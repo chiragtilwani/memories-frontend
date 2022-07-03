@@ -18,19 +18,21 @@ const useStyles = makeStyles({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    [Sizes.down('md')]:{
+    [Sizes.down('sm')]:{
+      width:'90%',
       flexDirection: 'column',
-      margin:'2rem 0rem'
+      margin:'2rem auto'
     }
   },
   card:{
     [Sizes.down('md')]:{
       width: "70%",
       maxWidth: "100% !important",
-      margin:'2rem 0rem 0rem 0rem !important',
     },
     [Sizes.down('sm')]:{
-      width: "100%",
+      margin:'0rem !important',
+      width: "100% !important",
+      borderRadius:'.5rem .5rem 0 0 !important'
     }
   },
   typography: {
@@ -52,24 +54,34 @@ const useStyles = makeStyles({
   },
   box: {
     width: "70%",
-    minHeight: "17rem",
+    height:'20rem',
     marginRight: "1rem",
     [Sizes.down('md')]:{
       margin:'0rem',
-      width: '70%',
     },
     [Sizes.down('sm')]:{
       width: '100%',
+      height:'10rem',
+      borderRadius:'0 0 .5rem .5rem !important',
+      zIndex:'2 !important',
     },
+    
   },
   paper: {
+    margin: '0rem !important',
     width: "100% !important",
     padding: "2rem",
     fontSize: "1.5rem !important",
     overflowY: "scroll",
     wordWrap: "break-word",
+    height:"auto !important",
+    maxHeight:'25rem',
+    backgroundColor:'rgb(25 118 210 / 12%) !important',
     "&::-webkit-scrollbar": {
       width: "0rem",
+    },
+    [Sizes.down('sm')]:{
+      borderRadius:'0 0 .5rem .5rem !important',
     },
     
   },
@@ -93,7 +105,7 @@ function Place(props) {
   const classes = useStyles();
   return (
     <div className={classes.container}>
-      <Card sx={{ maxWidth: 345, display: "inline-block", margin: "2rem" }} className={classes.card}>
+      <Card sx={{width:'25rem', maxWidth: 345, display: "inline-block", margin: "2rem" }} className={classes.card}>
         <CardActionArea>
           <CardMedia
             component="img"
