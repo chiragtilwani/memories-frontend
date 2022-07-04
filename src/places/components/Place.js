@@ -61,7 +61,7 @@ const useStyles = makeStyles({
     },
     [Sizes.down('sm')]:{
       width: '100%',
-      height:'10rem',
+      height:'fit-content',
       borderRadius:'0 0 .5rem .5rem !important',
       zIndex:'2 !important',
     },
