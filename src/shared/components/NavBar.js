@@ -77,7 +77,7 @@ const NavBar = () => {
 
     return (
         <AppBar position="sticky">
-            <Container maxWidth="xl">
+            <Container maxWidth="xxl">
                 <Toolbar disableGutters>
                     <GiRiver className={classes.river_icon_1} />
                     <Typography
@@ -202,13 +202,13 @@ const NavBar = () => {
                             onClose={handleCloseUserMenu}
                         >
                             <MenuItem onClick={handleCloseUserMenu}>
-                                    <Link to="/profile"><Typography textAlign="center">Profile</Typography></Link>
+                                    <Link to="/profile" className={classes.Link}><Typography textAlign="center">Profile</Typography></Link>
                                 </MenuItem>
                             <MenuItem onClick={handleCloseUserMenu}>
-                                    <Link to="/account"><Typography textAlign="center">Account</Typography></Link>
+                                    <Link to="/account" className={classes.Link}><Typography textAlign="center">Account</Typography></Link>
                                 </MenuItem>
                             <MenuItem onClick={handleCloseUserMenu}>
-                                    <Link to="/"><Typography textAlign="center">Logout</Typography></Link>
+                                    <Link to="/" className={classes.Link}><Typography textAlign="center">Logout</Typography></Link>
                                 </MenuItem>
                         </Menu>
                     </Box>

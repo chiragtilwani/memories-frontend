@@ -14,7 +14,35 @@ export const placesList = [
     { id: 'p3', name: 'Sri Chamarajendra Zoological Gardens', postedBy: 'sid', description: '157-acre zoo with a lake featuring numerous animals, including exotic species, plus a souvenir shop.', address: 'Zoo Main Road, Indira Nagar, Ittige Gudu, Mysuru, Karnataka 570010', url: "https://lh5.googleusercontent.com/p/AF1QipPz7CtmQJuBJ-cdJZvdkdu9CElPUa4zNt_AmFHA=w408-h306-k-no", liked: false, n_likes: 50,location:{
         long:12.3024092,
         lat:76.6473399
-    },creatorID:'u3',postDate:'thu Apr 22 2022' }
+    },creatorID:'u3',postDate:'thu Apr 22 2022' },
+    { id: 'p3', name: 'Sri Chamarajendra Zoological Gardens', postedBy: 'sid', description: '157-acre zoo with a lake featuring numerous animals, including exotic species, plus a souvenir shop.', address: 'Zoo Main Road, Indira Nagar, Ittige Gudu, Mysuru, Karnataka 570010', url: "https://lh5.googleusercontent.com/p/AF1QipPz7CtmQJuBJ-cdJZvdkdu9CElPUa4zNt_AmFHA=w408-h306-k-no", liked: false, n_likes: 50,location:{
+        long:12.3024092,
+        lat:76.6473399
+    },creatorID:'u3',postDate:'thu Apr 22 2022' },
+    { id: 'p3', name: 'Sri Chamarajendra Zoological Gardens', postedBy: 'sid', description: '157-acre zoo with a lake featuring numerous animals, including exotic species, plus a souvenir shop.', address: 'Zoo Main Road, Indira Nagar, Ittige Gudu, Mysuru, Karnataka 570010', url: "https://lh5.googleusercontent.com/p/AF1QipPz7CtmQJuBJ-cdJZvdkdu9CElPUa4zNt_AmFHA=w408-h306-k-no", liked: false, n_likes: 50,location:{
+        long:12.3024092,
+        lat:76.6473399
+    },creatorID:'u3',postDate:'thu Apr 22 2022' },
+    { id: 'p3', name: 'Sri Chamarajendra Zoological Gardens', postedBy: 'sid', description: '157-acre zoo with a lake featuring numerous animals, including exotic species, plus a souvenir shop.', address: 'Zoo Main Road, Indira Nagar, Ittige Gudu, Mysuru, Karnataka 570010', url: "https://lh5.googleusercontent.com/p/AF1QipPz7CtmQJuBJ-cdJZvdkdu9CElPUa4zNt_AmFHA=w408-h306-k-no", liked: false, n_likes: 50,location:{
+        long:12.3024092,
+        lat:76.6473399
+    },creatorID:'u3',postDate:'thu Apr 22 2022' },
+    { id: 'p3', name: 'Sri Chamarajendra Zoological Gardens', postedBy: 'sid', description: '157-acre zoo with a lake featuring numerous animals, including exotic species, plus a souvenir shop.dfsdafasdfsadfsdafasdgfasdggfhdfghfgdhfgdhfgdhfgdhdfghfdsgfdsgfdgfdsgdfsgfdgfadgfdagfddsfsadfasdgafsdgfdagfadgfdagdfagafdgafdgadfga', address: 'Zoo Main Road, Indira Nagar, Ittige Gudu, Mysuru, Karnataka 570010', url: "https://lh5.googleusercontent.com/p/AF1QipPz7CtmQJuBJ-cdJZvdkdu9CElPUa4zNt_AmFHA=w408-h306-k-no", liked: false, n_likes: 50,location:{
+        long:12.3024092,
+        lat:76.6473399
+    },creatorID:'u3',postDate:'thu Apr 22 2022' },
+    { id: 'p3', name: 'Sri Chamarajendra Zoological Gardens', postedBy: 'sid', description: '157-acre zoo with a lake featuring numerous animals, including exotic species, plus a souvenir shop.dfsdafasdfsadfsdafasdgfasdggfhdfghfgdhfgdhfgdhfgdhdfghfdsgfdsgfdgfdsgdfsgfdgfadgfdagfddsfsadfasdgafsdgfdagfadgfdagdfagafdgafdgadfga', address: 'Zoo Main Road, Indira Nagar, Ittige Gudu, Mysuru, Karnataka 570010', url: "https://lh5.googleusercontent.com/p/AF1QipPz7CtmQJuBJ-cdJZvdkdu9CElPUa4zNt_AmFHA=w408-h306-k-no", liked: false, n_likes: 50,location:{
+        long:12.3024092,
+        lat:76.6473399
+    },creatorID:'u3',postDate:'thu Apr 22 2022' },
+    { id: 'p3', name: 'Sri Chamarajendra Zoological Gardens', postedBy: 'sid', description: '157-acre zoo with a lake featuring numerous animals, including exotic species, plus a souvenir shop.dfsdafasdfsadfsdafasdgfasdggfhdfghfgdhfgdhfgdhfgdhdfghfdsgfdsgfdgfdsgdfsgfdgfadgfdagfddsfsadfasdgafsdgfdagfadgfdagdfagafdgafdgadfga', address: 'Zoo Main Road, Indira Nagar, Ittige Gudu, Mysuru, Karnataka 570010', url: "https://lh5.googleusercontent.com/p/AF1QipPz7CtmQJuBJ-cdJZvdkdu9CElPUa4zNt_AmFHA=w408-h306-k-no", liked: false, n_likes: 50,location:{
+        long:12.3024092,
+        lat:76.6473399
+    },creatorID:'u3',postDate:'thu Apr 22 2022' },
+    { id: 'p3', name: 'Sri Chamarajendra Zoological Gardens', postedBy: 'sid', description: '157-acre zoo with a lake featuring numerous animals, including exotic species, plus a souvenir shop.dfsdafasdfsadfsdafasdgfasdggfhdfghfgdhfgdhfgdhfgdhdfghfdsgfdsgfdgfdsgdfsgfdgfadgfdagfddsfsadfasdgafsdgfdagfadgfdagdfagafdgafdgadfga', address: 'Zoo Main Road, Indira Nagar, Ittige Gudu, Mysuru, Karnataka 570010', url: "https://lh5.googleusercontent.com/p/AF1QipPz7CtmQJuBJ-cdJZvdkdu9CElPUa4zNt_AmFHA=w408-h306-k-no", liked: false, n_likes: 50,location:{
+        long:12.3024092,
+        lat:76.6473399
+    },creatorID:'u3',postDate:'thu Apr 22 2022' },
 ]
 
 export const users = [{ id: 'u1', name: 'gldfshglhfsd gh', posts: 3, url: "https://cdn.vox-cdn.com/thumbor/YcVLI8UM9mTyIlDQkodM8dPZ6A4=/0x86:706x557/1220x813/filters:focal(0x86:706x557):format(webp)/cdn.vox-cdn.com/assets/738480/stevejobs.png", coverURL: "https://www.technocrazed.com/wp-content/uploads/2013/04/l9.jpg", bio: 'i am MERN stack develop and this is dummmy bio' }, { id: 'u2', name: 'rahul', posts: 10, url: "https://pi.tedcdn.com/r/ted-conferences-speaker-photos-production.s3.amazonaws.com/yoa4pm3vyerco6hqbhjxly3bf41d?w=255", coverURL: "https://cdn.mos.cms.futurecdn.net/cbBmRGrZuf7s9JMsEtDs5S-1024-80.jpg.webp", bio: 'fkjajhfkaewbfbakerbggragragahthgahghgfhatethaattrathtakbaargagagarekrgbkajerbg' }, { id: 'u3', name: 'sid', posts: 5, url: "https://upload.wikimedia.org/wikipedia/commons/6/69/Mukesh_Ambani.jpg", coverURL: "https://www.deccanherald.com/sites/dh/files/styles/article_detail/public/article_images/2020/05/19/2019-09-05T130129Z_141979623_RC19C06F4950_RTRMADP_3_RELIANCE-RETAIL-BRANDS-1569773604-605607076-1586337213.jpg?itok=dC2bju_T", bio: 'fkjajhfkaewbfbflfdgnhlnglhnlsfnghlgfkhjsjgfhjsgjfhljsfghjkgfjh;jsfghjlfgjhljfglshjlgfjhljgfsljhlsgfjhljgfsljhlgfsjlh;jfgljhlsjgflhjsfl;ghjslgfjhlgfjlhjfglhjlsjfghlkjgfljhlgfjhljtglhjrtohojtrohsojtojhbsjhtjostrhusiuhourtsoiuhboiasdgagfdgweahthatrgregargragagagakerbgkbaekrgbkajerbg' }]

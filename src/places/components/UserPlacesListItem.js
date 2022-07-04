@@ -3,52 +3,100 @@ import { makeStyles } from '@mui/styles'
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
-// import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
-import Collapse from '@mui/material/Collapse';
-// import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-// import { red } from '@mui/material/colors';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-// import ShareIcon from '@mui/icons-material/Share';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-// import MoreVertIcon from '@mui/icons-material/MoreVert';
-import {FaLocationArrow} from 'react-icons/fa'
-import {AiFillEdit} from 'react-icons/ai'
-import {MdDelete} from 'react-icons/md'
+import { MdLocationOn } from 'react-icons/md'
+import { AiFillEdit } from 'react-icons/ai'
+import { MdDelete } from 'react-icons/md'
+import PropTypes from 'prop-types';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import CloseIcon from '@mui/icons-material/Close';
 
-const useStyles =makeStyles({
-  card:{
+
+const useStyles = makeStyles({
+  span: {
+    fontSize: '1.2rem',
+    color: 'black',
+    letterSpacing: '.05rem',
+  },
+  description: {
+    overflowY: 'scroll !important',
+    position: 'fixed !important',
+    fontSize: '1.2rem !important',
+    '&::-webkit-scrollbar': {
+      width: '0rem'
+    }
+  },
+  cardActions: {
+    display: 'flex !important',
+    alignItems: 'center !important',
+    justifyContent: 'space-between !important'
 
   }
 })
 
-const ExpandMore = styled((props) => {
-  const { expand, ...other } = props;
-  return <IconButton {...other} />;
-})(({ theme, expand }) => ({
-  transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
-  marginLeft: 'auto',
-  transition: theme.transitions.create('transform', {
-    duration: theme.transitions.duration.shortest,
-  }),
-}));
 
 export default function UserPlacesListItem(props) {
-  const [expanded, setExpanded] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
 
-  const classes= useStyles()
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
 
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
+  const classes = useStyles()
+
+
+  const BootstrapDialog = styled(Dialog)(({ theme }) => ({
+    '& .MuiDialogContent-root': {
+      padding: theme.spacing(2),
+    },
+    '& .MuiDialogActions-root': {
+      padding: theme.spacing(1),
+    },
+  }));
+
+  const BootstrapDialogTitle = (props) => {
+    const { children, onClose, ...other } = props;
+
+    return (
+      <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
+        {children}
+        {onClose ? (
+          <IconButton
+            aria-label="close"
+            onClick={onClose}
+            sx={{
+              position: 'absolute',
+              right: 8,
+              top: 8,
+              color: (theme) => theme.palette.grey[500],
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
+        ) : null}
+      </DialogTitle>
+    );
+  };
+
+  BootstrapDialogTitle.propTypes = {
+    children: PropTypes.node,
+    onClose: PropTypes.func.isRequired,
   };
 
 
   return (
-    <Card sx={{ maxWidth: 345}} className={classes.card}>
+    <Card sx={{wordWrap: 'break-word' }} className={classes.card}>
       <CardMedia
         component="img"
         height="194"
@@ -57,39 +105,46 @@ export default function UserPlacesListItem(props) {
       />
       <CardContent>
         <Typography variant="body2" color="text.secondary">
-          {props.name} - {props.postDate}
+          <span className={classes.span}>{props.name}</span> - {props.postDate}
         </Typography>
       </CardContent>
-      <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
-        </IconButton>
-        <IconButton aria-label="location">
-          <FaLocationArrow />
-        </IconButton>
-        <IconButton aria-label="edit">
-          <AiFillEdit />
-        </IconButton>
-        <IconButton aria-label="delete">
-          <MdDelete />
-        </IconButton>
-        <ExpandMore
-          expand={expanded}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <ExpandMoreIcon />
-        </ExpandMore>
+      <CardActions disableSpacing className={classes.cardActions}>
+        <div>
+
+          <IconButton aria-label="add to favorites" title="Like">
+            <FavoriteIcon />
+          </IconButton>
+          <IconButton aria-label="location" title="Location">
+            <MdLocationOn />
+          </IconButton>
+          <IconButton aria-label="edit" title="Edit place">
+            <AiFillEdit />
+          </IconButton>
+          <IconButton aria-label="delete" title="Delete place">
+            <MdDelete />
+          </IconButton>
+        </div>
+        <Button onClick={handleClickOpen}>
+          Description
+        </Button>
       </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>
-          <Typography paragraph>Description:</Typography>
-          <Typography paragraph>
-            {props.description}
-          </Typography>
-        </CardContent>
-      </Collapse>
+      
+      <div>
+        <BootstrapDialog
+          onClose={handleClose}
+          aria-labelledby="customized-dialog-title"
+          open={open}
+        >
+          <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
+          {props.name}
+          </BootstrapDialogTitle>
+          <DialogContent dividers>
+            <Typography style={{wordWrap:'break-word'}}>
+              {props.description}
+            </Typography>
+          </DialogContent>
+        </BootstrapDialog>
+      </div>
     </Card>
   );
 }
