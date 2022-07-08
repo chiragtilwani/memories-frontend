@@ -1,5 +1,5 @@
-import { makeStyles } from "@mui/styles";
 import * as React from "react";
+import { makeStyles } from "@mui/styles";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
@@ -7,9 +7,14 @@ import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
-import liked from "../../images/liked.jpeg";
-import notLiked from "../../images/notLiked.jpeg";
 import Sizes from "../../styles/Sizes"
+import CardActions from '@mui/material/CardActions';
+import IconButton from '@mui/material/IconButton';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import { MdLocationOn } from 'react-icons/md'
+import { AiFillEdit } from 'react-icons/ai'
+import { MdDelete } from 'react-icons/md'
+
 
 const useStyles = makeStyles({
   container: {
@@ -18,21 +23,21 @@ const useStyles = makeStyles({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    [Sizes.down('sm')]:{
-      width:'90%',
+    [Sizes.down('sm')]: {
+      width: '90%',
       flexDirection: 'column',
-      margin:'2rem auto'
+      margin: '2rem auto'
     }
   },
-  card:{
-    [Sizes.down('md')]:{
+  card: {
+    [Sizes.down('md')]: {
       width: "70%",
       maxWidth: "100% !important",
     },
-    [Sizes.down('sm')]:{
-      margin:'0rem !important',
+    [Sizes.down('sm')]: {
+      margin: '0rem !important',
       width: "100% !important",
-      borderRadius:'.5rem .5rem 0 0 !important'
+      borderRadius: '.5rem .5rem 0 0 !important'
     }
   },
   typography: {
@@ -54,18 +59,18 @@ const useStyles = makeStyles({
   },
   box: {
     width: "70%",
-    height:'20rem',
+    height: '20rem',
     marginRight: "1rem",
-    [Sizes.down('md')]:{
-      margin:'0rem',
+    [Sizes.down('md')]: {
+      margin: '0rem',
     },
-    [Sizes.down('sm')]:{
+    [Sizes.down('sm')]: {
       width: '100%',
-      height:'fit-content',
-      borderRadius:'0 0 .5rem .5rem !important',
-      zIndex:'2 !important',
+      height: 'fit-content',
+      borderRadius: '0 0 .5rem .5rem !important',
+      zIndex: '2 !important',
     },
-    
+
   },
   paper: {
     margin: '0rem !important',
@@ -74,16 +79,16 @@ const useStyles = makeStyles({
     fontSize: "1.5rem !important",
     overflowY: "scroll",
     wordWrap: "break-word",
-    height:"auto !important",
-    maxHeight:'25rem',
-    backgroundColor:'rgb(25 118 210 / 12%) !important',
+    height: "auto !important",
+    maxHeight: '25rem',
+    backgroundColor: 'rgb(25 118 210 / 12%) !important',
     "&::-webkit-scrollbar": {
       width: "0rem",
     },
-    [Sizes.down('sm')]:{
-      borderRadius:'0 0 .5rem .5rem !important',
+    [Sizes.down('sm')]: {
+      borderRadius: '0 0 .5rem .5rem !important',
     },
-    
+
   },
   likes: {
     display: "flex",
@@ -99,13 +104,48 @@ const useStyles = makeStyles({
       transform: "scale(1.2)",
     },
   },
+  cardActions: {
+    display: 'flex !important',
+    alignItems: 'center !important',
+    justifyContent: 'space-between !important',
+  },
+  hover: {
+    '&:hover': {
+      transform: 'scale(1.5)'
+    }
+  },
+  likebtn: {
+    '&:hover': {
+      color: '#ed5151'
+    }
+  },
+  locationbtn: {
+    '&:hover': {
+      color: '#28a728;'
+    }
+  },
+  editbtn: {
+    '&:hover': {
+      color: '#1976d2'
+    }
+  },
+  deletebtn: {
+    '&:hover': {
+      color: 'red'
+    }
+  },
+  n_likes:{
+    fontSize:'1rem',
+    color:'--var(grey-text)',
+    marginRight:'.5rem'
+  }
 });
 
 function Place(props) {
   const classes = useStyles();
   return (
     <div className={classes.container}>
-      <Card sx={{width:'25rem', maxWidth: 345, display: "inline-block", margin: "2rem" }} className={classes.card}>
+      <Card sx={{ width: '25rem', maxWidth: 345, display: "inline-block", margin: "2rem" }} className={classes.card}>
         <CardActionArea>
           <CardMedia
             component="img"
@@ -116,7 +156,6 @@ function Place(props) {
           <CardContent
             style={{
               display: "flex",
-              alignItems: "center",
               justifyContent: "space-between",
             }}
           >
@@ -126,15 +165,25 @@ function Place(props) {
               </Typography>
               <span className={classes.span}>Posted By : {props.postedBy}</span>
             </div>
-            <div className={classes.likes}>
-              <img
-                src={props.liked ? liked : notLiked}
-                className={classes.img}
-                alt=""
-              />
-              <span style={{ fontSize: "1.2rem"}}>{props.n_likes}</span>
-            </div>
           </CardContent>
+          <CardActions disableSpacing className={classes.cardActions}>
+            <div>
+
+              <IconButton aria-label="add to favorites" title="Like" className={`${classes.likebtn} ${classes.hover}`}>
+                <FavoriteIcon />
+              </IconButton>
+              <IconButton aria-label="location" title="View on map" className={`${classes.locationbtn} ${classes.hover}`}>
+                <MdLocationOn  />
+              </IconButton>
+              <IconButton aria-label="edit" title="Edit place" className={`${classes.editbtn} ${classes.hover}`}>
+                <AiFillEdit  />
+              </IconButton>
+              <IconButton aria-label="delete" title="Delete place" className={`${classes.deletebtn} ${classes.hover}`} >
+                <MdDelete />
+              </IconButton>
+            </div>
+            <div className={classes.n_likes}>Likes : {props.n_likes}</div>
+          </CardActions>
         </CardActionArea>
       </Card>
       <Box

@@ -1,51 +1,100 @@
-import { makeStyles } from '@mui/styles'
+import { makeStyles } from "@mui/styles";
 
-import * as React from 'react';
-import { styled } from '@mui/material/styles';
-import Card from '@mui/material/Card';
-import CardMedia from '@mui/material/CardMedia';
-import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import { MdLocationOn } from 'react-icons/md'
-import { AiFillEdit } from 'react-icons/ai'
-import { MdDelete } from 'react-icons/md'
-import PropTypes from 'prop-types';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogContent from '@mui/material/DialogContent';
-import CloseIcon from '@mui/icons-material/Close';
+import * as React from "react";
+import { styled } from "@mui/material/styles";
+import Card from "@mui/material/Card";
+import CardMedia from "@mui/material/CardMedia";
+import CardContent from "@mui/material/CardContent";
+import CardActions from "@mui/material/CardActions";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import { MdLocationOn } from "react-icons/md";
+import { AiFillEdit } from "react-icons/ai";
+import { MdDelete } from "react-icons/md";
+import PropTypes from "prop-types";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import CloseIcon from "@mui/icons-material/Close";
+import Box from "@mui/material/Box";
+import Modal from "@mui/material/Modal";
+import { AiOutlineClose } from "react-icons/ai";
 
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
 
 const useStyles = makeStyles({
   span: {
-    fontSize: '1.2rem',
-    color: 'black',
-    letterSpacing: '.05rem',
+    fontSize: "1.2rem",
+    color: "black",
+    letterSpacing: ".05rem",
   },
   description: {
-    overflowY: 'scroll !important',
-    position: 'fixed !important',
-    fontSize: '1.2rem !important',
-    '&::-webkit-scrollbar': {
-      width: '0rem'
-    }
+    overflowY: "scroll !important",
+    position: "fixed !important",
+    fontSize: "1.2rem !important",
+    "&::-webkit-scrollbar": {
+      width: "0rem",
+    },
   },
   cardActions: {
-    display: 'flex !important',
-    alignItems: 'center !important',
-    justifyContent: 'space-between !important'
-
-  }
-})
-
+    display: "flex !important",
+    alignItems: "center !important",
+    justifyContent: "space-between !important",
+  },
+  hover: {
+    "&:hover": {
+      transform: "scale(1.5)",
+    },
+  },
+  likebtn: {
+    "&:hover": {
+      color: "#ed5151",
+    },
+  },
+  locationbtn: {
+    "&:hover": {
+      color: "#28a728;",
+    },
+  },
+  editbtn: {
+    "&:hover": {
+      color: "#1976d2",
+    },
+  },
+  deletebtn: {
+    "&:hover": {
+      color: "red",
+    },
+  },
+  close: {
+    position: "absolute",
+    right: "1.5rem",
+    top: "1.5rem",
+    fontSize: "1.5rem",
+    "&:hover": {
+      color: "red",
+    },
+  },
+});
 
 export default function UserPlacesListItem(props) {
+  console.log(props.location)
   const [open, setOpen] = React.useState(false);
-
+  const [modalOpen, setModalOpen] = React.useState(false);
+  const handleModalOpen = () => setModalOpen(true);
+  const handleModalClose = () => setModalOpen(false);
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -53,14 +102,13 @@ export default function UserPlacesListItem(props) {
     setOpen(false);
   };
 
-  const classes = useStyles()
-
+  const classes = useStyles();
 
   const BootstrapDialog = styled(Dialog)(({ theme }) => ({
-    '& .MuiDialogContent-root': {
+    "& .MuiDialogContent-root": {
       padding: theme.spacing(2),
     },
-    '& .MuiDialogActions-root': {
+    "& .MuiDialogActions-root": {
       padding: theme.spacing(1),
     },
   }));
@@ -76,7 +124,7 @@ export default function UserPlacesListItem(props) {
             aria-label="close"
             onClick={onClose}
             sx={{
-              position: 'absolute',
+              position: "absolute",
               right: 8,
               top: 8,
               color: (theme) => theme.palette.grey[500],
@@ -95,8 +143,9 @@ export default function UserPlacesListItem(props) {
   };
 
 
+
   return (
-    <Card sx={{wordWrap: 'break-word' }} className={classes.card}>
+    <Card sx={{ wordWrap: "break-word" }} className={classes.card}>
       <CardMedia
         component="img"
         height="194"
@@ -110,40 +159,75 @@ export default function UserPlacesListItem(props) {
       </CardContent>
       <CardActions disableSpacing className={classes.cardActions}>
         <div>
-
-          <IconButton aria-label="add to favorites" title="Like">
+          <IconButton
+            aria-label="add to favorites"
+            title="Like"
+            className={`${classes.likebtn} ${classes.hover}`}
+          >
             <FavoriteIcon />
           </IconButton>
-          <IconButton aria-label="location" title="Location">
+          <IconButton
+            aria-label="location"
+            title="View on map"
+            className={`${classes.locationbtn} ${classes.hover}`}
+            onClick={handleModalOpen}
+          >
             <MdLocationOn />
           </IconButton>
-          <IconButton aria-label="edit" title="Edit place">
+          <IconButton
+            aria-label="edit"
+            title="Edit place"
+            className={`${classes.editbtn} ${classes.hover}`}
+          >
             <AiFillEdit />
           </IconButton>
-          <IconButton aria-label="delete" title="Delete place">
+          <IconButton
+            aria-label="delete"
+            title="Delete place"
+            className={`${classes.deletebtn} ${classes.hover}`}
+          >
             <MdDelete />
           </IconButton>
         </div>
-        <Button onClick={handleClickOpen}>
-          Description
-        </Button>
+        <Button onClick={handleClickOpen}>Description</Button>
       </CardActions>
-      
+
       <div>
         <BootstrapDialog
           onClose={handleClose}
           aria-labelledby="customized-dialog-title"
           open={open}
         >
-          <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-          {props.name}
+          <BootstrapDialogTitle
+            id="customized-dialog-title"
+            onClose={handleClose}
+          >
+            {props.name}
           </BootstrapDialogTitle>
           <DialogContent dividers>
-            <Typography style={{wordWrap:'break-word'}}>
+            <Typography style={{ wordWrap: "break-word" }}>
               {props.description}
             </Typography>
           </DialogContent>
         </BootstrapDialog>
+      </div>
+      <div>
+        <Modal
+          open={modalOpen}
+          onClose={handleModalClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>
+            <AiOutlineClose
+              className={classes.close}
+              onClick={handleModalClose}
+            />
+            <Typography id="modal-modal-title" variant="h6" component="h2">
+              {props.name}
+            </Typography>
+          </Box>
+        </Modal>
       </div>
     </Card>
   );
