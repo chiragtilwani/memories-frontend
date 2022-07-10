@@ -20,7 +20,7 @@ function AllPlaces() {
     const classes = useStyles()
 
     return <div className={classes.container}>
-        <PlacesList placesList={placesList} />
+        <PlacesList/>
     </div>
 }
 

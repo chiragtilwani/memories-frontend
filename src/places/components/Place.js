@@ -145,13 +145,14 @@ function Place(props) {
   const classes = useStyles();
   return (
     <div className={classes.container}>
-      <Card sx={{ width: '25rem', maxWidth: 345, display: "inline-block", margin: "2rem" }} className={classes.card}>
+      <Card sx={{ width: '30rem', maxWidth: 345, display: "inline-block", margin: "2rem" }} className={classes.card}>
         <CardActionArea>
           <CardMedia
             component="img"
             height="140"
             image={props.url}
             alt="green iguana"
+            style={{width:'100%'}}
           />
           <CardContent
             style={{

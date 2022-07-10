@@ -5,10 +5,12 @@ import { makeStyles } from "@mui/styles";
 import svgImg from "../../images/NewPlaceForm.png";
 import Button from "@mui/material/Button";
 import { AiOutlineCamera } from "react-icons/ai";
-import {PlaceContext} from '../../context/PlaceContext'
+import {DispatchContext} from '../../context/PlaceContext'
 import useToggler from "../../customHooks/useToggler";
 import {MdCancel} from 'react-icons/md'
 import Sizes from '../../styles/Sizes'
+import { v4 as uuidv4 } from 'uuid';
+import {useNavigate} from 'react-router-dom'
 
 const useStyles = makeStyles({
   sections: {
@@ -18,8 +20,12 @@ const useStyles = makeStyles({
   left: {
     display: "flex",
     alignItems: "center",
-    justifyContent: "center",
+    // justifyContent: "center",
     flexDirection: "row",
+    position:'relative',
+    [Sizes.down('sm')]:{
+      display:'none'
+    }
   },
   svgContainer: {
     position: "relative",
@@ -38,31 +44,48 @@ const useStyles = makeStyles({
     "&:hover": {
       textShadow: "2px -2px 2px rgba(255,255,255,0.5)",
     },
+    
+    [Sizes.up('md')]: {
+      top:'60%',
+      left:'19%',
+      fontSize:'2.4rem'
+    },[Sizes.up('lg')]: {
+      top:'62%',
+      left:'20%',
+      fontSize:'3rem'
+    },
+    [Sizes.up('xl')]: {
+      top:'68%',
+      left:'25%',
+      fontSize:'2.4rem'
+    },
+    [Sizes.down('md')]: {
+      top:'56%',
+      left:'13%',
+      fontSize:'2.4rem'
+    }
   },
   img: {
     marginLeft: "-5%",
     width: "100%",
-    
   },
   right: {
     backgroundColor: "rgb(25 118 210 / 12%) !important",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    [Sizes.down('sm')]:{
+      width:'100%'
+    }
   },
   form: {
     width: "70%",
-    height: "80vh",
+    height: "80%",
     marginBottom: "7rem",
     display: "flex",
     alignItems: "center",
     justifyContent: "space-evenly",
     flexDirection: "column",
-    borderRadius: "1.2rem",
-    transitionDuration: ".5s",
-    "&:hover": {
-      boxShadow: "1rem 1rem 3rem rgba(0,0,0,0.4)",
-    },
   },
   textfield: {
     width: "90%",
@@ -95,6 +118,12 @@ const useStyles = makeStyles({
           return 'white'
         }
       }
+    },
+    [Sizes.down('lg')]:{
+      padding: "1.2rem 4.3rem",
+    },
+    [Sizes.down('xs')]:{
+      padding: "1.2rem 3rem",
     }
   },
   cameraIcon: {
@@ -118,10 +147,12 @@ const initialValues={
 
 export default function NewPlaceForm() {
   const [values,setValues]=useState(initialValues);
-  const [img,setImg]=useState(null)
+  const [url,setUrl]=useState(null)
   const [isImgSelected,toggleIsImgSelected]=useToggler(false)
-  const {dispatch} =useContext(PlaceContext)
+  const {dispatch} =useContext(DispatchContext)
   const classes = useStyles(isImgSelected);
+
+  const navigate=useNavigate();
 
   function handleChange(evt){
     setValues({...values,[evt.target.name]:evt.target.value})
@@ -129,17 +160,21 @@ export default function NewPlaceForm() {
 
   function handleImageChange(evt){
     toggleIsImgSelected()
-    setImg(URL.createObjectURL(evt.target.files[0]))
+    setUrl(URL.createObjectURL(evt.target.files[0]))
   }
 
   function handleImgDelete(){
     toggleIsImgSelected()
-    setImg(null)
+    setUrl(null)
   }
 
   function handleSubmit (evt){
+    // will connect this to BACKEND later
     evt.preventDefault()
-    dispatch({type:'add',place:{...values,img:img}})
+    let date=new Date();
+    let dateToday=`${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`
+    dispatch({type:'add',place:{id:uuidv4(),...values,postedBy:'chirag',creatorID:'u1',liked:false,n_likes:0,url:url,postDate:dateToday}})
+    navigate('/')
   }
 
   return (
@@ -186,7 +221,7 @@ export default function NewPlaceForm() {
           <div>
             <div className={classes.imgContainer}>
             <MdCancel style={{fontSize:'2rem',display:isImgSelected===true?'inline-block' :'none'}} onClick={handleImgDelete}/>
-            <img src={img} alt="preview" className={classes.imgPreview} style={{display:isImgSelected===true?'inline-block' :'none'}}/>
+            <img src={url} alt="preview" className={classes.imgPreview} style={{display:isImgSelected===true?'inline-block' :'none'}}/>
             </div>
             <label htmlFor="img" className={classes.fileInputLabel} style={{color:isImgSelected?'grey':'black'}}>
               Uplaod Image <AiOutlineCamera className={classes.cameraIcon} />
@@ -194,7 +229,7 @@ export default function NewPlaceForm() {
             <input
               type="file"
               id="img"
-              name="img"
+              name="url"
               value={""}
               accept="image/png, image/jpg, image/jpeg"
               className={classes.fileInput}
@@ -203,7 +238,7 @@ export default function NewPlaceForm() {
               disabled={isImgSelected?true:false}
             ></input>
           </div>
-          <Button variant="contained" className={classes.btn} type="submit">
+          <Button variant="contained" className={classes.btn} type="submit" disabled={!isImgSelected?true:false}>
             Add Memory
           </Button>
         </form>

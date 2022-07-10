@@ -5,6 +5,7 @@ const SIZES={
             sm:'767.98px',
             md:'991.98px',
             lg:'1199.98px',
+            xl:'1920px'
         }
         return `@media (max-width:${sizes[size]})`
     },
@@ -14,6 +15,7 @@ const SIZES={
             sm:'767.98px',
             md:'991.98px',
             lg:'1199.98px',
+            xl:'1920px'
         }
         return `@media (min-width:${sizes[size]})`
     }

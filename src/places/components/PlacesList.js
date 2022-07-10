@@ -2,6 +2,8 @@ import Place from './Place'
 import { makeStyles } from '@mui/styles'
 import placesNotFound from '../../images/placesNotFound.webp'
 import Sizes from '../../styles/Sizes'
+import {PlaceContext} from '../../context/PlaceContext'
+import {useContext} from 'react'
 
 const useStyles = makeStyles({
     container: {
@@ -19,16 +21,17 @@ const useStyles = makeStyles({
     }
 })
 
-function PlacesList(props) {
+function PlacesList() {
     const classes = useStyles()
-
-    if (props.placesList.length === 0) {
+    const placesListState=useContext(PlaceContext)
+    console.log(placesListState)
+    if (placesListState.length === 0) {
         return <div className={classes.noPlace}>
             <img src={placesNotFound} alt="places not found"/>
         </div>
     } else {
         return (<div className={classes.container}>
-            {props.placesList.map(place => <Place key={place.id} {...place} />)}
+            {placesListState.map(place => <Place key={place.id} {...place} />)}
         </div>)
     }
 }
