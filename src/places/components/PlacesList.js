@@ -24,7 +24,7 @@ const useStyles = makeStyles({
 function PlacesList() {
     const classes = useStyles()
     const placesListState=useContext(PlaceContext)
-    console.log(placesListState)
+    // console.log(placesListState)
     if (placesListState.length === 0) {
         return <div className={classes.noPlace}>
             <img src={placesNotFound} alt="places not found"/>

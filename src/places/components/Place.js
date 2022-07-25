@@ -7,14 +7,22 @@ import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
-import Sizes from "../../styles/Sizes"
-import CardActions from '@mui/material/CardActions';
-import IconButton from '@mui/material/IconButton';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import { MdLocationOn } from 'react-icons/md'
-import { AiFillEdit } from 'react-icons/ai'
-import { MdDelete } from 'react-icons/md'
-
+import Sizes from "../../styles/Sizes";
+import CardActions from "@mui/material/CardActions";
+import IconButton from "@mui/material/IconButton";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import { MdLocationOn } from "react-icons/md";
+import { AiFillEdit } from "react-icons/ai";
+import { MdDelete } from "react-icons/md";
+import {Link} from 'react-router-dom'
+import {DispatchContext} from '../../context/PlaceContext'
+import {useContext} from 'react'
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 
 const useStyles = makeStyles({
   container: {
@@ -23,22 +31,22 @@ const useStyles = makeStyles({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    [Sizes.down('sm')]: {
-      width: '90%',
-      flexDirection: 'column',
-      margin: '2rem auto'
-    }
+    [Sizes.down("sm")]: {
+      width: "90%",
+      flexDirection: "column",
+      margin: "2rem auto",
+    },
   },
   card: {
-    [Sizes.down('md')]: {
+    [Sizes.down("md")]: {
       width: "70%",
       maxWidth: "100% !important",
     },
-    [Sizes.down('sm')]: {
-      margin: '0rem !important',
+    [Sizes.down("sm")]: {
+      margin: "0rem !important",
       width: "100% !important",
-      borderRadius: '.5rem .5rem 0 0 !important'
-    }
+      borderRadius: ".5rem .5rem 0 0 !important",
+    },
   },
   typography: {
     display: "inline-block",
@@ -59,36 +67,34 @@ const useStyles = makeStyles({
   },
   box: {
     width: "70%",
-    height: '20rem',
+    height: "20rem",
     marginRight: "1rem",
-    [Sizes.down('md')]: {
-      margin: '0rem',
+    [Sizes.down("md")]: {
+      margin: "0rem",
     },
-    [Sizes.down('sm')]: {
-      width: '100%',
-      height: 'fit-content',
-      borderRadius: '0 0 .5rem .5rem !important',
-      zIndex: '2 !important',
+    [Sizes.down("sm")]: {
+      width: "100%",
+      height: "fit-content",
+      borderRadius: "0 0 .5rem .5rem !important",
+      zIndex: "2 !important",
     },
-
   },
   paper: {
-    margin: '0rem !important',
+    margin: "0rem !important",
     width: "100% !important",
     padding: "2rem",
     fontSize: "1.5rem !important",
     overflowY: "scroll",
     wordWrap: "break-word",
     height: "auto !important",
-    maxHeight: '25rem',
-    backgroundColor: 'rgb(25 118 210 / 12%) !important',
+    maxHeight: "25rem",
+    backgroundColor: "rgb(25 118 210 / 12%) !important",
     "&::-webkit-scrollbar": {
       width: "0rem",
     },
-    [Sizes.down('sm')]: {
-      borderRadius: '0 0 .5rem .5rem !important',
+    [Sizes.down("sm")]: {
+      borderRadius: "0 0 .5rem .5rem !important",
     },
-
   },
   likes: {
     display: "flex",
@@ -105,54 +111,82 @@ const useStyles = makeStyles({
     },
   },
   cardActions: {
-    display: 'flex !important',
-    alignItems: 'center !important',
-    justifyContent: 'space-between !important',
+    display: "flex !important",
+    alignItems: "center !important",
+    justifyContent: "space-between !important",
   },
   hover: {
-    '&:hover': {
-      transform: 'scale(1.5)'
-    }
+    "&:hover": {
+      transform: "scale(1.5)",
+    },
   },
   likebtn: {
-    '&:hover': {
-      color: '#ed5151'
-    }
+    "&:hover": {
+      color: "#ed5151",
+    },
   },
   locationbtn: {
-    '&:hover': {
-      color: '#28a728;'
-    }
+    "&:hover": {
+      color: "#28a728;",
+    },
   },
   editbtn: {
-    '&:hover': {
-      color: '#1976d2'
-    }
+    "&:hover": {
+      color: "#1976d2",
+    },
   },
   deletebtn: {
-    '&:hover': {
-      color: 'red'
-    }
+    "&:hover": {
+      color: "red",
+    },
   },
-  n_likes:{
-    fontSize:'1rem',
-    color:'--var(grey-text)',
-    marginRight:'.5rem'
-  }
+  n_likes: {
+    fontSize: "1rem",
+    color: "--var(grey-text)",
+    marginRight: ".5rem",
+  },
 });
 
 function Place(props) {
   const classes = useStyles();
+  const {dispatch}=useContext(DispatchContext)
+  const [open, setOpen] = React.useState(false);
+
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+
+  function handleClick(evt){
+    evt.stopPropagation();
+  }
+  function handleDelete(){
+    handleClose()
+    dispatch({type:"remove",id:props.id})
+  }
   return (
+    
     <div className={classes.container}>
-      <Card sx={{ width: '30rem', maxWidth: 345, display: "inline-block", margin: "2rem" }} className={classes.card}>
+      <Card
+        sx={{
+          width: "30rem",
+          maxWidth: 345,
+          display: "inline-block",
+          margin: "2rem",
+        }}
+        className={classes.card}
+      >
         <CardActionArea>
           <CardMedia
             component="img"
             height="140"
             image={props.url}
             alt="green iguana"
-            style={{width:'100%'}}
+            style={{ width: "100%" }}
           />
           <CardContent
             style={{
@@ -169,23 +203,63 @@ function Place(props) {
           </CardContent>
           <CardActions disableSpacing className={classes.cardActions}>
             <div>
-
-              <IconButton aria-label="add to favorites" title="Like" className={`${classes.likebtn} ${classes.hover}`}>
+              <IconButton
+                aria-label="add to favorites"
+                title="Like"
+                className={`${classes.likebtn} ${classes.hover}`}
+              >
                 <FavoriteIcon />
               </IconButton>
-              <IconButton aria-label="location" title="View on map" className={`${classes.locationbtn} ${classes.hover}`}>
-                <MdLocationOn  />
+              <IconButton
+                aria-label="location"
+                title="View on map"
+                className={`${classes.locationbtn} ${classes.hover}`}
+              >
+                <MdLocationOn />
               </IconButton>
-              <IconButton aria-label="edit" title="Edit place" className={`${classes.editbtn} ${classes.hover}`}>
-                <AiFillEdit  />
-              </IconButton>
-              <IconButton aria-label="delete" title="Delete place" className={`${classes.deletebtn} ${classes.hover}`} >
+              <Link to={`/${props.id}/update-place`} onClick={handleClick}>
+                <IconButton
+                  aria-label="edit"
+                  title="Edit place"
+                  className={`${classes.editbtn} ${classes.hover}`}
+                >
+                  <AiFillEdit />
+                </IconButton>
+              </Link>
+              <IconButton
+                aria-label="delete"
+                title="Delete place"
+                className={`${classes.deletebtn} ${classes.hover}`}
+                onClick={handleClickOpen}
+              >
                 <MdDelete />
               </IconButton>
             </div>
             <div className={classes.n_likes}>Likes : {props.n_likes}</div>
           </CardActions>
         </CardActionArea>
+        <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {`Deleting ${props.name}`}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Are you sure you want to delete <strong>{props.name}</strong> memory ?
+            Memory deleted once cannot be recovered. 
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Disagree</Button>
+          <Button onClick={handleDelete} autoFocus>
+            Agree
+          </Button>
+        </DialogActions>
+      </Dialog>
       </Card>
       <Box
         sx={{

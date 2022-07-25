@@ -1,16 +1,16 @@
 import * as React from "react";
-import {useState,useContext} from 'react'
+import { useState, useContext } from 'react'
 import TextField from "@mui/material/TextField";
 import { makeStyles } from "@mui/styles";
 import svgImg from "../../images/NewPlaceForm.png";
 import Button from "@mui/material/Button";
 import { AiOutlineCamera } from "react-icons/ai";
-import {DispatchContext} from '../../context/PlaceContext'
+import { DispatchContext } from '../../context/PlaceContext'
 import useToggler from "../../customHooks/useToggler";
-import {MdCancel} from 'react-icons/md'
+import { MdCancel } from 'react-icons/md'
 import Sizes from '../../styles/Sizes'
 import { v4 as uuidv4 } from 'uuid';
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 const useStyles = makeStyles({
   sections: {
@@ -22,9 +22,9 @@ const useStyles = makeStyles({
     alignItems: "center",
     // justifyContent: "center",
     flexDirection: "row",
-    position:'relative',
-    [Sizes.down('sm')]:{
-      display:'none'
+    position: 'relative',
+    [Sizes.down('sm')]: {
+      display: 'none'
     }
   },
   svgContainer: {
@@ -44,25 +44,25 @@ const useStyles = makeStyles({
     "&:hover": {
       textShadow: "2px -2px 2px rgba(255,255,255,0.5)",
     },
-    
+
     [Sizes.up('md')]: {
-      top:'60%',
-      left:'19%',
-      fontSize:'2.4rem'
-    },[Sizes.up('lg')]: {
-      top:'62%',
-      left:'20%',
-      fontSize:'3rem'
+      top: '60%',
+      left: '19%',
+      fontSize: '2.4rem'
+    }, [Sizes.up('lg')]: {
+      top: '62%',
+      left: '20%',
+      fontSize: '3rem'
     },
     [Sizes.up('xl')]: {
-      top:'68%',
-      left:'25%',
-      fontSize:'2.4rem'
+      top: '68%',
+      left: '25%',
+      fontSize: '2.4rem'
     },
     [Sizes.down('md')]: {
-      top:'56%',
-      left:'13%',
-      fontSize:'2.4rem'
+      top: '56%',
+      left: '13%',
+      fontSize: '2.4rem'
     }
   },
   img: {
@@ -74,8 +74,8 @@ const useStyles = makeStyles({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    [Sizes.down('sm')]:{
-      width:'100%'
+    [Sizes.down('sm')]: {
+      width: '100%'
     }
   },
   form: {
@@ -108,21 +108,21 @@ const useStyles = makeStyles({
     alignItems: "center",
     cursor: "pointer",
     borderRadius: ".4rem",
-    borderColor:'grey',
-    transitionDuration:'.5s',
-    '&:hover':{
-      backgroundColor:isImgSelected=>{
-        if(isImgSelected){
+    borderColor: 'grey',
+    transitionDuration: '.5s',
+    '&:hover': {
+      backgroundColor: isImgSelected => {
+        if (isImgSelected) {
           return 'transparent'
-        }else{
+        } else {
           return 'white'
         }
       }
     },
-    [Sizes.down('lg')]:{
+    [Sizes.down('lg')]: {
       padding: "1.2rem 4.3rem",
     },
-    [Sizes.down('xs')]:{
+    [Sizes.down('xs')]: {
       padding: "1.2rem 3rem",
     }
   },
@@ -130,50 +130,50 @@ const useStyles = makeStyles({
     marginLeft: "1rem",
     fontSize: "2rem !important",
   },
-  imgContainer:{
+  imgContainer: {
     display: "flex",
   },
   imgPreview: {
-    width:'10rem',
-    margin:'1rem',
+    width: '10rem',
+    margin: '1rem',
   }
 });
 
-const initialValues={
-  name:'',
-  description:'',
-  address:'',
+const initialValues = {
+  name: '',
+  description: '',
+  address: '',
 }
 
 export default function NewPlaceForm() {
-  const [values,setValues]=useState(initialValues);
-  const [url,setUrl]=useState(null)
-  const [isImgSelected,toggleIsImgSelected]=useToggler(false)
-  const {dispatch} =useContext(DispatchContext)
+  const [values, setValues] = useState(initialValues);
+  const [url, setUrl] = useState(null)
+  const [isImgSelected, toggleIsImgSelected] = useToggler(false)
+  const { dispatch } = useContext(DispatchContext)
   const classes = useStyles(isImgSelected);
 
-  const navigate=useNavigate();
+  const navigate = useNavigate();
 
-  function handleChange(evt){
-    setValues({...values,[evt.target.name]:evt.target.value})
+  function handleChange(evt) {
+    setValues({ ...values, [evt.target.name]: evt.target.value })
   }
 
-  function handleImageChange(evt){
+  function handleImageChange(evt) {
     toggleIsImgSelected()
     setUrl(URL.createObjectURL(evt.target.files[0]))
   }
 
-  function handleImgDelete(){
+  function handleImgDelete() {
     toggleIsImgSelected()
     setUrl(null)
   }
 
-  function handleSubmit (evt){
+  function handleSubmit(evt) {
     // will connect this to BACKEND later
     evt.preventDefault()
-    let date=new Date();
-    let dateToday=`${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`
-    dispatch({type:'add',place:{id:uuidv4(),...values,postedBy:'chirag',creatorID:'u1',liked:false,n_likes:0,url:url,postDate:dateToday}})
+    let date = new Date();
+    let dateToday = `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`
+    dispatch({ type: 'add', place: { id: uuidv4(), ...values, postedBy: 'chirag', creatorID: 'u1', liked: false, n_likes: 0, url: url, postDate: dateToday } })
     navigate('/')
   }
 
@@ -197,7 +197,7 @@ export default function NewPlaceForm() {
             name="name"
             value={values.name}
             onChange={handleChange}
-            />
+          />
           <TextField
             id="outlined-multiline-flexible"
             label="Description"
@@ -207,7 +207,7 @@ export default function NewPlaceForm() {
             name="description"
             value={values.description}
             onChange={handleChange}
-            />
+          />
           <TextField
             id="outlined-multiline-flexible"
             label="Address"
@@ -217,13 +217,13 @@ export default function NewPlaceForm() {
             name="address"
             value={values.address}
             onChange={handleChange}
-            />
+          />
           <div>
             <div className={classes.imgContainer}>
-            <MdCancel style={{fontSize:'2rem',display:isImgSelected===true?'inline-block' :'none'}} onClick={handleImgDelete}/>
-            <img src={url} alt="preview" className={classes.imgPreview} style={{display:isImgSelected===true?'inline-block' :'none'}}/>
+              <MdCancel style={{ fontSize: '2rem', display: isImgSelected === true ? 'inline-block' : 'none' }} onClick={handleImgDelete} />
+              <img src={url} alt="preview" className={classes.imgPreview} style={{ display: isImgSelected === true ? 'inline-block' : 'none' }} />
             </div>
-            <label htmlFor="img" className={classes.fileInputLabel} style={{color:isImgSelected?'grey':'black'}}>
+            <label htmlFor="img" className={classes.fileInputLabel} style={{ color: isImgSelected ? 'grey' : 'black' }}>
               Uplaod Image <AiOutlineCamera className={classes.cameraIcon} />
             </label>
             <input
@@ -235,10 +235,10 @@ export default function NewPlaceForm() {
               className={classes.fileInput}
               required
               onChange={handleImageChange}
-              disabled={isImgSelected?true:false}
+              disabled={isImgSelected ? true : false}
             ></input>
           </div>
-          <Button variant="contained" className={classes.btn} type="submit" disabled={!isImgSelected?true:false}>
+          <Button variant="contained" className={classes.btn} type="submit" disabled={!isImgSelected ? true : false}>
             Add Memory
           </Button>
         </form>

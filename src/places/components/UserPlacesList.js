@@ -2,6 +2,9 @@ import { makeStyles } from '@mui/styles'
 import UserPlacesListItem from './UserPlacesListItem'
 import placesNotFound from '../../images/placesNotFound.webp'
 import Sizes from '../../styles/Sizes'
+import {PlaceContext} from '../../context/PlaceContext'
+import {DispatchContext} from '../../context/PlaceContext'
+import {useContext} from 'react'
 
 const useStyles = makeStyles({
     noPlace: {
@@ -28,8 +31,16 @@ const useStyles = makeStyles({
 )
 function UserPlacesList(props) {
     const classes = useStyles()
+    const placesListState=useContext(PlaceContext)
+    const { dispatch} =useContext(DispatchContext)
+    const userPlaces=placesListState.filter(p=>p.creatorID===props.uid)
+
+    function handleDelete(id){
+       dispatch({type:"remove",id:id})
+    }
+
     let content;
-    if (props.placesList.length === 0) {
+    if (userPlaces.length === 0) {
 
         content = <div className={classes.noPlace}>
             <img src={placesNotFound} alt="places not found" />
@@ -37,15 +48,11 @@ function UserPlacesList(props) {
 
     } else {
         content = <div className={classes.container}>
-            {props.placesList.map(place => {
-                if(place.creatorID===props.uid){
-                   return <UserPlacesListItem key={place.id} {...place}/>
-                }else{
-                    return null
-                }
-                })}
+               { userPlaces.map(place =><UserPlacesListItem key={place.id} {...place} handleDelete={handleDelete}/>)}
         </div>
     }
+
+    
     return content
 }
 

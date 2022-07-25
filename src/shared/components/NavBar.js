@@ -14,7 +14,7 @@ import MenuItem from '@mui/material/MenuItem';
 import { GiRiver } from 'react-icons/gi'
 import Sizes from '../../styles/Sizes'
 import { makeStyles } from '@mui/styles'
-import { NavLink,Link } from 'react-router-dom'
+import { NavLink, Link } from 'react-router-dom'
 
 
 const useStyles = makeStyles({
@@ -40,17 +40,17 @@ const useStyles = makeStyles({
         letterSpacing: '.2rem',
         transitionDuration: '.1s',
     },
-    navLink:{
-        textDecoration:'none',
-        color:'black'
+    navLink: {
+        textDecoration: 'none',
+        color: 'black'
     },
-    Link:{
-        textDecoration:'none',
+    Link: {
+        textDecoration: 'none',
         padding: '1rem 3rem',
-        width:'100%',
+        width: '100%',
         margin: '0rem',
         height: '100%',
-        color:'black',
+        color: 'black',
     }
 })
 
@@ -80,24 +80,25 @@ const NavBar = () => {
             <Container maxWidth="xxl">
                 <Toolbar disableGutters>
                     <GiRiver className={classes.river_icon_1} />
-                    <Typography
-                        variant="h6"
-                        noWrap
-                        component="a"
-                        href="/"
-                        sx={{
-                            mr: 2,
-                            display: { xs: 'none', md: 'flex' },
-                            fontFamily: 'monospace',
-                            fontWeight: 700,
-                            letterSpacing: '.3rem',
-                            color: 'inherit',
-                            textDecoration: 'none',
-                            fontSize: '2.3rem'
-                        }}
-                    >
-                        MEMORIES
-                    </Typography>
+                    <Link to='/' style={{color:'white',textDecoration: 'none'}}>
+                        <Typography
+                            variant="h6"
+                            noWrap
+                            sx={{
+                                mr: 2,
+                                display: { xs: 'none', md: 'flex' },
+                                fontFamily: 'monospace',
+                                fontWeight: 700,
+                                letterSpacing: '.3rem',
+                                color: 'inherit',
+                                textDecoration: 'none',
+                                fontSize: '2.3rem'
+                            }}
+                        >
+                            MEMORIES
+                        </Typography>
+                    </Link>
+
 
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
                         <IconButton
@@ -128,15 +129,15 @@ const NavBar = () => {
                                 display: { xs: 'block', md: 'none' },
                             }}
                         >
-                                <MenuItem onClick={handleCloseNavMenu} style={{padding:0,display: 'flex',alignItems: 'center',justifyContent: 'center',width: '100%'}}>
+                            <MenuItem onClick={handleCloseNavMenu} style={{ padding: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
                                 <Link to="/" className={classes.Link}><Typography textAlign="center">Places</Typography></Link>
-                                </MenuItem>
-                                <MenuItem onClick={handleCloseNavMenu} style={{padding:0,display: 'flex',alignItems: 'center',justifyContent: 'center'}}>
+                            </MenuItem>
+                            <MenuItem onClick={handleCloseNavMenu} style={{ padding: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                                 <Link to="/users" className={classes.Link}><Typography textAlign="center" >Users</Typography></Link>
-                                </MenuItem>
-                                <MenuItem onClick={handleCloseNavMenu} style={{padding:0,display: 'flex',alignItems: 'center',justifyContent: 'center'}}>
-                                    <Link to="/add-place" className={classes.Link}><Typography textAlign="center" >Add Place</Typography></Link>
-                                </MenuItem>
+                            </MenuItem>
+                            <MenuItem onClick={handleCloseNavMenu} style={{ padding: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                <Link to="/add-place" className={classes.Link}><Typography textAlign="center" >Add Place</Typography></Link>
+                            </MenuItem>
                         </Menu>
                     </Box>
                     <GiRiver className={classes.river_icon_2} />
@@ -163,19 +164,19 @@ const NavBar = () => {
                             onClick={handleCloseNavMenu}
                             sx={{ my: 2, color: 'white', display: 'block' }}
                         >
-                            <NavLink to='/' style={{ color: '#f1faee', textDecoration: 'none',padding:'1.5rem' }} className={navData => navData.isActive ? classes.active : null}>Places</NavLink>
+                            <NavLink to='/' style={{ color: '#f1faee', textDecoration: 'none', padding: '1.5rem' }} className={navData => navData.isActive ? classes.active : null}>Places</NavLink>
                         </Button>
                         <Button
                             onClick={handleCloseNavMenu}
                             sx={{ my: 2, color: 'white', display: 'block' }}
                         >
-                            <NavLink to='/users' style={{ color: '#f1faee', textDecoration: 'none',padding:'1.5rem' }} className={navData => navData.isActive ? classes.active : null}>Users</NavLink>
+                            <NavLink to='/users' style={{ color: '#f1faee', textDecoration: 'none', padding: '1.5rem' }} className={navData => navData.isActive ? classes.active : null}>Users</NavLink>
                         </Button>
                         <Button
                             onClick={handleCloseNavMenu}
                             sx={{ my: 2, color: 'white', display: 'block' }}
                         >
-                            <NavLink to='/add-place' style={{ color: '#f1faee', textDecoration: 'none',padding:'1.5rem' }} className={navData => navData.isActive ? classes.active : null}>Add Place</NavLink>
+                            <NavLink to='/add-place' style={{ color: '#f1faee', textDecoration: 'none', padding: '1.5rem' }} className={navData => navData.isActive ? classes.active : null}>Add Place</NavLink>
                         </Button>
                     </Box>
 
@@ -202,14 +203,14 @@ const NavBar = () => {
                             onClose={handleCloseUserMenu}
                         >
                             <MenuItem onClick={handleCloseUserMenu}>
-                                    <Link to="/profile" className={classes.Link}><Typography textAlign="center">Profile</Typography></Link>
-                                </MenuItem>
+                                <Link to="/profile" className={classes.Link}><Typography textAlign="center">Profile</Typography></Link>
+                            </MenuItem>
                             <MenuItem onClick={handleCloseUserMenu}>
-                                    <Link to="/account" className={classes.Link}><Typography textAlign="center">Account</Typography></Link>
-                                </MenuItem>
+                                <Link to="/account" className={classes.Link}><Typography textAlign="center">Account</Typography></Link>
+                            </MenuItem>
                             <MenuItem onClick={handleCloseUserMenu}>
-                                    <Link to="/" className={classes.Link}><Typography textAlign="center">Logout</Typography></Link>
-                                </MenuItem>
+                                <Link to="/" className={classes.Link}><Typography textAlign="center">Logout</Typography></Link>
+                            </MenuItem>
                         </Menu>
                     </Box>
                 </Toolbar>

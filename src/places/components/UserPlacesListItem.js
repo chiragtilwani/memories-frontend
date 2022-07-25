@@ -21,6 +21,11 @@ import CloseIcon from "@mui/icons-material/Close";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import { AiOutlineClose } from "react-icons/ai";
+import {Link} from 'react-router-dom'
+// import {DispatchContext} from '../../context/PlaceContext'
+// import {useContext} from 'react'
+import DialogActions from '@mui/material/DialogActions';
+import DialogContentText from '@mui/material/DialogContentText';
 
 const style = {
   position: "absolute",
@@ -90,17 +95,20 @@ const useStyles = makeStyles({
 });
 
 export default function UserPlacesListItem(props) {
-  console.log(props.location)
+  // console.log(props.location)
   const [open, setOpen] = React.useState(false);
   const [modalOpen, setModalOpen] = React.useState(false);
   const handleModalOpen = () => setModalOpen(true);
   const handleModalClose = () => setModalOpen(false);
+  // const {dispatch}=useContext(DispatchContext)
+  const [deleteDialogopen, setDeleteDialogOpen] = React.useState(false);
   const handleClickOpen = () => {
     setOpen(true);
   };
   const handleClose = () => {
     setOpen(false);
   };
+ 
 
   const classes = useStyles();
 
@@ -115,6 +123,9 @@ export default function UserPlacesListItem(props) {
 
   const BootstrapDialogTitle = (props) => {
     const { children, onClose, ...other } = props;
+
+
+    
 
     return (
       <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
@@ -142,8 +153,24 @@ export default function UserPlacesListItem(props) {
     onClose: PropTypes.func.isRequired,
   };
 
+  function handleClick(evt){
+    evt.stopPropagation();
+  }
 
 
+  const handleDeleteDialogOpen = () => {
+    setDeleteDialogOpen(true);
+  };
+  const handleDeleteDialogclose = () => {
+    setDeleteDialogOpen(false);
+  };
+function handleDelete(){
+    handleDeleteDialogclose();
+    // dispatch({type:"remove",id:props.id})
+    props.handleDelete(props.id);
+  }
+
+// console.log(props)
   return (
     <Card sx={{ wordWrap: "break-word" }} className={classes.card}>
       <CardMedia
@@ -174,6 +201,7 @@ export default function UserPlacesListItem(props) {
           >
             <MdLocationOn />
           </IconButton>
+          <Link to={`/${props.id}/update-place`} onClick={handleClick}>
           <IconButton
             aria-label="edit"
             title="Edit place"
@@ -181,10 +209,12 @@ export default function UserPlacesListItem(props) {
           >
             <AiFillEdit />
           </IconButton>
+          </Link>
           <IconButton
             aria-label="delete"
             title="Delete place"
             className={`${classes.deletebtn} ${classes.hover}`}
+            onClick={handleDeleteDialogOpen}
           >
             <MdDelete />
           </IconButton>
@@ -229,6 +259,28 @@ export default function UserPlacesListItem(props) {
           </Box>
         </Modal>
       </div>
+      <Dialog
+        open={deleteDialogopen}
+        onClose={handleDeleteDialogclose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {`Deleting ${props.name}`}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Are you sure you want to delete <strong>{props.name}</strong> memory ?
+            Memory deleted once cannot be recovered. 
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleDeleteDialogclose}>Disagree</Button>
+          <Button onClick={handleDelete} autoFocus>
+            Agree
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Card>
   );
 }

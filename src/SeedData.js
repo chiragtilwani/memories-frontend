@@ -11,35 +11,35 @@ export const placesList = [
         lng:12.3024092,
         lat:76.6473399
     },creatorID:'u3',postDate:'thu Apr 22 2022' },
-    { id: 'p3', name: 'Sri Chamarajendra Zoological Gardens', postedBy: 'sid', description: '157-acre zoo with a lake featuring numerous animals, including exotic species, plus a souvenir shop.', address: 'Zoo Main Road, Indira Nagar, Ittige Gudu, Mysuru, Karnataka 570010', url: "https://lh5.googleusercontent.com/p/AF1QipPz7CtmQJuBJ-cdJZvdkdu9CElPUa4zNt_AmFHA=w408-h306-k-no", liked: false, n_likes: 50,location:{
+    { id: 'p4', name: 'Sri Chamarajendra Zoological Gardens', postedBy: 'sid', description: '157-acre zoo with a lake featuring numerous animals, including exotic species, plus a souvenir shop.', address: 'Zoo Main Road, Indira Nagar, Ittige Gudu, Mysuru, Karnataka 570010', url: "https://lh5.googleusercontent.com/p/AF1QipPz7CtmQJuBJ-cdJZvdkdu9CElPUa4zNt_AmFHA=w408-h306-k-no", liked: false, n_likes: 50,location:{
         lng:12.3024092,
         lat:76.6473399
     },creatorID:'u3',postDate:'thu Apr 22 2022' },
-    { id: 'p3', name: 'Sri Chamarajendra Zoological Gardens', postedBy: 'sid', description: '157-acre zoo with a lake featuring numerous animals, including exotic species, plus a souvenir shop.', address: 'Zoo Main Road, Indira Nagar, Ittige Gudu, Mysuru, Karnataka 570010', url: "https://lh5.googleusercontent.com/p/AF1QipPz7CtmQJuBJ-cdJZvdkdu9CElPUa4zNt_AmFHA=w408-h306-k-no", liked: false, n_likes: 50,location:{
+    { id: 'p5', name: 'Sri Chamarajendra Zoological Gardens', postedBy: 'sid', description: '157-acre zoo with a lake featuring numerous animals, including exotic species, plus a souvenir shop.', address: 'Zoo Main Road, Indira Nagar, Ittige Gudu, Mysuru, Karnataka 570010', url: "https://lh5.googleusercontent.com/p/AF1QipPz7CtmQJuBJ-cdJZvdkdu9CElPUa4zNt_AmFHA=w408-h306-k-no", liked: false, n_likes: 50,location:{
         lng:12.3024092,
         lat:76.6473399
     },creatorID:'u3',postDate:'thu Apr 22 2022' },
-    { id: 'p3', name: 'Sri Chamarajendra Zoological Gardens', postedBy: 'sid', description: '157-acre zoo with a lake featuring numerous animals, including exotic species, plus a souvenir shop.', address: 'Zoo Main Road, Indira Nagar, Ittige Gudu, Mysuru, Karnataka 570010', url: "https://lh5.googleusercontent.com/p/AF1QipPz7CtmQJuBJ-cdJZvdkdu9CElPUa4zNt_AmFHA=w408-h306-k-no", liked: false, n_likes: 50,location:{
+    { id: 'p6', name: 'Sri Chamarajendra Zoological Gardens', postedBy: 'sid', description: '157-acre zoo with a lake featuring numerous animals, including exotic species, plus a souvenir shop.', address: 'Zoo Main Road, Indira Nagar, Ittige Gudu, Mysuru, Karnataka 570010', url: "https://lh5.googleusercontent.com/p/AF1QipPz7CtmQJuBJ-cdJZvdkdu9CElPUa4zNt_AmFHA=w408-h306-k-no", liked: false, n_likes: 50,location:{
         lng:12.3024092,
         lat:76.6473399
     },creatorID:'u3',postDate:'thu Apr 22 2022' },
-    { id: 'p3', name: 'Sri Chamarajendra Zoological Gardens', postedBy: 'sid', description: '157-acre zoo with a lake featuring numerous animals, including exotic species, plus a souvenir shop.', address: 'Zoo Main Road, Indira Nagar, Ittige Gudu, Mysuru, Karnataka 570010', url: "https://lh5.googleusercontent.com/p/AF1QipPz7CtmQJuBJ-cdJZvdkdu9CElPUa4zNt_AmFHA=w408-h306-k-no", liked: false, n_likes: 50,location:{
+    { id: 'p7', name: 'Sri Chamarajendra Zoological Gardens', postedBy: 'sid', description: '157-acre zoo with a lake featuring numerous animals, including exotic species, plus a souvenir shop.', address: 'Zoo Main Road, Indira Nagar, Ittige Gudu, Mysuru, Karnataka 570010', url: "https://lh5.googleusercontent.com/p/AF1QipPz7CtmQJuBJ-cdJZvdkdu9CElPUa4zNt_AmFHA=w408-h306-k-no", liked: false, n_likes: 50,location:{
         lng:12.3024092,
         lat:76.6473399
     },creatorID:'u3',postDate:'thu Apr 22 2022' },
-    { id: 'p3', name: 'Sri Chamarajendra Zoological Gardens', postedBy: 'sid', description: '157-acre zoo with a lake featuring numerous animals, including exotic species, plus a souvenir shop.dfsdafasdfsadfsdafasdgfasdggfhdfghfgdhfgdhfgdhfgdhdfghfdsgfdsgfdgfdsgdfsgfdgfadgfdagfddsfsadfasdgafsdgfdagfadgfdagdfagafdgafdgadfga', address: 'Zoo Main Road, Indira Nagar, Ittige Gudu, Mysuru, Karnataka 570010', url: "https://lh5.googleusercontent.com/p/AF1QipPz7CtmQJuBJ-cdJZvdkdu9CElPUa4zNt_AmFHA=w408-h306-k-no", liked: false, n_likes: 50,location:{
+    { id: 'p8', name: 'Sri Chamarajendra Zoological Gardens', postedBy: 'sid', description: '157-acre zoo with a lake featuring numerous animals, including exotic species, plus a souvenir shop.dfsdafasdfsadfsdafasdgfasdggfhdfghfgdhfgdhfgdhfgdhdfghfdsgfdsgfdgfdsgdfsgfdgfadgfdagfddsfsadfasdgafsdgfdagfadgfdagdfagafdgafdgadfga', address: 'Zoo Main Road, Indira Nagar, Ittige Gudu, Mysuru, Karnataka 570010', url: "https://lh5.googleusercontent.com/p/AF1QipPz7CtmQJuBJ-cdJZvdkdu9CElPUa4zNt_AmFHA=w408-h306-k-no", liked: false, n_likes: 50,location:{
         lng:12.3024092,
         lat:76.6473399
     },creatorID:'u3',postDate:'thu Apr 22 2022' },
-    { id: 'p3', name: 'Sri Chamarajendra Zoological Gardens', postedBy: 'sid', description: '157-acre zoo with a lake featuring numerous animals, including exotic species, plus a souvenir shop.dfsdafasdfsadfsdafasdgfasdggfhdfghfgdhfgdhfgdhfgdhdfghfdsgfdsgfdgfdsgdfsgfdgfadgfdagfddsfsadfasdgafsdgfdagfadgfdagdfagafdgafdgadfga', address: 'Zoo Main Road, Indira Nagar, Ittige Gudu, Mysuru, Karnataka 570010', url: "https://lh5.googleusercontent.com/p/AF1QipPz7CtmQJuBJ-cdJZvdkdu9CElPUa4zNt_AmFHA=w408-h306-k-no", liked: false, n_likes: 50,location:{
+    { id: 'p9', name: 'Sri Chamarajendra Zoological Gardens', postedBy: 'sid', description: '157-acre zoo with a lake featuring numerous animals, including exotic species, plus a souvenir shop.dfsdafasdfsadfsdafasdgfasdggfhdfghfgdhfgdhfgdhfgdhdfghfdsgfdsgfdgfdsgdfsgfdgfadgfdagfddsfsadfasdgafsdgfdagfadgfdagdfagafdgafdgadfga', address: 'Zoo Main Road, Indira Nagar, Ittige Gudu, Mysuru, Karnataka 570010', url: "https://lh5.googleusercontent.com/p/AF1QipPz7CtmQJuBJ-cdJZvdkdu9CElPUa4zNt_AmFHA=w408-h306-k-no", liked: false, n_likes: 50,location:{
         lng:12.3024092,
         lat:76.6473399
     },creatorID:'u3',postDate:'thu Apr 22 2022' },
-    { id: 'p3', name: 'Sri Chamarajendra Zoological Gardens', postedBy: 'sid', description: '157-acre zoo with a lake featuring numerous animals, including exotic species, plus a souvenir shop.dfsdafasdfsadfsdafasdgfasdggfhdfghfgdhfgdhfgdhfgdhdfghfdsgfdsgfdgfdsgdfsgfdgfadgfdagfddsfsadfasdgafsdgfdagfadgfdagdfagafdgafdgadfga', address: 'Zoo Main Road, Indira Nagar, Ittige Gudu, Mysuru, Karnataka 570010', url: "https://lh5.googleusercontent.com/p/AF1QipPz7CtmQJuBJ-cdJZvdkdu9CElPUa4zNt_AmFHA=w408-h306-k-no", liked: false, n_likes: 50,location:{
+    { id: 'p10', name: 'Sri Chamarajendra Zoological Gardens', postedBy: 'sid', description: '157-acre zoo with a lake featuring numerous animals, including exotic species, plus a souvenir shop.dfsdafasdfsadfsdafasdgfasdggfhdfghfgdhfgdhfgdhfgdhdfghfdsgfdsgfdgfdsgdfsgfdgfadgfdagfddsfsadfasdgafsdgfdagfadgfdagdfagafdgafdgadfga', address: 'Zoo Main Road, Indira Nagar, Ittige Gudu, Mysuru, Karnataka 570010', url: "https://lh5.googleusercontent.com/p/AF1QipPz7CtmQJuBJ-cdJZvdkdu9CElPUa4zNt_AmFHA=w408-h306-k-no", liked: false, n_likes: 50,location:{
         lng:12.3024092,
         lat:76.6473399
     },creatorID:'u3',postDate:'thu Apr 22 2022' },
-    { id: 'p3', name: 'Sri Chamarajendra Zoological Gardens', postedBy: 'sid', description: '157-acre zoo with a lake featuring numerous animals, including exotic species, plus a souvenir shop.dfsdafasdfsadfsdafasdgfasdggfhdfghfgdhfgdhfgdhfgdhdfghfdsgfdsgfdgfdsgdfsgfdgfadgfdagfddsfsadfasdgafsdgfdagfadgfdagdfagafdgafdgadfga', address: 'Zoo Main Road, Indira Nagar, Ittige Gudu, Mysuru, Karnataka 570010', url: "https://lh5.googleusercontent.com/p/AF1QipPz7CtmQJuBJ-cdJZvdkdu9CElPUa4zNt_AmFHA=w408-h306-k-no", liked: false, n_likes: 50,location:{
+    { id: 'p11', name: 'Sri Chamarajendra Zoological Gardens', postedBy: 'sid', description: '157-acre zoo with a lake featuring numerous animals, including exotic species, plus a souvenir shop.dfsdafasdfsadfsdafasdgfasdggfhdfghfgdhfgdhfgdhfgdhdfghfdsgfdsgfdgfdsgdfsgfdgfadgfdagfddsfsadfasdgafsdgfdagfadgfdagdfagafdgafdgadfga', address: 'Zoo Main Road, Indira Nagar, Ittige Gudu, Mysuru, Karnataka 570010', url: "https://lh5.googleusercontent.com/p/AF1QipPz7CtmQJuBJ-cdJZvdkdu9CElPUa4zNt_AmFHA=w408-h306-k-no", liked: false, n_likes: 50,location:{
         lng:12.3024092,
         lat:76.6473399
     },creatorID:'u3',postDate:'thu Apr 22 2022' },
