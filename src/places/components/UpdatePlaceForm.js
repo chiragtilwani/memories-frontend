@@ -115,9 +115,7 @@ const useStyles = makeStyles({
 export default function NewPlaceForm() {
   let { pid } = useParams();
   const placesListState = useContext(PlaceContext);
-  // console.log(placesListState)
   const [foundPlace] = placesListState.filter((place) => pid === place.id);
-  // console.log(foundPlace);
   const initialValues = {
     name: foundPlace.name,
     description: foundPlace.description,

@@ -205,7 +205,7 @@ function Place(props) {
             <div>
               <IconButton
                 aria-label="add to favorites"
-                title="Like"
+                title="Like memory"
                 className={`${classes.likebtn} ${classes.hover}`}
               >
                 <FavoriteIcon />
@@ -220,7 +220,7 @@ function Place(props) {
               <Link to={`/${props.id}/update-place`} onClick={handleClick}>
                 <IconButton
                   aria-label="edit"
-                  title="Edit place"
+                  title="Edit memory"
                   className={`${classes.editbtn} ${classes.hover}`}
                 >
                   <AiFillEdit />
@@ -228,7 +228,7 @@ function Place(props) {
               </Link>
               <IconButton
                 aria-label="delete"
-                title="Delete place"
+                title="Delete memory"
                 className={`${classes.deletebtn} ${classes.hover}`}
                 onClick={handleClickOpen}
               >

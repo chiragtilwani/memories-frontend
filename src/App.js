@@ -7,6 +7,8 @@ import UserPlaces from './places/pages/UserPlaces'
 import NewPlace from './places/pages/NewPlace'
 import UpdatePlaces from './places/pages/UpdatePlaces'
 import { PlaceProvider } from './context/PlaceContext'
+import Login from './users/pages/Login'
+import Signup from './users/pages/Signup'
 
 function App() {
   return (
@@ -14,12 +16,13 @@ function App() {
       <NavBar />
       <PlaceProvider>
         <Routes>
-
           <Route path="/" element={<AllPlaces />} />
           <Route path="/users" element={<AllUsers />} />
           <Route path="/:uid/places" element={<UserPlaces />} />
           <Route path="/add-place" element={<NewPlace />} />
           <Route path="/:pid/update-place" element={<UpdatePlaces />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/signup' element={<Signup />} />
         </Routes>
       </PlaceProvider>
     </div>

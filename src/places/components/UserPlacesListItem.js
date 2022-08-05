@@ -95,7 +95,6 @@ const useStyles = makeStyles({
 });
 
 export default function UserPlacesListItem(props) {
-  // console.log(props.location)
   const [open, setOpen] = React.useState(false);
   const [modalOpen, setModalOpen] = React.useState(false);
   const handleModalOpen = () => setModalOpen(true);
@@ -166,11 +165,9 @@ export default function UserPlacesListItem(props) {
   };
 function handleDelete(){
     handleDeleteDialogclose();
-    // dispatch({type:"remove",id:props.id})
     props.handleDelete(props.id);
   }
 
-// console.log(props)
   return (
     <Card sx={{ wordWrap: "break-word" }} className={classes.card}>
       <CardMedia
@@ -188,7 +185,7 @@ function handleDelete(){
         <div>
           <IconButton
             aria-label="add to favorites"
-            title="Like"
+            title="Like memory"
             className={`${classes.likebtn} ${classes.hover}`}
           >
             <FavoriteIcon />
@@ -204,7 +201,7 @@ function handleDelete(){
           <Link to={`/${props.id}/update-place`} onClick={handleClick}>
           <IconButton
             aria-label="edit"
-            title="Edit place"
+            title="Edit memory"
             className={`${classes.editbtn} ${classes.hover}`}
           >
             <AiFillEdit />
@@ -212,7 +209,7 @@ function handleDelete(){
           </Link>
           <IconButton
             aria-label="delete"
-            title="Delete place"
+            title="Delete memory"
             className={`${classes.deletebtn} ${classes.hover}`}
             onClick={handleDeleteDialogOpen}
           >

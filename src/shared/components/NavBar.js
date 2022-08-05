@@ -209,6 +209,12 @@ const NavBar = () => {
                                 <Link to="/account" className={classes.Link}><Typography textAlign="center">Account</Typography></Link>
                             </MenuItem>
                             <MenuItem onClick={handleCloseUserMenu}>
+                                <Link to="/login" className={classes.Link}><Typography textAlign="center">Login</Typography></Link>
+                            </MenuItem>
+                            <MenuItem onClick={handleCloseUserMenu}>
+                                <Link to="/" className={classes.Link}><Typography textAlign="center">Signup</Typography></Link>
+                            </MenuItem>
+                            <MenuItem onClick={handleCloseUserMenu}>
                                 <Link to="/" className={classes.Link}><Typography textAlign="center">Logout</Typography></Link>
                             </MenuItem>
                         </Menu>
