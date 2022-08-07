@@ -1,5 +1,8 @@
 import NewPlaceForm from '../components/NewPlaceForm'
-import {makeStyles} from '@mui/styles'
+import { makeStyles } from '@mui/styles'
+import { useContext} from 'react'
+import { DispatchContext } from '../../context/UserContext'
+import {Navigate} from 'react-router-dom'
 
 const useStyles = makeStyles({
     container: {
@@ -9,11 +12,17 @@ const useStyles = makeStyles({
     }
 })
 
-function NewPlace(){
-    const classes=useStyles()
-    return <div className={classes.container}>
-        <NewPlaceForm/>
-    </div>
+function NewPlace() {
+    const classes = useStyles()
+    // const navigate = useNavigate()
+    const { isLoggedIn } = useContext(DispatchContext)
+    if (isLoggedIn) {
+        return <div className={classes.container}>
+            <NewPlaceForm />
+        </div>
+    }else{
+       return <Navigate to='/login'/>
+    }
 }
 
 export default NewPlace

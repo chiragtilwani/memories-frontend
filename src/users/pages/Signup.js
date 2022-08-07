@@ -1,10 +1,11 @@
 import { makeStyles } from '@mui/styles'
 import loginSvg from '../../images/login.webp'
-import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
-import { useEffect, useState } from 'react'
-import { users } from '../../SeedData'
+import { useState } from 'react'
 import Button from '@mui/material/Button';
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
+import { DispatchContext } from '../../context/UserContext';
+import {useContext} from 'react'
 
 const useStyles = makeStyles({
     container: {
@@ -14,11 +15,14 @@ const useStyles = makeStyles({
     left: {
         width: '50%',
         height: '100vh',
+        backgroundColor: "rgb(25 118 210 / 12%)",
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     right: {
         width: '50%',
         height: '100vh',
-        border: ".2rem solid red",
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -28,7 +32,6 @@ const useStyles = makeStyles({
         height: '100%',
     },
     form: {
-        // border: '1rem solid red',
         width: "100%",
         height: "60%",
         display: 'flex',
@@ -40,9 +43,12 @@ const useStyles = makeStyles({
         width: '60%',
         height: '3rem',
         marginBottom: "3rem",
-        paddingLeft:'1rem',
+        paddingLeft: '1rem',
         '&::placeholder': {
-            color:'grey',
+            color: 'grey',
+        },
+        '&:focus':{
+            borderColor:'rgb(25 118 210 / 12%)'
         }
     },
 })
@@ -58,13 +64,13 @@ function Login() {
     }
 
     const [initialVal, setInitialVal] = useState(initialValues)
-    useEffect(() => {
-        ValidatorForm.addValidationRule('isUniqueEmail', (value) => users.every(user => user.email !== value));
-    })
 
+    const {login}=useContext(DispatchContext)
+    const navigate = useNavigate()
     function handleSubmit(evt) {
         evt.preventDefault();
-        console.log(initialVal)
+        login();
+        navigate('/')
     }
     function handleChange(evt) {
         setInitialVal({ ...initialVal, [evt.target.name]: evt.target.value })
@@ -77,6 +83,20 @@ function Login() {
                     onSubmit={handleSubmit}
                     className={classes.form}
                 >
+                        <input type="text"
+                            placeholder="First Name..."
+                            onChange={handleChange}
+                            name="email"
+                            value={initialVal.email}
+                            className={classes.input}
+                        />
+                        <input type="email"
+                            placeholder="Last Name..."
+                            onChange={handleChange}
+                            name="email"
+                            value={initialVal.email}
+                            className={classes.input}
+                        />
                     <input type="email"
                         placeholder="Email..."
                         onChange={handleChange}
@@ -91,8 +111,15 @@ function Login() {
                         value={initialVal.password}
                         className={classes.input}
                     />
-                    <Button type="submit" variant="contained" style={{width:"20%",letterSpacing:'.1rem',height:'3.5rem',fontSize:'1.2rem'}}>Submit</Button>
-                    <p style={{fontWeight:'600',marginTop:'1.5rem'}}>Already have an account ? <Link to='/login'>Login</Link></p>
+                    <input type="password"
+                        placeholder="Confirm Password..."
+                        onChange={handleChange}
+                        name="cpassword"
+                        value={initialVal.cpassword}
+                        className={classes.input}
+                    />
+                    <Button type="submit" variant="contained" style={{ width: "20%", letterSpacing: '.1rem', height: '3.5rem', fontSize: '1.2rem' }}>Signup</Button>
+                    <p style={{ fontWeight: '600', marginTop: '1.5rem' }}>Already have an account ? <Link to='/login'>Login</Link></p>
                 </form>
             </div>
             <div className={classes.right}>

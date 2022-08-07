@@ -14,7 +14,9 @@ import MenuItem from '@mui/material/MenuItem';
 import { GiRiver } from 'react-icons/gi'
 import Sizes from '../../styles/Sizes'
 import { makeStyles } from '@mui/styles'
-import { NavLink, Link } from 'react-router-dom'
+import { NavLink, Link,useNavigate } from 'react-router-dom'
+import {DispatchContext} from '../../context/UserContext'
+import {useContext} from 'react'
 
 
 const useStyles = makeStyles({
@@ -60,6 +62,10 @@ const NavBar = () => {
 
     const classes = useStyles()
 
+    const navigate=useNavigate()
+
+    const {isLoggedIn,logout}=useContext(DispatchContext);
+
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
     };
@@ -75,6 +81,10 @@ const NavBar = () => {
         setAnchorElUser(null);
     };
 
+    function handleLogout(){
+        logout();
+        navigate('/')
+    }
     return (
         <AppBar position="sticky">
             <Container maxWidth="xxl">
@@ -202,21 +212,18 @@ const NavBar = () => {
                             open={Boolean(anchorElUser)}
                             onClose={handleCloseUserMenu}
                         >
-                            <MenuItem onClick={handleCloseUserMenu}>
+                            {isLoggedIn&&<MenuItem onClick={handleCloseUserMenu}>
                                 <Link to="/profile" className={classes.Link}><Typography textAlign="center">Profile</Typography></Link>
-                            </MenuItem>
-                            <MenuItem onClick={handleCloseUserMenu}>
-                                <Link to="/account" className={classes.Link}><Typography textAlign="center">Account</Typography></Link>
-                            </MenuItem>
-                            <MenuItem onClick={handleCloseUserMenu}>
+                            </MenuItem>}
+                            {!isLoggedIn&&<MenuItem onClick={handleCloseUserMenu}>
                                 <Link to="/login" className={classes.Link}><Typography textAlign="center">Login</Typography></Link>
-                            </MenuItem>
-                            <MenuItem onClick={handleCloseUserMenu}>
-                                <Link to="/" className={classes.Link}><Typography textAlign="center">Signup</Typography></Link>
-                            </MenuItem>
-                            <MenuItem onClick={handleCloseUserMenu}>
-                                <Link to="/" className={classes.Link}><Typography textAlign="center">Logout</Typography></Link>
-                            </MenuItem>
+                            </MenuItem>}
+                            {!isLoggedIn&&<MenuItem onClick={handleCloseUserMenu}>
+                                <Link to="/signup" className={classes.Link}><Typography textAlign="center">Signup</Typography></Link>
+                            </MenuItem>}
+                            {isLoggedIn&&<MenuItem onClick={handleCloseUserMenu}>
+                                <Link to="" className={classes.Link} onClick={handleLogout}><Typography textAlign="center">Logout</Typography></Link>
+                            </MenuItem>}
                         </Menu>
                     </Box>
                 </Toolbar>

@@ -7,23 +7,28 @@ import UserPlaces from './places/pages/UserPlaces'
 import NewPlace from './places/pages/NewPlace'
 import UpdatePlaces from './places/pages/UpdatePlaces'
 import { PlaceProvider } from './context/PlaceContext'
+import { UserProvider } from './context/UserContext'
 import Login from './users/pages/Login'
 import Signup from './users/pages/Signup'
+import Profile from './users/pages/Profile'
 
 function App() {
   return (
     <div className="App">
-      <NavBar />
       <PlaceProvider>
-        <Routes>
-          <Route path="/" element={<AllPlaces />} />
-          <Route path="/users" element={<AllUsers />} />
-          <Route path="/:uid/places" element={<UserPlaces />} />
-          <Route path="/add-place" element={<NewPlace />} />
-          <Route path="/:pid/update-place" element={<UpdatePlaces />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/signup' element={<Signup />} />
-        </Routes>
+        <UserProvider>
+          <NavBar />
+          <Routes>
+            <Route path="/" element={<AllPlaces />} />
+            <Route path="/users" element={<AllUsers />} />
+            <Route path="/:uid/places" element={<UserPlaces />} />
+            <Route path="/add-place" element={<NewPlace />} />
+            <Route path="/:pid/update-place" element={<UpdatePlaces />} />
+            <Route path='/login' element={<Login />} />
+            <Route path='/signup' element={<Signup />} />
+            <Route path='/profile' element={<Profile />} />
+          </Routes>
+        </UserProvider>
       </PlaceProvider>
     </div>
   );

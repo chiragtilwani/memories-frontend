@@ -1,10 +1,10 @@
 import { makeStyles } from '@mui/styles'
 import loginSvg from '../../images/login.webp'
-import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
-import { useEffect, useState } from 'react'
-import { users } from '../../SeedData'
+import { useState,useContext } from 'react'
 import Button from '@mui/material/Button';
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
+import { DispatchContext } from '../../context/UserContext';
+import {useNavigate} from 'react-router-dom'
 
 const useStyles = makeStyles({
     container: {
@@ -18,17 +18,16 @@ const useStyles = makeStyles({
     right: {
         width: '50%',
         height: '100vh',
-        border: ".2rem solid red",
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
+        backgroundColor: "rgb(25 118 210 / 12%)"
     },
     img: {
         width: '100%',
         height: '100%',
     },
     form: {
-        // border: '1rem solid red',
         width: "100%",
         height: "60%",
         display: 'flex',
@@ -40,9 +39,9 @@ const useStyles = makeStyles({
         width: '60%',
         height: '3rem',
         marginBottom: "3rem",
-        paddingLeft:'1rem',
+        paddingLeft: '1rem',
         '&::placeholder': {
-            color:'grey',
+            color: 'grey',
         }
     },
 })
@@ -50,6 +49,8 @@ const useStyles = makeStyles({
 function Login() {
     const classes = useStyles()
 
+    const {login}=useContext(DispatchContext)
+    const navigate=useNavigate()
     const initialValues = {
         name: '',
         email: '',
@@ -58,13 +59,11 @@ function Login() {
     }
 
     const [initialVal, setInitialVal] = useState(initialValues)
-    useEffect(() => {
-        ValidatorForm.addValidationRule('isUniqueEmail', (value) => users.every(user => user.email !== value));
-    })
 
     function handleSubmit(evt) {
         evt.preventDefault();
-        console.log(initialVal)
+        login()
+        navigate('/')
     }
     function handleChange(evt) {
         setInitialVal({ ...initialVal, [evt.target.name]: evt.target.value })
@@ -86,6 +85,7 @@ function Login() {
                         name="email"
                         value={initialVal.email}
                         className={classes.input}
+                        required
                     />
                     <input type="password"
                         placeholder="Password..."
@@ -93,9 +93,10 @@ function Login() {
                         name="password"
                         value={initialVal.password}
                         className={classes.input}
+                        required
                     />
-                    <Button type="submit" variant="contained" style={{width:"20%",letterSpacing:'.1rem',height:'3.5rem',fontSize:'1.2rem'}}>Submit</Button>
-                    <p style={{fontWeight:'600',marginTop:'1.5rem'}}>Do not have an account ? <Link to='/signup'>Signup</Link></p>
+                    <Button type="submit" variant="contained" style={{ width: "20%", letterSpacing: '.1rem', height: '3.5rem', fontSize: '1.2rem' }}>login</Button>
+                    <p style={{ fontWeight: '600', marginTop: '1.5rem' }}>Do not have an account ? <Link to='/signup'>Signup</Link></p>
                 </form>
             </div>
         </div>

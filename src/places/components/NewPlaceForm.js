@@ -169,7 +169,6 @@ export default function NewPlaceForm() {
   }
 
   function handleSubmit(evt) {
-    // will connect this to BACKEND later
     evt.preventDefault()
     let date = new Date();
     let dateToday = `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`
