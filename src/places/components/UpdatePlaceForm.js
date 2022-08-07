@@ -8,15 +8,24 @@ import { DispatchContext } from "../../context/PlaceContext";
 import { PlaceContext } from "../../context/PlaceContext";
 import useToggler from "../../customHooks/useToggler";
 import Sizes from "../../styles/Sizes";
-// import { v4 as uuidv4 } from "uuid";
 import { useNavigate, useParams } from "react-router-dom";
 import Backdrop from "@mui/material/Backdrop";
 import { BiImageAdd } from "react-icons/bi";
 
 const useStyles = makeStyles({
+  container:{
+    display:'flex',
+    width:'100%',
+    [Sizes.down("md")]: {
+      flexDirection:'column',
+    },
+  },
   sections: {
     width: "50%",
     height: "100vh",
+    [Sizes.down("md")]: {
+      width: "100%",
+    },
   },
   img: {
     width: "100%",
@@ -31,6 +40,7 @@ const useStyles = makeStyles({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    position:'relative'
   },
   right: {
     backgroundColor: "rgb(25 118 210 / 12%) !important",
@@ -94,7 +104,12 @@ const useStyles = makeStyles({
     fontSize: "2rem !important",
   },
   backdrop: {
-    display: "none",
+    width:'50%',
+    height:'100%',
+    position:'absolute !important',
+    [Sizes.down('md')]:{
+      width:'100%',
+    }
   },
   leftImgUpload: {
     fontSize: "3rem",
@@ -173,7 +188,7 @@ export default function NewPlaceForm() {
   };
 
   return (
-    <>
+    <div className={classes.container}>
       <div className={`${classes.left} ${classes.sections}`}>
         <img
           src={isImgSelected ? url : ""}
@@ -187,10 +202,9 @@ export default function NewPlaceForm() {
           open={open}
           onMouseLeave={handleClose}
           style={{
-            width: "50%",
-            height: "100%",
             display: isImgSelected ? "" : "none",
           }}
+          className={classes.backdrop}
         >
           <Button
             variant="contained"
@@ -277,6 +291,6 @@ export default function NewPlaceForm() {
           </Button>
         </form>
       </div>
-    </>
+    </div>
   );
 }

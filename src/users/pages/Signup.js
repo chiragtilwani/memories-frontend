@@ -6,11 +6,14 @@ import { Link } from 'react-router-dom'
 import {useNavigate} from 'react-router-dom'
 import { DispatchContext } from '../../context/UserContext';
 import {useContext} from 'react'
-
+import Sizes from '../../styles/Sizes'
 const useStyles = makeStyles({
     container: {
         display: 'flex',
         flexDirection: 'row',
+        [Sizes.down('md')]:{
+            flexDirection: 'column',
+        }
     },
     left: {
         width: '50%',
@@ -19,6 +22,9 @@ const useStyles = makeStyles({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
+        [Sizes.down('md')]:{
+            width: '100%'
+        }
     },
     right: {
         width: '50%',
@@ -26,6 +32,9 @@ const useStyles = makeStyles({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
+        [Sizes.down('md')]:{
+            display: 'none'
+        }
     },
     img: {
         width: '100%',

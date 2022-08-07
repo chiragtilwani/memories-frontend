@@ -5,15 +5,22 @@ import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom'
 import { DispatchContext } from '../../context/UserContext';
 import {useNavigate} from 'react-router-dom'
+import Sizes from '../../styles/Sizes'
 
 const useStyles = makeStyles({
     container: {
         display: 'flex',
         flexDirection: 'row',
+        [Sizes.down('md')]:{
+            flexDirection: 'column',
+        }
     },
     left: {
         width: '50%',
         height: '100vh',
+        [Sizes.down('md')]:{
+           display: 'none',
+        }
     },
     right: {
         width: '50%',
@@ -21,7 +28,10 @@ const useStyles = makeStyles({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: "rgb(25 118 210 / 12%)"
+        backgroundColor: "rgb(25 118 210 / 12%)",
+        [Sizes.down('md')]:{
+            width:'100%'
+        }
     },
     img: {
         width: '100%',
