@@ -11,7 +11,6 @@ import Sizes from "../../styles/Sizes";
 import CardActions from "@mui/material/CardActions";
 import IconButton from "@mui/material/IconButton";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import { MdLocationOn } from "react-icons/md";
 import { AiFillEdit } from "react-icons/ai";
 import { MdDelete } from "react-icons/md";
 import {Link} from 'react-router-dom'
@@ -209,13 +208,6 @@ function Place(props) {
                 className={`${classes.likebtn} ${classes.hover}`}
               >
                 <FavoriteIcon />
-              </IconButton>
-              <IconButton
-                aria-label="location"
-                title="View on map"
-                className={`${classes.locationbtn} ${classes.hover}`}
-              >
-                <MdLocationOn />
               </IconButton>
               <Link to={`/${props.id}/update-place`} onClick={handleClick}>
                 <IconButton

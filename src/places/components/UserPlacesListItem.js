@@ -9,7 +9,6 @@ import CardActions from "@mui/material/CardActions";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import { MdLocationOn } from "react-icons/md";
 import { AiFillEdit } from "react-icons/ai";
 import { MdDelete } from "react-icons/md";
 import PropTypes from "prop-types";
@@ -18,26 +17,10 @@ import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import CloseIcon from "@mui/icons-material/Close";
-import Box from "@mui/material/Box";
-import Modal from "@mui/material/Modal";
-import { AiOutlineClose } from "react-icons/ai";
 import {Link} from 'react-router-dom'
-// import {DispatchContext} from '../../context/PlaceContext'
-// import {useContext} from 'react'
 import DialogActions from '@mui/material/DialogActions';
 import DialogContentText from '@mui/material/DialogContentText';
 
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
 
 const useStyles = makeStyles({
   span: {
@@ -96,10 +79,6 @@ const useStyles = makeStyles({
 
 export default function UserPlacesListItem(props) {
   const [open, setOpen] = React.useState(false);
-  const [modalOpen, setModalOpen] = React.useState(false);
-  const handleModalOpen = () => setModalOpen(true);
-  const handleModalClose = () => setModalOpen(false);
-  // const {dispatch}=useContext(DispatchContext)
   const [deleteDialogopen, setDeleteDialogOpen] = React.useState(false);
   const handleClickOpen = () => {
     setOpen(true);
@@ -167,7 +146,7 @@ function handleDelete(){
     handleDeleteDialogclose();
     props.handleDelete(props.id);
   }
-
+console.log(props)
   return (
     <Card sx={{ wordWrap: "break-word" }} className={classes.card}>
       <CardMedia
@@ -189,14 +168,6 @@ function handleDelete(){
             className={`${classes.likebtn} ${classes.hover}`}
           >
             <FavoriteIcon />
-          </IconButton>
-          <IconButton
-            aria-label="location"
-            title="View on map"
-            className={`${classes.locationbtn} ${classes.hover}`}
-            onClick={handleModalOpen}
-          >
-            <MdLocationOn />
           </IconButton>
           <Link to={`/${props.id}/update-place`} onClick={handleClick}>
           <IconButton
@@ -237,24 +208,6 @@ function handleDelete(){
             </Typography>
           </DialogContent>
         </BootstrapDialog>
-      </div>
-      <div>
-        <Modal
-          open={modalOpen}
-          onClose={handleModalClose}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box sx={style}>
-            <AiOutlineClose
-              className={classes.close}
-              onClick={handleModalClose}
-            />
-            <Typography id="modal-modal-title" variant="h6" component="h2">
-              {props.name}
-            </Typography>
-          </Box>
-        </Modal>
       </div>
       <Dialog
         open={deleteDialogopen}
