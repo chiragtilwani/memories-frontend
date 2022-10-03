@@ -23,13 +23,14 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
+
 const useStyles = makeStyles({
   container: {
     width: "100%",
-    margin: "auto",
+    
     display: "flex",
     alignItems: "center",
-    justifyContent: "center",
+    
     [Sizes.down("sm")]: {
       width: "90%",
       flexDirection: "column",
@@ -37,6 +38,7 @@ const useStyles = makeStyles({
     },
   },
   card: {
+    
     [Sizes.down("md")]: {
       width: "70%",
       maxWidth: "100% !important",
@@ -65,7 +67,7 @@ const useStyles = makeStyles({
     height: "3.3rem",
   },
   box: {
-    width: "70%",
+    minWidth: "70%",
     height: "20rem",
     marginRight: "1rem",
     [Sizes.down("md")]: {
@@ -80,7 +82,8 @@ const useStyles = makeStyles({
   },
   paper: {
     margin: "0rem !important",
-    width: "100% !important",
+    maxWidth: "100% !important",
+    
     padding: "2rem",
     fontSize: "1.5rem !important",
     overflowY: "scroll",
@@ -144,6 +147,9 @@ const useStyles = makeStyles({
     color: "--var(grey-text)",
     marginRight: ".5rem",
   },
+  liked:{
+    width:'1.5rem'
+  }
 });
 
 function Place(props) {
@@ -167,19 +173,27 @@ function Place(props) {
     handleClose()
     dispatch({type:"remove",id:props.id})
   }
+
+  function handleLikeBtnClick(){
+    let editedPlace={...props,liked:!props.liked,n_likes:props.liked?props.n_likes-1:props.n_likes+1}
+    dispatch({type:"edit",id:props.id,editedPlace:editedPlace})
+    console.log(props)
+  }
   return (
     
     <div className={classes.container}>
       <Card
         sx={{
-          width: "30rem",
-          maxWidth: 345,
+          
+          minWidth: '30%',
           display: "inline-block",
           margin: "2rem",
         }}
         className={classes.card}
+        
       >
-        <CardActionArea>
+        <CardActionArea disableRipple="true"
+        disableTouchRipple="true">
           <CardMedia
             component="img"
             height="140"
@@ -202,13 +216,15 @@ function Place(props) {
           </CardContent>
           <CardActions disableSpacing className={classes.cardActions}>
             <div>
-              <IconButton
-                aria-label="add to favorites"
+            <IconButton
+                onClick={handleLikeBtnClick}
                 title="Like memory"
                 className={`${classes.likebtn} ${classes.hover}`}
+                style={{color:props.liked?'red':'' }}
               >
                 <FavoriteIcon />
               </IconButton>
+              
               <Link to={`/${props.id}/update-place`} onClick={handleClick}>
                 <IconButton
                   aria-label="edit"
@@ -259,7 +275,7 @@ function Place(props) {
           flexWrap: "wrap",
           "& > :not(style)": {
             m: 1,
-            width: 128,
+            minWidth: '70%',
             height: 150,
           },
         }}

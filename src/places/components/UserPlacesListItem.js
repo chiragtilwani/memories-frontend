@@ -163,9 +163,10 @@ console.log(props)
       <CardActions disableSpacing className={classes.cardActions}>
         <div>
           <IconButton
-            aria-label="add to favorites"
+            
             title="Like memory"
             className={`${classes.likebtn} ${classes.hover}`}
+            style={{color:props.liked?'red':'' }}
           >
             <FavoriteIcon />
           </IconButton>
