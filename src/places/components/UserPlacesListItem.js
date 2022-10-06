@@ -44,6 +44,11 @@ const useStyles = makeStyles({
   hover: {
     "&:hover": {
       transform: "scale(1.5)",
+      transition: "all 0.1s"
+    },
+    "&:active": {
+      transform: "scale(.8)",
+      transition: "all 0.1s"
     },
   },
   likebtn: {
@@ -146,7 +151,6 @@ function handleDelete(){
     handleDeleteDialogclose();
     props.handleDelete(props.id);
   }
-console.log(props)
   return (
     <Card sx={{ wordWrap: "break-word" }} className={classes.card}>
       <CardMedia

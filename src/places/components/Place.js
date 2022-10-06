@@ -118,9 +118,15 @@ const useStyles = makeStyles({
     justifyContent: "space-between !important",
   },
   hover: {
+    transform: "scale(1)",
     "&:hover": {
+      transition:'all .1s',
       transform: "scale(1.5)",
     },
+    "&:active":{
+      transition:'all .1s',
+      transform: "scale(.8)"
+    }
   },
   likebtn: {
     "&:hover": {
@@ -177,7 +183,6 @@ function Place(props) {
   function handleLikeBtnClick(){
     let editedPlace={...props,liked:!props.liked,n_likes:props.liked?props.n_likes-1:props.n_likes+1}
     dispatch({type:"edit",id:props.id,editedPlace:editedPlace})
-    console.log(props)
   }
   return (
     
