@@ -166,14 +166,6 @@ function handleDelete(){
       </CardContent>
       <CardActions disableSpacing className={classes.cardActions}>
         <div>
-          <IconButton
-            
-            title="Like memory"
-            className={`${classes.likebtn} ${classes.hover}`}
-            style={{color:props.liked?'red':'' }}
-          >
-            <FavoriteIcon />
-          </IconButton>
           <Link to={`/${props.id}/update-place`} onClick={handleClick}>
           <IconButton
             aria-label="edit"

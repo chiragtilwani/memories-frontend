@@ -31,7 +31,6 @@ function AllUsers() {
                 setIsLoading(true)
                 const response = await fetch('http://localhost:5000/api/users/')
                 const responseData = await response.json()
-                console.log(responseData.users)
                 if (!response.ok) {
                     throw new Error(responseData.message)
                 }
@@ -44,6 +43,7 @@ function AllUsers() {
         }
         sendRequest()
     }, [])
+    
 
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {

@@ -108,11 +108,10 @@ function Login() {
                 )
             })
             const responseData = await response.json()
-            console.log(responseData)
             if (!response.ok) {
                 throw new Error(responseData.message)
             }
-            login()
+            login(responseData.userFound._id)
             setIsLoading(false)
             navigate('/users')
         } catch (err) {

@@ -122,13 +122,12 @@ function Login() {
                 setError(responseData.message)
                 throw new Error(responseData.message)
             }
-            login();
+            login(responseData._id);
             navigate('/users')
             setIsLoading(false)
         } catch (err) {
             setIsLoading(false)
             setError(err.message || 'Something went wrong,Please try again.')
-            console.log(error)
         }
 
     }
@@ -202,6 +201,7 @@ function Login() {
                     <img className={classes.img} src={loginSvg} alt="" />
                 </div>
                 {error ? <Snackbar
+                
                     style={{ position: 'absolute' }}
                     open={error}
                     autoHideDuration={6000}

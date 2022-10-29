@@ -2,10 +2,12 @@ import { makeStyles } from "@mui/styles";
 import UserPlacesListItem from "./UserPlacesListItem";
 import placesNotFound from "../../images/placesNotFound.webp";
 import Sizes from "../../styles/Sizes";
-import { PlaceContext } from "../../context/PlaceContext";
-import { UserContext } from "../../context/UserContext";
 import { DispatchContext } from "../../context/PlaceContext";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
+import axios from 'axios'
+
 
 const useStyles = makeStyles({
   userInfo: {
@@ -64,10 +66,10 @@ const useStyles = makeStyles({
     justifyContent: "center",
     flexDirection: "column",
   },
-  h1:{
-    fontSize:'5rem',
+  h1: {
+    fontSize: '5rem',
     color: '#5801ae',
-    margin:'0rem'
+    margin: '0rem'
   },
   container: {
     width: "100%",
@@ -83,64 +85,83 @@ const useStyles = makeStyles({
       gridTemplateColumns: "repeat(1,1fr)",
     },
   },
+  loader: {
+    display: 'flex',
+    width: '100vw',
+    height: '90vh',
+    justifyContent: 'center',
+    alignItems: 'center',
+    border: '1px solid',
+  }
 });
 function UserPlacesList(props) {
   const classes = useStyles();
-  const placesListState = useContext(PlaceContext);
-  const userState = useContext(UserContext);
   const { dispatch } = useContext(DispatchContext);
-  const userPlaces = placesListState.filter((p) => p.creatorID === props.uid);
-  const currentUser = userState.find((user) => user.id === props.uid);
+  const [foundUser, setFoundUser] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
+  const [userPlacesID, setUserPlacesID] = useState(props.user.posts);
+  const [userPlaces, setUserPlaces] = useState([])
+
+
+  useEffect(() => {
+    // setIsLoading(true);
+    userPlacesID.forEach(addPost)
+    setIsLoading(false)
+  }, [])
+
+  function addPost(postID) {
+    axios.get(`http://localhost:5000/api/places/${postID}`).then(res => setUserPlaces(prevState => [...prevState, res.data.place]))
+  }
 
   function handleDelete(id) {
     dispatch({ type: "remove", id: id });
   }
 
-  let content;
-  if (userPlaces.length === 0) {
-    content = (
-      <div className={classes.noPlace}>
-        <img src={placesNotFound} alt="Memory not uploaded" />
-        <h1 className={classes.h1}>No post yet !</h1>
-      </div>
-    );
-  } else {
-    content = (
-      <>
-        {window.location.pathname === "/profile" ? (
-          ""
-        ) : (
-          <div className={classes.userInfo}>
-            <div
-              className={classes.userImg}
-              style={{
-                background: `url(${currentUser.url})`,
-                backgroundSize: "100% 100%",
-              }}
-            ></div>
-            <div
-              className={classes.userInfoContainer}
-              style={{ display: "inline-block", height: "100%", width: "100%" }}
-            >
-              <span className={classes.username}>{currentUser.name}</span>
-              <p className={classes.userbio}>{currentUser.bio}</p>
-            </div>
-          </div>
-        )}
-        <div className={classes.container}>
-          {userPlaces.map((place) => (
-            <UserPlacesListItem
-              key={place.id}
-              {...place}
-              handleDelete={handleDelete}
-            />
-          ))}
+  return <>
+    {window.location.pathname === "/profile" ? (
+      ""
+    ) : (
+      <div className={classes.userInfo}>
+        <div
+          className={classes.userImg}
+          style={{
+            background: ``,
+            backgroundSize: "100% 100%",
+          }}
+        ></div>
+        <div
+          className={classes.userInfoContainer}
+          style={{ display: "inline-block", height: "100%", width: "100%" }}
+        >
+          <span className={classes.username}>{ }</span>
+          <p className={classes.userbio}>{ }</p>
         </div>
-      </>
-    );
-  }
+      </div>
+    )}
 
-  return content;
+    {!isLoading && userPlaces.length ? <div className={classes.container}>
+      {userPlaces.map((place) =>
+        <UserPlacesListItem
+          key={place._id}
+          {...place}
+          handleDelete={handleDelete}
+        />
+      )}
+    </div> : ''}
+    {!isLoading && !userPlaces.length ?<div className={classes.noPlace}>
+      <img src={placesNotFound} alt="Memory not uploaded" />
+      <h1 className={classes.h1}>No post yet !</h1>
+    </div>:''}
+    {/* {!isLoading && userPlaces.length===0 ?  : <>
+      {isLoading ? <Box sx={{ display: 'flex' ,height:'100vh',width:'100vw',justifyContent: 'center',alignItems: 'center'}}>
+        <CircularProgress />
+      </Box> : } */}
+    {isLoading && <Box className={classes.loader} >
+      <CircularProgress style={{ color: "#1976d2" }} />
+    </Box>}
+
+  </>
 }
+
 
 export default UserPlacesList;

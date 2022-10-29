@@ -30,7 +30,7 @@ function UsersList(props) {
 
     const classes = useStyles()
     const content = props.UsersList.length !== 0 ? <div className={classes.container}>
-        {props.UsersList.map(user => <User key={user.id} id={user.id} name={user.name} posts={user.posts.length} url={user.url} bio={user.bio} />)}
+        {props.UsersList.map(user => <User key={user._id} uid={user._id} name={user.name} posts={user.posts.length} url={user.url} bio={user.bio} />)}
     </div> : <div className={classes.noUser}>
         <img className={classes.img} src={noUserFound} alt="no user found" />
         <h1 className={classes.h1}>404 : No User Found !</h1>

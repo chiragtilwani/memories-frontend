@@ -86,7 +86,7 @@ const useStyles = makeStyles({
 function User(props) {
   const classes = useStyles();
   return (
-    <Link to={`/${props.id}/places`} style={{ textDecoration: "none" }}>
+    <Link to={`/${props.uid}/places`} style={{ textDecoration: "none" }}>
       <Paper className={classes.container}>
         <div className={classes.innerContainer}>
           <Avatar src={props.url} className={classes.avatar} />

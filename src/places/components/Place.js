@@ -204,7 +204,7 @@ function Place(props) {
             height="140"
             image={props.url}
             alt="green iguana"
-            style={{ width: "100%" }}
+            style={{ width: "100%", }}
           />
           <CardContent
             style={{
@@ -221,15 +221,6 @@ function Place(props) {
           </CardContent>
           <CardActions disableSpacing className={classes.cardActions}>
             <div>
-            <IconButton
-                onClick={handleLikeBtnClick}
-                title="Like memory"
-                className={`${classes.likebtn} ${classes.hover}`}
-                style={{color:props.liked?'red':'' }}
-              >
-                <FavoriteIcon />
-              </IconButton>
-              
               <Link to={`/${props.id}/update-place`} onClick={handleClick}>
                 <IconButton
                   aria-label="edit"
@@ -248,7 +239,6 @@ function Place(props) {
                 <MdDelete />
               </IconButton>
             </div>
-            <div className={classes.n_likes}>Likes : {props.n_likes}</div>
           </CardActions>
         </CardActionArea>
         <Dialog
