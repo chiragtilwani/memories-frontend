@@ -97,14 +97,12 @@ const useStyles = makeStyles({
 function UserPlacesList(props) {
   const classes = useStyles();
   const { dispatch } = useContext(DispatchContext);
-  const [foundUser, setFoundUser] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [userPlacesID, setUserPlacesID] = useState(props.user.posts);
   const [userPlaces, setUserPlaces] = useState([])
 
 
   useEffect(() => {
-    // setIsLoading(true);
     userPlacesID.forEach(addPost)
     setIsLoading(false)
   }, [])
@@ -116,7 +114,7 @@ function UserPlacesList(props) {
   function handleDelete(id) {
     dispatch({ type: "remove", id: id });
   }
-
+console.log(props)
   return <>
     {window.location.pathname === "/profile" ? (
       ""
@@ -143,22 +141,19 @@ function UserPlacesList(props) {
       {userPlaces.map((place) =>
         <UserPlacesListItem
           key={place._id}
-          {...place}
+          place={place}
           handleDelete={handleDelete}
+          setPlaceToUpdate={props.setPlaceToUpdate}
         />
       )}
     </div> : ''}
+    {isLoading && <Box className={classes.loader} >
+      <CircularProgress style={{ color: "#1976d2" }} />
+    </Box>}
     {!isLoading && !userPlaces.length ?<div className={classes.noPlace}>
       <img src={placesNotFound} alt="Memory not uploaded" />
       <h1 className={classes.h1}>No post yet !</h1>
     </div>:''}
-    {/* {!isLoading && userPlaces.length===0 ?  : <>
-      {isLoading ? <Box sx={{ display: 'flex' ,height:'100vh',width:'100vw',justifyContent: 'center',alignItems: 'center'}}>
-        <CircularProgress />
-      </Box> : } */}
-    {isLoading && <Box className={classes.loader} >
-      <CircularProgress style={{ color: "#1976d2" }} />
-    </Box>}
 
   </>
 }

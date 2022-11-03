@@ -9,11 +9,11 @@ const useStyles = makeStyles({
     }
 })
 
-function NewPlace(){
+function UpdatePlace(props){
     const classes=useStyles()
     return <div className={classes.container}>
-        <UpdatePlaceForm/>
+        <UpdatePlaceForm place={props.place}/>
     </div>
 }
 
-export default NewPlace
+export default UpdatePlace

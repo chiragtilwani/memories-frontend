@@ -20,6 +20,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import {Link} from 'react-router-dom'
 import DialogActions from '@mui/material/DialogActions';
 import DialogContentText from '@mui/material/DialogContentText';
+import axios from "axios";
 
 
 const useStyles = makeStyles({
@@ -85,6 +86,7 @@ const useStyles = makeStyles({
 export default function UserPlacesListItem(props) {
   const [open, setOpen] = React.useState(false);
   const [deleteDialogopen, setDeleteDialogOpen] = React.useState(false);
+  console.log(props)
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -138,6 +140,7 @@ export default function UserPlacesListItem(props) {
 
   function handleClick(evt){
     evt.stopPropagation();
+    props.setPlaceToUpdate({...props.place})
   }
 
 
@@ -149,24 +152,24 @@ export default function UserPlacesListItem(props) {
   };
 function handleDelete(){
     handleDeleteDialogclose();
-    props.handleDelete(props.id);
+    // props.handleDelete(props.place._id);
   }
   return (
     <Card sx={{ wordWrap: "break-word" }} className={classes.card}>
       <CardMedia
         component="img"
         height="194"
-        image={props.url}
-        alt={props.name}
+        image={props.place.url}
+        alt={props.place.name}
       />
       <CardContent>
         <Typography variant="body2" color="text.secondary">
-          <span className={classes.span}>{props.name}</span> - {props.postDate}
+          <span className={classes.span}>{props.place.name}</span> - {props.place.postDate}
         </Typography>
       </CardContent>
       <CardActions disableSpacing className={classes.cardActions}>
         <div>
-          <Link to={`/${props.id}/update-place`} onClick={handleClick}>
+          <Link to={`/${props.place._id}/update-place`} onClick={handleClick}>
           <IconButton
             aria-label="edit"
             title="Edit memory"
@@ -197,11 +200,11 @@ function handleDelete(){
             id="customized-dialog-title"
             onClose={handleClose}
           >
-            {props.name}
+            {props.place.name}
           </BootstrapDialogTitle>
           <DialogContent dividers>
             <Typography style={{ wordWrap: "break-word" }}>
-              {props.description}
+              {props.place.description}
             </Typography>
           </DialogContent>
         </BootstrapDialog>
@@ -213,11 +216,11 @@ function handleDelete(){
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">
-          {`Deleting ${props.name}`}
+          {`Deleting ${props.place.name}`}
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Are you sure you want to delete <strong>{props.name}</strong> memory ?
+            Are you sure you want to delete <strong>{props.place.name}</strong> memory ?
             Memory deleted once cannot be recovered. 
           </DialogContentText>
         </DialogContent>

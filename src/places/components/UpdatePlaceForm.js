@@ -5,10 +5,9 @@ import { makeStyles } from "@mui/styles";
 import Button from "@mui/material/Button";
 import { AiOutlineCamera } from "react-icons/ai";
 import { DispatchContext } from "../../context/PlaceContext";
-import { PlaceContext } from "../../context/PlaceContext";
 import useToggler from "../../customHooks/useToggler";
 import Sizes from "../../styles/Sizes";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Backdrop from "@mui/material/Backdrop";
 import { BiImageAdd } from "react-icons/bi";
 
@@ -127,23 +126,26 @@ const useStyles = makeStyles({
   },
 });
 
-export default function NewPlaceForm() {
-  let { pid } = useParams();
-  const placesListState = useContext(PlaceContext);
-  const [foundPlace] = placesListState.filter((place) => pid === place.id);
+export default function UpdatePlaceForm(props) {
+  const [foundPlace,setFoundPlace]=useState(props.place)
+  const [isImgSelected, toggleIsImgSelected] = useToggler(true);
+  const { dispatch } = useContext(DispatchContext);
+  const classes = useStyles(isImgSelected);
+  const [open, setOpen] = React.useState(false);
   const initialValues = {
     name: foundPlace.name,
     description: foundPlace.description,
     address: foundPlace.address,
   };
   const [values, setValues] = useState(initialValues);
-  const [url, setUrl] = useState(foundPlace.url);
-  const [isImgSelected, toggleIsImgSelected] = useToggler(true);
-  const { dispatch } = useContext(DispatchContext);
-  const classes = useStyles(isImgSelected);
-  const [open, setOpen] = React.useState(false);
-
+  
   const navigate = useNavigate();
+
+//  useEffect(() => {
+//   axios.get(`http://localhost:5000/api/places/${pid}`)
+//   .then(res=>setFoundPlace(res.data.place)).then(()=>setValues({}))
+//   .catch(err=>console.log(err))
+//  },[pid])
 
   function handleChange(evt) {
     setValues({ ...values, [evt.target.name]: evt.target.value });
@@ -151,12 +153,12 @@ export default function NewPlaceForm() {
 
   function handleImageChange(evt) {
     toggleIsImgSelected();
-    setUrl(URL.createObjectURL(evt.target.files[0]));
+    // setUrl(URL.createObjectURL(evt.target.files[0]));
   }
 
   function handleImgDelete() {
     toggleIsImgSelected();
-    setUrl(null);
+    // setUrl(null);
   }
 
   function handleSubmit(evt) {
@@ -164,16 +166,16 @@ export default function NewPlaceForm() {
     evt.preventDefault();
     dispatch({
       type: "edit",
-      id:foundPlace.id,
+      // id:foundPlace.id,
       editedPlace: {
         ...values,
-        id: foundPlace.id,
-        postedBy: foundPlace.postedBy,
-        creatorID: foundPlace.creatorID,
-        liked: foundPlace.liked,
-        n_likes: foundPlace.n_likes,
-        url: url,
-        postDate: foundPlace.postDate,
+        // id: foundPlace.id,
+        // postedBy: foundPlace.postedBy,
+        // creatorID: foundPlace.creatorID,
+        // liked: foundPlace.liked,
+        // n_likes: foundPlace.n_likes,
+        // url: url,
+        // postDate: foundPlace.postDate,
       },
     });
     navigate("/");
@@ -191,7 +193,7 @@ export default function NewPlaceForm() {
     <div className={classes.container}>
       <div className={`${classes.left} ${classes.sections}`}>
         <img
-          src={isImgSelected ? url : ""}
+          // src={isImgSelected ? url : ""}
           alt="svg"
           className={classes.img}
           onMouseEnter={handleOpen}
