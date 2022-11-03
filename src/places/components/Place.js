@@ -96,6 +96,7 @@ const useStyles = makeStyles({
     },
     [Sizes.down("sm")]: {
       borderRadius: "0 0 .5rem .5rem !important",
+      width: "100% !important"
     },
   },
   likes: {

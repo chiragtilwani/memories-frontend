@@ -10,6 +10,7 @@ import Sizes from "../../styles/Sizes";
 import { useNavigate } from "react-router-dom";
 import Backdrop from "@mui/material/Backdrop";
 import { BiImageAdd } from "react-icons/bi";
+import axios from "axios";
 
 const useStyles = makeStyles({
   container:{
@@ -128,6 +129,7 @@ const useStyles = makeStyles({
 
 export default function UpdatePlaceForm(props) {
   const [foundPlace,setFoundPlace]=useState(props.place)
+  const [url, setUrl] = useState(props.place.url);
   const [isImgSelected, toggleIsImgSelected] = useToggler(true);
   const { dispatch } = useContext(DispatchContext);
   const classes = useStyles(isImgSelected);
@@ -141,11 +143,6 @@ export default function UpdatePlaceForm(props) {
   
   const navigate = useNavigate();
 
-//  useEffect(() => {
-//   axios.get(`http://localhost:5000/api/places/${pid}`)
-//   .then(res=>setFoundPlace(res.data.place)).then(()=>setValues({}))
-//   .catch(err=>console.log(err))
-//  },[pid])
 
   function handleChange(evt) {
     setValues({ ...values, [evt.target.name]: evt.target.value });
@@ -153,32 +150,24 @@ export default function UpdatePlaceForm(props) {
 
   function handleImageChange(evt) {
     toggleIsImgSelected();
-    // setUrl(URL.createObjectURL(evt.target.files[0]));
+    setUrl(URL.createObjectURL(evt.target.files[0]));
   }
 
   function handleImgDelete() {
     toggleIsImgSelected();
-    // setUrl(null);
+    setUrl(null);
   }
 
-  function handleSubmit(evt) {
-    // will connect this to BACKEND later
+ async function handleSubmit(evt) {
     evt.preventDefault();
-    dispatch({
-      type: "edit",
-      // id:foundPlace.id,
-      editedPlace: {
-        ...values,
-        // id: foundPlace.id,
-        // postedBy: foundPlace.postedBy,
-        // creatorID: foundPlace.creatorID,
-        // liked: foundPlace.liked,
-        // n_likes: foundPlace.n_likes,
-        // url: url,
-        // postDate: foundPlace.postDate,
-      },
-    });
-    navigate("/");
+     const res=await axios.patch(`http://localhost:5000/api/places/${foundPlace._id}`,{
+      name:evt.target.name.value,
+      description:evt.target.description.value,
+      address:evt.target.address.value,
+      url:url
+     });
+     console.log(res.data)
+    navigate(-1);
   }
 
   const handleOpen = () => {
@@ -193,7 +182,7 @@ export default function UpdatePlaceForm(props) {
     <div className={classes.container}>
       <div className={`${classes.left} ${classes.sections}`}>
         <img
-          // src={isImgSelected ? url : ""}
+          src={isImgSelected ? url : ""}
           alt="svg"
           className={classes.img}
           onMouseEnter={handleOpen}

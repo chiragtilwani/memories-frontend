@@ -2,19 +2,20 @@ import Place from './Place'
 import { makeStyles } from '@mui/styles'
 import placesNotFound from '../../images/placesNotFound.webp'
 import Sizes from '../../styles/Sizes'
-import {PlaceContext} from '../../context/PlaceContext'
-import {useContext} from 'react'
+import { PlaceContext } from '../../context/PlaceContext'
+import { useContext, useEffect, useState } from 'react'
+import axios from 'axios'
 
 const useStyles = makeStyles({
     container: {
         width: '100%',
-        [Sizes.down('md')]:{
-            display:'flex',
+        [Sizes.down('md')]: {
+            display: 'flex',
             flexDirection: 'column',
         },
     },
-    noPlace:{
-        width:'100%',
+    noPlace: {
+        width: '100%',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -23,15 +24,30 @@ const useStyles = makeStyles({
 
 function PlacesList() {
     const classes = useStyles()
-    const placesListState=useContext(PlaceContext)
-    if (placesListState.length === 0) {
-        return <div className={classes.noPlace}>
-            <img src={placesNotFound} alt="places not found"/>
-        </div>
-    } else {
-        return (<div className={classes.container}>
-            {placesListState.map(place => <Place key={place.id} {...place} />)}
-        </div>)
+    const placesListState = useContext(PlaceContext)
+    const [isLoading, setIsLoading] = useState(true)
+    const [placesList, setPlacesList] = useState()
+
+    useEffect(() => {
+        // setIsLoading(true)
+        axios.get('http://localhost:5000/api/places/')
+            .then(res => setPlacesList(res.data.places))
+            .catch(err => console.log(err))
+        setIsLoading(false)
+    }, [])
+    
+    if (!isLoading && placesList) {
+        if (placesList.length === 0) {
+            return <div className={classes.noPlace}>
+                <img src={placesNotFound} alt="places not found" />
+            </div>
+        } else {
+            return (<div className={classes.container}>
+                {placesList.map(place => <Place key={place.id} {...place} />)}
+            </div>)
+        }
+    }else{
+        return <div>is loading ....</div>
     }
 }
 
