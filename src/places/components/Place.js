@@ -13,24 +13,26 @@ import IconButton from "@mui/material/IconButton";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { AiFillEdit } from "react-icons/ai";
 import { MdDelete } from "react-icons/md";
-import {Link} from 'react-router-dom'
-import {DispatchContext} from '../../context/PlaceContext'
-import {useContext} from 'react'
+import { Link } from 'react-router-dom'
+import { DispatchContext } from '../../context/PlaceContext'
+import { useContext } from 'react'
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import axios from "axios";
+import CircularProgress from '@mui/material/CircularProgress';
 
 
 const useStyles = makeStyles({
   container: {
     width: "100%",
-    
+
     display: "flex",
     alignItems: "center",
-    
+
     [Sizes.down("sm")]: {
       width: "90%",
       flexDirection: "column",
@@ -38,7 +40,7 @@ const useStyles = makeStyles({
     },
   },
   card: {
-    
+
     [Sizes.down("md")]: {
       width: "70%",
       maxWidth: "100% !important",
@@ -83,7 +85,7 @@ const useStyles = makeStyles({
   paper: {
     margin: "0rem !important",
     maxWidth: "100% !important",
-    
+
     padding: "2rem",
     fontSize: "1.5rem !important",
     overflowY: "scroll",
@@ -121,11 +123,11 @@ const useStyles = makeStyles({
   hover: {
     transform: "scale(1)",
     "&:hover": {
-      transition:'all .1s',
+      transition: 'all .1s',
       transform: "scale(1.5)",
     },
-    "&:active":{
-      transition:'all .1s',
+    "&:active": {
+      transition: 'all .1s',
       transform: "scale(.8)"
     }
   },
@@ -154,15 +156,22 @@ const useStyles = makeStyles({
     color: "--var(grey-text)",
     marginRight: ".5rem",
   },
-  liked:{
-    width:'1.5rem'
+  liked: {
+    width: '1.5rem'
+  },
+  Box: {
+    display: 'flex',
+    width: '100vw',
+    height: '100vh',
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 });
 
 function Place(props) {
   const classes = useStyles();
-  const {dispatch}=useContext(DispatchContext)
   const [open, setOpen] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false)
 
 
   const handleClickOpen = () => {
@@ -173,115 +182,121 @@ function Place(props) {
   };
 
 
-  function handleClick(evt){
+  function handleClick(evt) {
     evt.stopPropagation();
+    props.setPlaceToUpdate({ ...props.place })
   }
-  function handleDelete(){
-    handleClose()
-    dispatch({type:"remove",id:props.id})
+  function handleDelete() {
+    setIsLoading(true)
+    axios.delete(`http://localhost:5000/api/places/${props.place._id}`)
+      .then(() => axios.get('http://localhost:5000/api/places/').then((res) => props.onDelete(res.data.places)))
+      .then(() => {
+        setIsLoading(false)
+        handleClose()
+      })
   }
 
-  function handleLikeBtnClick(){
-    let editedPlace={...props,liked:!props.liked,n_likes:props.liked?props.n_likes-1:props.n_likes+1}
-    dispatch({type:"edit",id:props.id,editedPlace:editedPlace})
-  }
+
   return (
-    
-    <div className={classes.container}>
-      <Card
-        sx={{
-          
-          minWidth: '30%',
-          display: "inline-block",
-          margin: "2rem",
-        }}
-        className={classes.card}
-        
-      >
-        <CardActionArea disableRipple="true"
-        disableTouchRipple="true">
-          <CardMedia
-            component="img"
-            height="140"
-            image={props.url}
-            alt="green iguana"
-            style={{ width: "100%", }}
-          />
-          <CardContent
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          >
-            <div className={classes.nameAndPostedBy}>
-              <Typography className={classes.typography}>
-                {props.name}
-              </Typography>
-              <span className={classes.span}>Posted By : {props.postedBy}</span>
-            </div>
-          </CardContent>
-          <CardActions disableSpacing className={classes.cardActions}>
-            <div>
-              <Link to={`/${props.id}/update-place`} onClick={handleClick}>
+    <>{isLoading && <Box className={classes.Box}>
+      <CircularProgress />
+    </Box>}
+      <div className={classes.container}>
+        <Card
+          sx={{
+
+            minWidth: '30%',
+            display: "inline-block",
+            margin: "2rem",
+          }}
+          className={classes.card}
+
+        >
+          <CardActionArea disableRipple="true"
+            disableTouchRipple="true">
+            <CardMedia
+              component="img"
+              height="140"
+              image={props.place.url}
+              alt={props.place.name}
+              style={{ width: "100%", }}
+            />
+            <CardContent
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+              }}
+            >
+              <div className={classes.nameAndPostedBy}>
+                <Typography className={classes.typography}>
+                  {props.place.name}
+                </Typography>
+                <span className={classes.span}>Posted By : {props.place.postedBy}</span>
+              </div>
+            </CardContent>
+            <CardActions disableSpacing className={classes.cardActions}>
+              <div>
+                <Link to={`/${props.place._id}/update-place`} onClick={handleClick}>
+                  <IconButton
+                    aria-label="edit"
+                    title="Edit memory"
+                    className={`${classes.editbtn} ${classes.hover}`}
+                  >
+                    <AiFillEdit />
+                  </IconButton>
+                </Link>
                 <IconButton
-                  aria-label="edit"
-                  title="Edit memory"
-                  className={`${classes.editbtn} ${classes.hover}`}
+                  aria-label="delete"
+                  title="Delete memory"
+                  className={`${classes.deletebtn} ${classes.hover}`}
+                  onClick={handleClickOpen}
                 >
-                  <AiFillEdit />
+                  <MdDelete />
                 </IconButton>
-              </Link>
-              <IconButton
-                aria-label="delete"
-                title="Delete memory"
-                className={`${classes.deletebtn} ${classes.hover}`}
-                onClick={handleClickOpen}
-              >
-                <MdDelete />
-              </IconButton>
-            </div>
-          </CardActions>
-        </CardActionArea>
-        <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-          {`Deleting ${props.name}`}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Are you sure you want to delete <strong>{props.name}</strong> memory ?
-            Memory deleted once cannot be recovered. 
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Disagree</Button>
-          <Button onClick={handleDelete} autoFocus>
-            Agree
-          </Button>
-        </DialogActions>
-      </Dialog>
-      </Card>
-      <Box
-        sx={{
-          display: "flex",
-          flexWrap: "wrap",
-          "& > :not(style)": {
-            m: 1,
-            minWidth: '70%',
-            height: 150,
-          },
-        }}
-        className={classes.box}
-      >
-        <Paper elevation={3} className={classes.paper}>
-          {props.description}
-        </Paper>
-      </Box>
-    </div>
+              </div>
+            </CardActions>
+          </CardActionArea>
+          <Dialog
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title">
+              {`Deleting ${props.place.name}`}
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                Are you sure you want to delete <strong>{props.place.name}</strong> memory ?
+                Memory deleted once cannot be recovered.
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose}>Disagree</Button>
+              <Button onClick={handleDelete} autoFocus>
+                Agree
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </Card>
+        <Box
+          sx={{
+            display: "flex",
+            flexWrap: "wrap",
+            "& > :not(style)": {
+              m: 1,
+              minWidth: '70%',
+              height: 150,
+            },
+          }}
+          className={classes.box}
+        >
+          <Paper elevation={3} className={classes.paper}>
+            {props.place.description}
+          </Paper>
+        </Box>
+      </div>
+    </>
   );
 }
 

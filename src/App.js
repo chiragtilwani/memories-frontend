@@ -24,7 +24,7 @@ function App() {
         <UserProvider>
           <NavBar />
           <Routes>
-            <Route path="/" element={<AllPlaces />} />
+            <Route path="/" element={<AllPlaces setPlaceToUpdate={setPlaceToUpdate}/>} />
             <Route path="/users" element={<AllUsers />} />
             <Route path="/:uid/places" element={<UserPlaces setPlaceToUpdate={setPlaceToUpdate} />} />
             <Route path="/add-place" element={<NewPlace />} />

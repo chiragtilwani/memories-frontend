@@ -16,11 +16,11 @@ const useStyles = makeStyles({
     }
 })
 
-function AllPlaces() {
+function AllPlaces(props) {
     const classes = useStyles()
 
     return <div className={classes.container}>
-        <PlacesList/>
+        <PlacesList setPlaceToUpdate={props.setPlaceToUpdate}/>
     </div>
 }
 
