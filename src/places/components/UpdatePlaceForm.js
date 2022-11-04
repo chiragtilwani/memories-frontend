@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import TextField from "@mui/material/TextField";
 import { makeStyles } from "@mui/styles";
 import Button from "@mui/material/Button";
@@ -11,13 +11,16 @@ import { useNavigate } from "react-router-dom";
 import Backdrop from "@mui/material/Backdrop";
 import { BiImageAdd } from "react-icons/bi";
 import axios from "axios";
+import { useParams } from 'react-router-dom';
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 
 const useStyles = makeStyles({
-  container:{
-    display:'flex',
-    width:'100%',
+  container: {
+    display: 'flex',
+    width: '100%',
     [Sizes.down("md")]: {
-      flexDirection:'column',
+      flexDirection: 'column',
     },
   },
   sections: {
@@ -40,7 +43,7 @@ const useStyles = makeStyles({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    position:'relative'
+    position: 'relative'
   },
   right: {
     backgroundColor: "rgb(25 118 210 / 12%) !important",
@@ -104,11 +107,11 @@ const useStyles = makeStyles({
     fontSize: "2rem !important",
   },
   backdrop: {
-    width:'100%',
-    height:'100%',
-    position:'absolute !important',
-    [Sizes.down('md')]:{
-      width:'100%',
+    width: '100%',
+    height: '100%',
+    position: 'absolute !important',
+    [Sizes.down('md')]: {
+      width: '100%',
     }
   },
   leftImgUpload: {
@@ -119,30 +122,51 @@ const useStyles = makeStyles({
     textDecoration: "none",
     alignItems: "center",
     justifyContent: "center",
-    transitionDuration:'.5s',
+    transitionDuration: '.5s',
     cursor: "pointer",
-    '&:hover':{
-      color:"black",
+    '&:hover': {
+      color: "black",
     }
   },
+  loader: {
+    display: 'flex',
+    width: '100vw',
+    height: '90vh',
+    justifyContent: 'center',
+    alignItems: 'center',
+    border: '1px solid',
+  }
 });
 
 export default function UpdatePlaceForm(props) {
-  const [foundPlace,setFoundPlace]=useState(props.place)
-  const [url, setUrl] = useState(props.place.url);
+  const [foundPlace, setFoundPlace] = useState()
+  const [url, setUrl] = useState();
   const [isImgSelected, toggleIsImgSelected] = useToggler(true);
-  const { dispatch } = useContext(DispatchContext);
   const classes = useStyles(isImgSelected);
   const [open, setOpen] = React.useState(false);
-  const initialValues = {
-    name: foundPlace.name,
-    description: foundPlace.description,
-    address: foundPlace.address,
-  };
-  const [values, setValues] = useState(initialValues);
-  
+  const [values, setValues] = useState();
+  const [isLoading, setIsLoading] = useState(true)
+  const { pid } = useParams()
+
+
   const navigate = useNavigate();
 
+  useEffect(() => {
+    // setIsLoading(true)
+    axios.get(`http://localhost:5000/api/places/${pid}`)
+      .then(res => {
+        setFoundPlace(res.data.place)
+        setUrl(res.data.place.url)
+        const initialValues = {
+          name: res.data.place.name,
+          description: res.data.place.description,
+          address: res.data.place.address,
+        };
+        setValues(initialValues)
+      })
+    setIsLoading(false)
+
+  }, [])
 
   function handleChange(evt) {
     setValues({ ...values, [evt.target.name]: evt.target.value });
@@ -158,14 +182,14 @@ export default function UpdatePlaceForm(props) {
     setUrl(null);
   }
 
- async function handleSubmit(evt) {
+  async function handleSubmit(evt) {
     evt.preventDefault();
-     const res=await axios.patch(`http://localhost:5000/api/places/${foundPlace._id}`,{
-      name:evt.target.name.value,
-      description:evt.target.description.value,
-      address:evt.target.address.value,
-      url:url
-     });
+    const res = await axios.patch(`http://localhost:5000/api/places/${foundPlace._id}`, {
+      name: evt.target.name.value,
+      description: evt.target.description.value,
+      address: evt.target.address.value,
+      url: url
+    });
     navigate(-1);
   }
 
@@ -177,8 +201,11 @@ export default function UpdatePlaceForm(props) {
     setOpen(false);
   };
 
-  return (
-    <div className={classes.container}>
+  return <>
+    {isLoading && <Box className={classes.loader} >
+      <CircularProgress style={{ color: "#1976d2" }} />
+    </Box>}
+    {foundPlace && !isLoading ? <><div className={classes.container}>
       <div className={`${classes.left} ${classes.sections}`}>
         <img
           src={isImgSelected ? url : ""}
@@ -282,5 +309,5 @@ export default function UpdatePlaceForm(props) {
         </form>
       </div>
     </div>
-  );
+    </> : ''}</>
 }
