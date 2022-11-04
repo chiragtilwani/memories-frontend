@@ -103,18 +103,24 @@ function UserPlacesList(props) {
 
 
   useEffect(() => {
-    userPlacesID.forEach(addPost)
-    setIsLoading(false)
-  }, [])
+    // userPlacesID.forEach(addPost)
+    axios.get(`http://localhost:5000/api/places/user/${props.user._id}`)
+    .then((res)=>setUserPlaces(res.data.places))
+        setIsLoading(false)
+  }, [userPlacesID])
 
   function addPost(postID) {
     axios.get(`http://localhost:5000/api/places/${postID}`).then(res => setUserPlaces(prevState => [...prevState, res.data.place]))
   }
 
   function handleDelete(id) {
-    dispatch({ type: "remove", id: id });
+    axios.delete(`http://localhost:5000/api/places/${id}`)
+    .then(() =>axios.get(`http://localhost:5000/api/places/user/${props.user._id}`)
+    .then((res)=>setUserPlaces(res.data.places))
+    )
+
+    .catch(err=>console.log(err))
   }
-console.log(props)
   return <>
     {window.location.pathname === "/profile" ? (
       ""

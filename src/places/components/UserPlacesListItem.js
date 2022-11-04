@@ -86,7 +86,6 @@ const useStyles = makeStyles({
 export default function UserPlacesListItem(props) {
   const [open, setOpen] = React.useState(false);
   const [deleteDialogopen, setDeleteDialogOpen] = React.useState(false);
-  console.log(props)
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -152,7 +151,7 @@ export default function UserPlacesListItem(props) {
   };
 function handleDelete(){
     handleDeleteDialogclose();
-    // props.handleDelete(props.place._id);
+    props.handleDelete(props.place._id);
   }
   return (
     <Card sx={{ wordWrap: "break-word" }} className={classes.card}>

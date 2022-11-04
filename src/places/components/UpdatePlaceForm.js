@@ -166,7 +166,6 @@ export default function UpdatePlaceForm(props) {
       address:evt.target.address.value,
       url:url
      });
-     console.log(res.data)
     navigate(-1);
   }
 
