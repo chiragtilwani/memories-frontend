@@ -37,6 +37,8 @@ const useStyles = makeStyles({
   },
   avatar: {
     margin: "2rem",
+    border: ".2rem solid #1976d2",
+    boxShadow: "0 0 .5rem black"
   },
   nameAndPosts: {
     height: "5rem",
@@ -89,7 +91,7 @@ function User(props) {
     <Link to={`/${props.uid}/places`} style={{ textDecoration: "none" }}>
       <Paper className={classes.container}>
         <div className={classes.innerContainer}>
-          <Avatar src={props.url} className={classes.avatar} />
+          <Avatar src={props.url?props.url:`https://joeschmoe.io/api/v1/${props.name}`} className={classes.avatar} />
           <div className={classes.nameAndPosts}>
             <p className={classes.paragraph}>{props.name}</p>
             <span className={classes.span}>Posts : {props.posts}</span>

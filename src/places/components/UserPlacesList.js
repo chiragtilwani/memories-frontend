@@ -95,6 +95,7 @@ const useStyles = makeStyles({
   }
 });
 function UserPlacesList(props) {
+  console.log(props)
   const classes = useStyles();
   const { dispatch } = useContext(DispatchContext);
   const [isLoading, setIsLoading] = useState(true);
@@ -103,7 +104,6 @@ function UserPlacesList(props) {
 
 
   useEffect(() => {
-    // userPlacesID.forEach(addPost)
     axios.get(`http://localhost:5000/api/places/user/${props.user._id}`)
     .then((res)=>setUserPlaces(res.data.places))
         setIsLoading(false)
@@ -129,7 +129,7 @@ function UserPlacesList(props) {
         <div
           className={classes.userImg}
           style={{
-            background: ``,
+            background:props.user.url? `url(${props.user.url})`:`url(https://joeschmoe.io/api/v1/${props.user.name})`,
             backgroundSize: "100% 100%",
           }}
         ></div>
@@ -137,8 +137,8 @@ function UserPlacesList(props) {
           className={classes.userInfoContainer}
           style={{ display: "inline-block", height: "100%", width: "100%" }}
         >
-          <span className={classes.username}>{ }</span>
-          <p className={classes.userbio}>{ }</p>
+          <span className={classes.username}>{ props.user.name}</span>
+          <p className={classes.userbio}>{props.user.bio }</p>
         </div>
       </div>
     )}
