@@ -1,12 +1,11 @@
 import { makeStyles } from "@mui/styles";
-import { placesList } from '../../SeedData'
 import UserPlacesList from '../../places/components/UserPlacesList'
-import { useContext, useEffect, useState} from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { DispatchContext } from '../../context/UserContext'
 import axios from "axios";
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
-import {useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 const useStyles = makeStyles({
   container: {

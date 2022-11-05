@@ -11,11 +11,11 @@ import { UserProvider } from './context/UserContext'
 import Login from './users/pages/Login'
 import Signup from './users/pages/Signup'
 import Profile from './users/pages/Profile'
-import {useState} from 'react'
+import { useState } from 'react'
 
 function App() {
-  const [place,setPlace]=useState()
-  function setPlaceToUpdate(place){
+  const [place, setPlace] = useState()
+  function setPlaceToUpdate(place) {
     setPlace(place)
   }
   return (
@@ -24,11 +24,11 @@ function App() {
         <UserProvider>
           <NavBar />
           <Routes>
-            <Route path="/" element={<AllPlaces setPlaceToUpdate={setPlaceToUpdate}/>} />
+            <Route path="/" element={<AllPlaces setPlaceToUpdate={setPlaceToUpdate} />} />
             <Route path="/users" element={<AllUsers />} />
             <Route path="/:uid/places" element={<UserPlaces setPlaceToUpdate={setPlaceToUpdate} />} />
             <Route path="/add-place" element={<NewPlace />} />
-            <Route path="/:pid/update-place" element={<UpdatePlaces place={place}/>} />
+            <Route path="/:pid/update-place" element={<UpdatePlaces place={place} />} />
             <Route path='/login' element={<Login />} />
             <Route path='/signup' element={<Signup />} />
             <Route path='/profile' element={<Profile />} />

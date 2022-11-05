@@ -1,10 +1,9 @@
 import * as React from "react";
-import { useState, useContext, useEffect } from "react";
+import { useState, useEffect } from "react";
 import TextField from "@mui/material/TextField";
 import { makeStyles } from "@mui/styles";
 import Button from "@mui/material/Button";
 import { AiOutlineCamera } from "react-icons/ai";
-import { DispatchContext } from "../../context/PlaceContext";
 import useToggler from "../../customHooks/useToggler";
 import Sizes from "../../styles/Sizes";
 import { useNavigate } from "react-router-dom";
@@ -152,7 +151,6 @@ export default function UpdatePlaceForm(props) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // setIsLoading(true)
     axios.get(`http://localhost:5000/api/places/${pid}`)
       .then(res => {
         setFoundPlace(res.data.place)

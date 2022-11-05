@@ -59,7 +59,7 @@ const useStyles = makeStyles({
   },
   span: {
     cursor: "default",
-    color:'var(--grey-text)'
+    color: 'var(--grey-text)'
   },
   divider: {
     border: "1px solid",
@@ -91,7 +91,7 @@ function User(props) {
     <Link to={`/${props.uid}/places`} style={{ textDecoration: "none" }}>
       <Paper className={classes.container}>
         <div className={classes.innerContainer}>
-          <Avatar src={props.url?props.url:`https://joeschmoe.io/api/v1/${props.name}`} className={classes.avatar} />
+          <Avatar src={props.url ? props.url : `https://joeschmoe.io/api/v1/${props.name}`} className={classes.avatar} />
           <div className={classes.nameAndPosts}>
             <p className={classes.paragraph}>{props.name}</p>
             <span className={classes.span}>Posts : {props.posts}</span>

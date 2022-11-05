@@ -1,22 +1,22 @@
-function placeReducer(state,action){
-    switch(action.type){
+function placeReducer(state, action) {
+    switch (action.type) {
         case "add":
             return [...state, action.place]
-           
+
         case "remove":
-            return state.filter(place=>place.id !== action.id)    
+            return state.filter(place => place.id !== action.id)
 
         case "edit":
-            return state.map(place=>{
-                if(place.id === action.id){
+            return state.map(place => {
+                if (place.id === action.id) {
                     return action.editedPlace
-                }else{
+                } else {
                     return place
                 }
-            })    
+            })
 
-        default :
-            return state     
+        default:
+            return state
     }
 }
 

@@ -148,7 +148,7 @@ const useStyles = makeStyles({
     justifyContent: 'center',
     alignItems: 'center',
     border: '1px solid',
-}
+  }
 });
 
 const initialValues = {
@@ -211,35 +211,35 @@ export default function NewPlaceForm() {
 
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
-        return;
+      return;
     }
 
     setError(null);
-};
-const action = (
+  };
+  const action = (
     <>
 
-        <IconButton
-            size="small"
-            aria-label="close"
-            color="inherit"
-            onClick={handleClose}
-        >
-            <CloseIcon fontSize="small" />
-        </IconButton>
+      <IconButton
+        size="small"
+        aria-label="close"
+        color="inherit"
+        onClick={handleClose}
+      >
+        <CloseIcon fontSize="small" />
+      </IconButton>
     </>
-);
+  );
 
   return (
     <>
-    {error && <Snackbar
-                    style={{ position: 'absolute' }}
-                    open={error}
-                    autoHideDuration={6000}
-                    onClose={handleClose}
-                    message={error}
-                    action={action}
-                />}
+      {error && <Snackbar
+        style={{ position: 'absolute' }}
+        open={error}
+        autoHideDuration={6000}
+        onClose={handleClose}
+        message={error}
+        action={action}
+      />}
       {isLoading ? <Box className={classes.loader} >
         <CircularProgress style={{ color: "#1976d2" }} />
       </Box> : <><div className={`${classes.left} ${classes.sections}`}>

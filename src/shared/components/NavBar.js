@@ -83,7 +83,7 @@ const NavBar = () => {
     useEffect(() => {
         axios.get(`http://localhost:5000/api/users/user/${currentUserID}`)
             .then((res) => setCurrentUser(res.data))
-            .catch((err) =>console.log(err))
+            .catch((err) => console.log(err))
         setIsLoading(false)
     }, [currentUserID])
 

@@ -1,18 +1,18 @@
-function userReducer(state,action){
-    switch(action.type){
+function userReducer(state, action) {
+    switch (action.type) {
         case 'add':
-            return [...state,action.user];
+            return [...state, action.user];
         case 'edit':
-            return state.map(user=>{
-                if(user.id===action.id){
+            return state.map(user => {
+                if (user.id === action.id) {
                     return action.editedUser
-                }else{
+                } else {
                     return user
                 }
             })
         case 'remove':
-            return state.filter(user=>user.id!==action.id)
-        default :
+            return state.filter(user => user.id !== action.id)
+        default:
             return state
     }
 }

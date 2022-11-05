@@ -105,21 +105,17 @@ function UserPlacesList(props) {
 
   useEffect(() => {
     axios.get(`http://localhost:5000/api/places/user/${props.user._id}`)
-    .then((res)=>setUserPlaces(res.data.places))
-        setIsLoading(false)
+      .then((res) => setUserPlaces(res.data.places))
+    setIsLoading(false)
   }, [userPlacesID])
-
-  function addPost(postID) {
-    axios.get(`http://localhost:5000/api/places/${postID}`).then(res => setUserPlaces(prevState => [...prevState, res.data.place]))
-  }
 
   function handleDelete(id) {
     axios.delete(`http://localhost:5000/api/places/${id}`)
-    .then(() =>axios.get(`http://localhost:5000/api/places/user/${props.user._id}`)
-    .then((res)=>setUserPlaces(res.data.places))
-    )
+      .then(() => axios.get(`http://localhost:5000/api/places/user/${props.user._id}`)
+        .then((res) => setUserPlaces(res.data.places))
+      )
 
-    .catch(err=>console.log(err))
+      .catch(err => console.log(err))
   }
   return <>
     {window.location.pathname === "/profile" ? (
@@ -129,7 +125,7 @@ function UserPlacesList(props) {
         <div
           className={classes.userImg}
           style={{
-            background:props.user.url? `url(${props.user.url})`:`url(https://joeschmoe.io/api/v1/${props.user.name})`,
+            background: props.user.url ? `url(${props.user.url})` : `url(https://joeschmoe.io/api/v1/${props.user.name})`,
             backgroundSize: "100% 100%",
           }}
         ></div>
@@ -137,8 +133,8 @@ function UserPlacesList(props) {
           className={classes.userInfoContainer}
           style={{ display: "inline-block", height: "100%", width: "100%" }}
         >
-          <span className={classes.username}>{ props.user.name}</span>
-          <p className={classes.userbio}>{props.user.bio }</p>
+          <span className={classes.username}>{props.user.name}</span>
+          <p className={classes.userbio}>{props.user.bio}</p>
         </div>
       </div>
     )}
@@ -156,13 +152,12 @@ function UserPlacesList(props) {
     {isLoading && <Box className={classes.loader} >
       <CircularProgress style={{ color: "#1976d2" }} />
     </Box>}
-    {!isLoading && !userPlaces.length ?<div className={classes.noPlace}>
+    {!isLoading && !userPlaces.length ? <div className={classes.noPlace}>
       <img src={placesNotFound} alt="Memory not uploaded" />
       <h1 className={classes.h1}>No post yet !</h1>
-    </div>:''}
+    </div> : ''}
 
   </>
 }
-
 
 export default UserPlacesList;

@@ -10,12 +10,9 @@ import Box from "@mui/material/Box";
 import Sizes from "../../styles/Sizes";
 import CardActions from "@mui/material/CardActions";
 import IconButton from "@mui/material/IconButton";
-import FavoriteIcon from "@mui/icons-material/Favorite";
 import { AiFillEdit } from "react-icons/ai";
 import { MdDelete } from "react-icons/md";
 import { Link } from 'react-router-dom'
-import { DispatchContext } from '../../context/PlaceContext'
-import { useContext } from 'react'
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';

@@ -1,5 +1,5 @@
 import UsersList from '../components/UsersList'
-import {makeStyles} from '@mui/styles'
+import { makeStyles } from '@mui/styles'
 import { useState, useEffect } from 'react'
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
@@ -7,7 +7,7 @@ import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 
-const useStyles= makeStyles({
+const useStyles = makeStyles({
     loader: {
         display: 'flex',
         width: '100vw',
@@ -23,7 +23,7 @@ function AllUsers() {
     const [isLoading, setIsLoading] = useState(false)
     const [loadedUsers, setLoadedUsers] = useState()
 
-    const classes= useStyles()
+    const classes = useStyles()
 
     useEffect(() => {
         const sendRequest = async () => {
@@ -43,7 +43,7 @@ function AllUsers() {
         }
         sendRequest()
     }, [])
-    
+
 
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
@@ -67,14 +67,14 @@ function AllUsers() {
     );
     return <div >
         {error && <Snackbar
-                    style={{ position: 'absolute' }}
-                    open={error}
-                    autoHideDuration={6000}
-                    onClose={handleClose}
-                    message={error}
-                    action={action}
-                />}
-        {isLoading && <Box className={classes.loader}sx={{ display: 'flex' }}>
+            style={{ position: 'absolute' }}
+            open={error}
+            autoHideDuration={6000}
+            onClose={handleClose}
+            message={error}
+            action={action}
+        />}
+        {isLoading && <Box className={classes.loader} sx={{ display: 'flex' }}>
             <CircularProgress style={{ color: "#1976d2" }} />
         </Box>}
         {!isLoading && loadedUsers && <UsersList UsersList={loadedUsers} />}

@@ -1,5 +1,5 @@
 import UpdatePlaceForm from '../components/UpdatePlaceForm'
-import {makeStyles} from '@mui/styles'
+import { makeStyles } from '@mui/styles'
 
 const useStyles = makeStyles({
     container: {
@@ -9,10 +9,10 @@ const useStyles = makeStyles({
     }
 })
 
-function UpdatePlace(props){
-    const classes=useStyles()
+function UpdatePlace(props) {
+    const classes = useStyles()
     return <div className={classes.container}>
-        <UpdatePlaceForm place={props.place}/>
+        <UpdatePlaceForm place={props.place} />
     </div>
 }
 

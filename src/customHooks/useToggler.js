@@ -1,12 +1,12 @@
-import {useState} from 'react'
+import { useState } from 'react'
 
-function useToggler(initialState=false){
-    const [state,setState] = useState(initialState)
+function useToggler(initialState = false) {
+    const [state, setState] = useState(initialState)
 
-    function toggleState(){
+    function toggleState() {
         setState(!state)
     }
-    return [state,toggleState]
+    return [state, toggleState]
 }
 
 export default useToggler

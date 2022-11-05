@@ -42,7 +42,6 @@ function PlacesList(props) {
     const [placesList, setPlacesList] = useState()
 
     useEffect(() => {
-        // setIsLoading(true)
         axios.get('http://localhost:5000/api/places/')
             .then(res => setPlacesList(res.data.places))
             .catch(err => console.log(err))

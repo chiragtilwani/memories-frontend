@@ -201,7 +201,7 @@ function Login() {
                     <img className={classes.img} src={loginSvg} alt="" />
                 </div>
                 {error ? <Snackbar
-                
+
                     style={{ position: 'absolute' }}
                     open={error}
                     autoHideDuration={6000}
