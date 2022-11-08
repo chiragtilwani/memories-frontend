@@ -27,6 +27,7 @@ const useStyles = makeStyles({
     height: "100vh",
     [Sizes.down("md")]: {
       width: "100%",
+      height: "50vh",
     },
   },
   img: {
@@ -154,7 +155,7 @@ export default function UpdatePlaceForm(props) {
     axios.get(`http://localhost:5000/api/places/${pid}`)
       .then(res => {
         setFoundPlace(res.data.place)
-        setUrl(res.data.place.url)
+        setUrl(res.data.place.url.url)
         const initialValues = {
           name: res.data.place.name,
           description: res.data.place.description,
@@ -171,8 +172,23 @@ export default function UpdatePlaceForm(props) {
   }
 
   function handleImageChange(evt) {
+    setIsLoading(true)
     toggleIsImgSelected();
-    setUrl(URL.createObjectURL(evt.target.files[0]));
+    const fileName = evt.target.files[0].name
+    let idxDot = fileName.lastIndexOf(".") + 1;
+    let extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
+    if (extFile === "jpg" || extFile === "jpeg" || extFile === "png") {
+      //TO DO
+      const file = evt.target.files[0]
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () =>{
+        setUrl(reader.result)
+      }
+    } else {
+      alert("Only jpg/jpeg and png files are allowed!");
+    }
+    setIsLoading(false)
   }
 
   function handleImgDelete() {
@@ -198,7 +214,6 @@ export default function UpdatePlaceForm(props) {
   const handleClose = () => {
     setOpen(false);
   };
-
   return <>
     {isLoading && <Box className={classes.loader} >
       <CircularProgress style={{ color: "#1976d2" }} />
@@ -207,7 +222,7 @@ export default function UpdatePlaceForm(props) {
       <div className={`${classes.left} ${classes.sections}`}>
         <img
           src={isImgSelected ? url : ""}
-          alt="svg"
+          alt={props.name}
           className={classes.img}
           onMouseEnter={handleOpen}
           style={{ display: isImgSelected ? "block" : "none" }}

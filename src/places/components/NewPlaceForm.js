@@ -175,7 +175,21 @@ export default function NewPlaceForm() {
 
   function handleImageChange(evt) {
     toggleIsImgSelected()
-    setUrl(URL.createObjectURL(evt.target.files[0]))
+    const fileName = evt.target.files[0].name
+    let idxDot = fileName.lastIndexOf(".") + 1;
+    let extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
+    if (extFile === "jpg" || extFile === "jpeg" || extFile === "png") {
+      //TO DO
+      const file = evt.target.files[0]
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        setUrl(reader.result)
+      }
+    } else {
+      alert("Only jpg/jpeg and png files are allowed!");
+    }
+
   }
 
   function handleImgDelete() {

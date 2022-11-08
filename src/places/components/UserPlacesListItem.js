@@ -18,12 +18,19 @@ import CloseIcon from "@mui/icons-material/Close";
 import { Link } from 'react-router-dom'
 import DialogActions from '@mui/material/DialogActions';
 import DialogContentText from '@mui/material/DialogContentText';
+import { useContext } from 'react'
+import { DispatchContext } from '../../context/UserContext'
 
 const useStyles = makeStyles({
   span: {
     fontSize: "1.2rem",
     color: "black",
     letterSpacing: ".05rem",
+  },
+  image: {
+    width: '100%',
+    height: '194px',
+    backgroundSize: '100% 100% !important',
   },
   description: {
     overflowY: "scroll !important",
@@ -48,16 +55,6 @@ const useStyles = makeStyles({
       transition: "all 0.1s"
     },
   },
-  likebtn: {
-    "&:hover": {
-      color: "#ed5151",
-    },
-  },
-  locationbtn: {
-    "&:hover": {
-      color: "#28a728;",
-    },
-  },
   editbtn: {
     "&:hover": {
       color: "#1976d2",
@@ -80,6 +77,8 @@ const useStyles = makeStyles({
 });
 
 export default function UserPlacesListItem(props) {
+  const { currentUserID } = useContext(DispatchContext)
+
   const [open, setOpen] = React.useState(false);
   const [deleteDialogopen, setDeleteDialogOpen] = React.useState(false);
   const handleClickOpen = () => {
@@ -148,19 +147,15 @@ export default function UserPlacesListItem(props) {
   }
   return (
     <Card sx={{ wordWrap: "break-word" }} className={classes.card}>
-      <CardMedia
-        component="img"
-        height="194"
-        image={props.place.url}
-        alt={props.place.name}
-      />
+      <div className={classes.image} style={{background: `url(${props.place.url.url})`}}>
+      </div>
       <CardContent>
         <Typography variant="body2" color="text.secondary">
-          <span className={classes.span}>{props.place.name}</span> - {props.place.postDate}
+          <span className={classes.span}>{props.place.name}</span> ~ {props.place.postDate}
         </Typography>
       </CardContent>
       <CardActions disableSpacing className={classes.cardActions}>
-        <div>
+        {props.place.creatorID === currentUserID ? <div>
           <Link to={`/${props.place._id}/update-place`} onClick={handleClick}>
             <IconButton
               aria-label="edit"
@@ -178,7 +173,8 @@ export default function UserPlacesListItem(props) {
           >
             <MdDelete />
           </IconButton>
-        </div>
+        </div> : ''}
+
         <Button onClick={handleClickOpen}>Description</Button>
       </CardActions>
 
@@ -191,11 +187,12 @@ export default function UserPlacesListItem(props) {
           <BootstrapDialogTitle
             id="customized-dialog-title"
             onClose={handleClose}
+            style={{fontSize:'3rem'}}
           >
             {props.place.name}
           </BootstrapDialogTitle>
           <DialogContent dividers>
-            <Typography style={{ wordWrap: "break-word" }}>
+            <Typography style={{ wordWrap: "break-word", minWidth: '10rem',fontSize:'1.5rem' }}>
               {props.place.description}
             </Typography>
           </DialogContent>

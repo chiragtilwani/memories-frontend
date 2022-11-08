@@ -32,7 +32,11 @@ const useStyles = makeStyles({
     h1: {
         fontSize: '5rem',
         color: '#5801ae',
-        margin: '0rem'
+        margin: '0rem',
+        [Sizes.down('md')]: {
+            fontSize:'3rem',
+            textAlign: 'center',
+        },
     }
 })
 
@@ -55,12 +59,12 @@ function PlacesList(props) {
     if (!isLoading && placesList) {
         if (placesList.length === 0) {
             return <div className={classes.noPlace}>
-                <img src={placesNotFound} alt="places not found" />
+                <img src={placesNotFound} alt="places not found" style={{width:'100%'}}/>
                 <h1 className={classes.h1}>No places found !</h1>
             </div>
         } else {
             return (<div className={classes.container}>
-                {placesList.map(place => <Place key={place.id} place={place} setPlaceToUpdate={props.setPlaceToUpdate} onDelete={onDelete} />)}
+                {placesList.map(place => <Place key={place._id} place={place} setPlaceToUpdate={props.setPlaceToUpdate} onDelete={onDelete} />)}
             </div>)
         }
     } else {

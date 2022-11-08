@@ -48,6 +48,7 @@ const useStyles = makeStyles({
     [Sizes.down("md")]: {
       width: "95%",
       padding: "1rem",
+      textAlign: "center",
     },
     [Sizes.up("md")]: {
       paddingRight: "2rem",
@@ -60,7 +61,8 @@ const useStyles = makeStyles({
     fontWeight: "400",
   },
   noPlace: {
-    width: "100%",
+    width: "90vw",
+    margin:'auto',
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -69,7 +71,10 @@ const useStyles = makeStyles({
   h1: {
     fontSize: '5rem',
     color: '#5801ae',
-    margin: '0rem'
+    margin: '0rem',
+    [Sizes.down("md")]: {
+      fontSize: '3rem',
+    },
   },
   container: {
     width: "100%",
@@ -95,9 +100,7 @@ const useStyles = makeStyles({
   }
 });
 function UserPlacesList(props) {
-  console.log(props)
   const classes = useStyles();
-  const { dispatch } = useContext(DispatchContext);
   const [isLoading, setIsLoading] = useState(true);
   const [userPlacesID, setUserPlacesID] = useState(props.user.posts);
   const [userPlaces, setUserPlaces] = useState([])
@@ -117,18 +120,13 @@ function UserPlacesList(props) {
 
       .catch(err => console.log(err))
   }
+  console.log(props.user.name)
   return <>
     {window.location.pathname === "/profile" ? (
       ""
     ) : (
       <div className={classes.userInfo}>
-        <div
-          className={classes.userImg}
-          style={{
-            background: props.user.url ? `url(${props.user.url})` : `url(https://joeschmoe.io/api/v1/${props.user.name})`,
-            backgroundSize: "100% 100%",
-          }}
-        ></div>
+        <img className={classes.userImg} src={props.user.url.url.length>0? `${props.user.url.url}`:`https://joeschmoe.io/api/v1/${props.user.name}`} alt={props.user.name}/>
         <div
           className={classes.userInfoContainer}
           style={{ display: "inline-block", height: "100%", width: "100%" }}
@@ -153,7 +151,7 @@ function UserPlacesList(props) {
       <CircularProgress style={{ color: "#1976d2" }} />
     </Box>}
     {!isLoading && !userPlaces.length ? <div className={classes.noPlace}>
-      <img src={placesNotFound} alt="Memory not uploaded" />
+      <img src={placesNotFound} alt="Memory not uploaded" style={{width:'100%'}}/>
       <h1 className={classes.h1}>No post yet !</h1>
     </div> : ''}
 

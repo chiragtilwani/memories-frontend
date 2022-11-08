@@ -21,6 +21,8 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import axios from "axios";
 import CircularProgress from '@mui/material/CircularProgress';
+import {useContext} from 'react'
+import { DispatchContext } from "../../context/UserContext";
 
 
 const useStyles = makeStyles({
@@ -88,8 +90,9 @@ const useStyles = makeStyles({
     overflowY: "scroll",
     wordWrap: "break-word",
     height: "auto !important",
-    maxHeight: "25rem",
+    maxHeight: "15rem",
     backgroundColor: "rgb(25 118 210 / 12%) !important",
+    textOverflow: 'ellipsis',
     "&::-webkit-scrollbar": {
       width: "0rem",
     },
@@ -98,19 +101,17 @@ const useStyles = makeStyles({
       width: "100% !important"
     },
   },
-  likes: {
-    display: "flex",
-    flexDirection: "column",
-    height: "4rem",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
   img: {
     width: "2rem",
     transitionDuration: ".3s",
     "&:hover": {
       transform: "scale(1.2)",
     },
+  },
+  image: {
+    width: '100%',
+    height: '194px',
+    backgroundSize: '100% 100% !important',
   },
   cardActions: {
     display: "flex !important",
@@ -128,16 +129,6 @@ const useStyles = makeStyles({
       transform: "scale(.8)"
     }
   },
-  likebtn: {
-    "&:hover": {
-      color: "#ed5151",
-    },
-  },
-  locationbtn: {
-    "&:hover": {
-      color: "#28a728;",
-    },
-  },
   editbtn: {
     "&:hover": {
       color: "#1976d2",
@@ -147,14 +138,6 @@ const useStyles = makeStyles({
     "&:hover": {
       color: "red",
     },
-  },
-  n_likes: {
-    fontSize: "1rem",
-    color: "--var(grey-text)",
-    marginRight: ".5rem",
-  },
-  liked: {
-    width: '1.5rem'
   },
   Box: {
     display: 'flex',
@@ -167,6 +150,9 @@ const useStyles = makeStyles({
 
 function Place(props) {
   const classes = useStyles();
+
+  const {currentUserID}=useContext(DispatchContext)
+
   const [open, setOpen] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false)
 
@@ -211,13 +197,8 @@ function Place(props) {
         >
           <CardActionArea disableRipple="true"
             disableTouchRipple="true">
-            <CardMedia
-              component="img"
-              height="140"
-              image={props.place.url}
-              alt={props.place.name}
-              style={{ width: "100%", }}
-            />
+            <div className={classes.image} style={{background: `url(${props.place.url.url})`}}>
+      </div>
             <CardContent
               style={{
                 display: "flex",
@@ -232,7 +213,7 @@ function Place(props) {
               </div>
             </CardContent>
             <CardActions disableSpacing className={classes.cardActions}>
-              <div>
+              {props.place.creatorID===currentUserID?<div>
                 <Link to={`/${props.place._id}/update-place`} onClick={handleClick}>
                   <IconButton
                     aria-label="edit"
@@ -250,7 +231,8 @@ function Place(props) {
                 >
                   <MdDelete />
                 </IconButton>
-              </div>
+              </div>:''}
+              
             </CardActions>
           </CardActionArea>
           <Dialog

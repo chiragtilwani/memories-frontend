@@ -81,9 +81,11 @@ const NavBar = () => {
     const { isLoggedIn, logout, currentUserID } = useContext(DispatchContext);
     console.log(currentUserID)
     useEffect(() => {
-        axios.get(`http://localhost:5000/api/users/user/${currentUserID}`)
-            .then((res) => setCurrentUser(res.data))
-            .catch((err) => console.log(err))
+        if(currentUserID){
+            axios.get(`http://localhost:5000/api/users/user/${currentUserID}`)
+                .then((res) => setCurrentUser(res.data))
+                .catch((err) => console.log(err))
+        }
         setIsLoading(false)
     }, [currentUserID])
 
@@ -219,7 +221,7 @@ const NavBar = () => {
                         <Box sx={{ flexGrow: 0 }}>
                             <Tooltip title="Open settings">
                                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                    {currentUser && <Avatar alt={currentUser.name ? currentUser.name : ''} src={currentUser.url ? currentUser.url : `https://joeschmoe.io/api/v1/${currentUser.name}`} className={classes.avatar} />}
+                                    {currentUser && <Avatar alt={currentUser.name ? currentUser.name : ''} src={currentUser.url.url.length>0 ? currentUser.url.url : `https://joeschmoe.io/api/v1/${currentUser.name}`} className={classes.avatar} />}
                                     {!currentUser && <Avatar alt="Chirag Tilwani" src={`https://joeschmoe.io/api/v1/chirag`} className={classes.avatar} />}
                                 </IconButton>
                             </Tooltip>

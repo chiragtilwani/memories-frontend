@@ -6,6 +6,7 @@ import axios from "axios";
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import { useNavigate } from 'react-router-dom'
+import Backdrop from '@mui/material/Backdrop';
 
 const useStyles = makeStyles({
   container: {
@@ -27,6 +28,8 @@ const useStyles = makeStyles({
     zIndex: "2",
     boxShadow: "0 0 3rem .5rem rgba(0, 0, 0,.5)",
     backgroundSize: "100% 100%",
+    overflow: "hidden",
+    position: 'relative'
   },
   innerContainer: {
     margin: '0 auto',
@@ -42,6 +45,25 @@ const useStyles = makeStyles({
     justifyContent: 'center',
     alignItems: 'center',
     border: '1px solid',
+  },
+  backdrop: {
+    width: '100%',
+    height: '100%',
+    position: 'absolute',
+    borderRadius: '50%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    cursor: 'pointer'
+  },
+  span: {
+    color: 'white',
+    fontSize: '1.2rem',
+    letterSpacing: '.1rem'
+  },
+  img: {
+    width: '100%',
+    height: '100%'
   }
 });
 
@@ -52,38 +74,70 @@ function Profile() {
   const [currentUser, setCurrentUser] = useState()
   const [isLoading, setIsLoading] = useState(true)
   const navigate = useNavigate()
+  const [open, setOpen] = useState(false);
+  const [url, setUrl] = useState()
   useEffect(() => {
-
     axios.get(`http://localhost:5000/api/users/user/${currentUserID}`)
       .then(res => setCurrentUser(res.data))
       .catch(err => {
-        console.log(err)
         navigate('/')
       });
     setIsLoading(false)
   }, [])
 
-  return (
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleOpen = () => {
+    setOpen(true);
+  };
 
+  async function handleImgChange(evt) {
+    setIsLoading(true)
+    const fileName = evt.target.files[0].name
+    let idxDot = fileName.lastIndexOf(".") + 1;
+    let extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
+    if (extFile === "jpg" || extFile === "jpeg" || extFile === "png") {
+      //TO DO
+      const file = evt.target.files[0]
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        setUrl(reader.result)
+      }
+      await axios.patch(`http://localhost:5000/api/users/${currentUserID}`,
+        { url: url }
+      )
+    } else {
+      alert("Only jpg/jpeg and png files are allowed!");
+    }
+    setIsLoading(false)
+  }
+  return (
     <>
       {isLoading && <Box className={classes.loader} >
         <CircularProgress style={{ color: "#1976d2" }} />
       </Box>}
       {currentUser && <div className={classes.container}>
-        <div className={classes.profileName}>
+        <div className={classes.profileName} style={{ backgroundColor: '#e3eefa', paddingBottom: '2rem' }}>
+          <label htmlFor="profileImg">
+            <div className={classes.profilePic}>
+              <div className={classes.backdrop} style={{
+                backgroundColor: open ? 'rgba(0,0,0,.5)' : '',
+              }} onMouseEnter={handleOpen} onMouseLeave={handleClose}>{open ? <span className={classes.span}>update</span> : ''}</div>
+              <img className={classes.img} src={currentUser.url.url.length > 0 ? `${currentUser.url.url}` : `https://joeschmoe.io/api/v1/${currentUser.name}`} alt={currentUser.name} />
+            </div>
+          </label>
 
-          <div
-            className={classes.profilePic}
-            style={{ backgroundImage: currentUser.url ? `url(${currentUser.url})` : `url(https://joeschmoe.io/api/v1/${currentUser.name})` }}
-          ></div>
           <div>
             <h1>{currentUser.name}</h1>
             <p style={{ fontSize: '1.2rem', color: 'var(--grey-text)', wordWrap: "break-word" }}>{currentUser.bio}</p>
           </div>
         </div>
+        <input type="file" id="profileImg" value={""} style={{ display: 'none' }} accept="image/png image/jpeg image/jpg" onChange={handleImgChange}></input>
         <div className={classes.innerContainer}>
           <div className={classes.posts}>
-            <h2>POSTS</h2>
+            {currentUser.posts.length !== 0 && <h2>POSTS</h2>}
             <UserPlacesList user={currentUser} />
           </div>
         </div></div>}
