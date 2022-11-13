@@ -4,7 +4,7 @@ import { useState } from 'react'
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
-import { DispatchContext } from '../../context/UserContext';
+import { UserDispatchContext } from '../../context/UserContext';
 import { useContext } from 'react'
 import Sizes from '../../styles/Sizes'
 import CircularProgress from '@mui/material/CircularProgress';
@@ -82,7 +82,7 @@ const useStyles = makeStyles({
     }
 })
 
-function Login() {
+function Signup(props) {
     const classes = useStyles()
 
     const initialValues = {
@@ -97,7 +97,7 @@ function Login() {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState()
 
-    const { login } = useContext(DispatchContext)
+    // const { login } = useContext(UserDispatchContext)
     const navigate = useNavigate()
     async function handleSubmit(evt) {
         evt.preventDefault();
@@ -122,8 +122,10 @@ function Login() {
                 setError(responseData.message)
                 throw new Error(responseData.message)
             }
-            login(responseData._id);
+            console.log(responseData)
+            props.login(responseData.userId, responseData.token)
             navigate('/users')
+            window.location.reload();
             setIsLoading(false)
         } catch (err) {
             setIsLoading(false)
@@ -215,4 +217,4 @@ function Login() {
     )
 }
 
-export default Login
+export default Signup

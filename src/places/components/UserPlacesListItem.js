@@ -19,7 +19,7 @@ import { Link } from 'react-router-dom'
 import DialogActions from '@mui/material/DialogActions';
 import DialogContentText from '@mui/material/DialogContentText';
 import { useContext } from 'react'
-import { DispatchContext } from '../../context/UserContext'
+import { UserDispatchContext } from '../../context/UserContext'
 
 const useStyles = makeStyles({
   span: {
@@ -77,7 +77,11 @@ const useStyles = makeStyles({
 });
 
 export default function UserPlacesListItem(props) {
-  const { currentUserID } = useContext(DispatchContext)
+  // const { currentUserID } = useContext(UserDispatchContext)
+  let currentUserID
+  if(localStorage.getItem('userData')){
+   currentUserID=JSON.parse(localStorage.getItem('userData')).userId
+  }
 
   const [open, setOpen] = React.useState(false);
   const [deleteDialogopen, setDeleteDialogOpen] = React.useState(false);
@@ -128,6 +132,8 @@ export default function UserPlacesListItem(props) {
     children: PropTypes.node,
     onClose: PropTypes.func.isRequired,
   };
+
+  console.log(props)
 
   function handleClick(evt) {
     evt.stopPropagation();

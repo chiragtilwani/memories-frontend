@@ -13,6 +13,8 @@ import axios from "axios";
 import { useParams } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
+import { useContext } from 'react'
+import { UserDispatchContext } from '../../context/UserContext'
 
 const useStyles = makeStyles({
   container: {
@@ -147,7 +149,7 @@ export default function UpdatePlaceForm(props) {
   const [values, setValues] = useState();
   const [isLoading, setIsLoading] = useState(true)
   const { pid } = useParams()
-
+  const token = JSON.parse(localStorage.getItem('userData')).token
 
   const navigate = useNavigate();
 
@@ -182,7 +184,7 @@ export default function UpdatePlaceForm(props) {
       const file = evt.target.files[0]
       const reader = new FileReader();
       reader.readAsDataURL(file);
-      reader.onload = () =>{
+      reader.onload = () => {
         setUrl(reader.result)
       }
     } else {
@@ -203,6 +205,10 @@ export default function UpdatePlaceForm(props) {
       description: evt.target.description.value,
       address: evt.target.address.value,
       url: url
+    }, {
+      headers: {
+        Authorization: 'Bearer ' + token
+      }
     });
     navigate(-1);
   }

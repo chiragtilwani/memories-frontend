@@ -3,7 +3,7 @@ import loginSvg from '../../images/login.webp'
 import { useState, useContext } from 'react'
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom'
-import { DispatchContext } from '../../context/UserContext';
+import { UserDispatchContext } from '../../context/UserContext';
 import { useNavigate } from 'react-router-dom'
 import Sizes from '../../styles/Sizes'
 import CircularProgress from '@mui/material/CircularProgress';
@@ -75,10 +75,10 @@ const useStyles = makeStyles({
     }
 })
 
-function Login() {
+function Login(props) {
     const classes = useStyles()
 
-    const { login } = useContext(DispatchContext)
+    // const { login } = useContext(UserDispatchContext)
     const navigate = useNavigate()
     const initialValues = {
         name: '',
@@ -111,9 +111,10 @@ function Login() {
             if (!response.ok) {
                 throw new Error(responseData.message)
             }
-            login(responseData.userFound._id)
+            props.login(responseData.userId, responseData.token)
             setIsLoading(false)
             navigate('/users')
+            window.location.reload();
         } catch (err) {
             setIsLoading(false)
             setError(err.message || "Something went wrong.")

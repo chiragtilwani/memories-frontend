@@ -1,7 +1,7 @@
 import { makeStyles } from "@mui/styles";
 import UserPlacesList from '../../places/components/UserPlacesList'
 import { useContext, useEffect, useState } from 'react'
-import { DispatchContext } from '../../context/UserContext'
+import { UserDispatchContext } from '../../context/UserContext'
 import axios from "axios";
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
@@ -70,12 +70,14 @@ const useStyles = makeStyles({
 
 function Profile() {
   const classes = useStyles();
-  const { currentUserID } = useContext(DispatchContext)
+  // const { currentUserID } = useContext(UserDispatchContext)
   const [currentUser, setCurrentUser] = useState()
   const [isLoading, setIsLoading] = useState(true)
   const navigate = useNavigate()
   const [open, setOpen] = useState(false);
   const [url, setUrl] = useState()
+  const currentUserID=JSON.parse(localStorage.getItem('userData')).userId
+  const token=JSON.parse(localStorage.getItem('userData')).token
   useEffect(() => {
     axios.get(`http://localhost:5000/api/users/user/${currentUserID}`)
       .then(res => setCurrentUser(res.data))
@@ -106,7 +108,11 @@ function Profile() {
         setUrl(reader.result)
       }
       await axios.patch(`http://localhost:5000/api/users/${currentUserID}`,
-        { url: url }
+        { url: url }, {
+        headers: {
+          Authorization: 'Bearer ' + token
+        }
+      }
       )
     } else {
       alert("Only jpg/jpeg and png files are allowed!");

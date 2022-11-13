@@ -5,7 +5,7 @@ import { makeStyles } from "@mui/styles";
 import svgImg from "../../images/NewPlaceForm.png";
 import Button from "@mui/material/Button";
 import { AiOutlineCamera } from "react-icons/ai";
-import { DispatchContext } from '../../context/UserContext'
+import { UserDispatchContext } from '../../context/UserContext'
 import useToggler from "../../customHooks/useToggler";
 import { MdCancel } from 'react-icons/md'
 import Sizes from '../../styles/Sizes'
@@ -164,7 +164,8 @@ export default function NewPlaceForm() {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(null)
 
-  const { currentUserID } = useContext(DispatchContext)
+  const currentUserID =JSON.parse(localStorage.getItem('userData')).userId
+  const token = JSON.parse(localStorage.getItem('userData')).token
   const classes = useStyles(isImgSelected);
 
   const navigate = useNavigate();
@@ -203,7 +204,7 @@ export default function NewPlaceForm() {
       setIsLoading(true)
       const response = await fetch('http://localhost:5000/api/places', {
         method: "POST",
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json',Authorization: 'Bearer '+ token},
         body: JSON.stringify({
           name: evt.target.name.value,
           description: evt.target.description.value,

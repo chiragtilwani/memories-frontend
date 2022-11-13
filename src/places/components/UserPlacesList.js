@@ -3,6 +3,7 @@ import UserPlacesListItem from "./UserPlacesListItem";
 import placesNotFound from "../../images/placesNotFound.webp";
 import Sizes from "../../styles/Sizes";
 import { DispatchContext } from "../../context/PlaceContext";
+import { UserDispatchContext } from "../../context/UserContext";
 import { useContext, useEffect, useState } from "react";
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
@@ -104,6 +105,11 @@ function UserPlacesList(props) {
   const [isLoading, setIsLoading] = useState(true);
   const [userPlacesID, setUserPlacesID] = useState(props.user.posts);
   const [userPlaces, setUserPlaces] = useState([])
+  let token
+  if(localStorage.getItem('userData')){
+    token = JSON.parse(localStorage.getItem('userData')).token
+  }
+
 
 
   useEffect(() => {
@@ -113,8 +119,10 @@ function UserPlacesList(props) {
   }, [userPlacesID])
 
   function handleDelete(id) {
-    axios.delete(`http://localhost:5000/api/places/${id}`)
-      .then(() => axios.get(`http://localhost:5000/api/places/user/${props.user._id}`)
+    axios.delete(`http://localhost:5000/api/places/${id}`, {headers: {
+        Authorization: 'Bearer ' + token
+      }})
+      .then(() => axios.get(`http://localhost:5000/api/places/user/${props.user._id}`,)
         .then((res) => setUserPlaces(res.data.places))
       )
 

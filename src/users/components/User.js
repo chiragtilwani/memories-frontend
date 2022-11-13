@@ -10,7 +10,7 @@ const useStyles = makeStyles({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "center",
+    // justifyContent: "center",
     margin: "1rem auto",
     height: "10vh",
     cursor: "pointer",
@@ -46,7 +46,6 @@ const useStyles = makeStyles({
     flexDirection: "column",
     justifyContent: "center",
     padding: "1rem",
-    width: "50%",
   },
   paragraph: {
     fontSize: "1.2rem",
@@ -68,21 +67,6 @@ const useStyles = makeStyles({
     borderRadius: "50%",
     marginLeft: "1rem",
   },
-
-  bio: {
-    padding: "1rem",
-    height: "10%",
-    width: "75%",
-    whiteSpace: "nowrap",
-    lineHeight: "75%",
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    fontSize: "1.3rem",
-    letterSpacing: ".1rem",
-    [Sizes.down("md")]: {
-      width: "45%",
-    },
-  },
 });
 
 function User(props) {
@@ -97,8 +81,6 @@ function User(props) {
             <span className={classes.span}>Posts : {props.posts}</span>
           </div>
         </div>
-        <span className={classes.divider}></span>
-        <div className={classes.bio}>{props.bio}</div>
       </Paper>
     </Link>
   );

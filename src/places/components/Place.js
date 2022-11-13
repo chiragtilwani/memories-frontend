@@ -21,8 +21,8 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import axios from "axios";
 import CircularProgress from '@mui/material/CircularProgress';
-import {useContext} from 'react'
-import { DispatchContext } from "../../context/UserContext";
+import { useContext } from 'react'
+import { UserDispatchContext } from "../../context/UserContext";
 
 
 const useStyles = makeStyles({
@@ -84,7 +84,6 @@ const useStyles = makeStyles({
   paper: {
     margin: "0rem !important",
     maxWidth: "100% !important",
-
     padding: "2rem",
     fontSize: "1.5rem !important",
     overflowY: "scroll",
@@ -150,8 +149,11 @@ const useStyles = makeStyles({
 
 function Place(props) {
   const classes = useStyles();
-
-  const {currentUserID}=useContext(DispatchContext)
+let currentUserID,token;
+  if(localStorage.getItem('userData')){
+     currentUserID =JSON.parse(localStorage.getItem('userData')).userId
+     token =JSON.parse(localStorage.getItem('userData')).token
+  }
 
   const [open, setOpen] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false)
@@ -171,7 +173,11 @@ function Place(props) {
   }
   function handleDelete() {
     setIsLoading(true)
-    axios.delete(`http://localhost:5000/api/places/${props.place._id}`)
+    axios.delete(`http://localhost:5000/api/places/${props.place._id}`, {
+      headers: {
+        Authorization: 'Bearer ' + token
+      }
+    })
       .then(() => axios.get('http://localhost:5000/api/places/').then((res) => props.onDelete(res.data.places)))
       .then(() => {
         setIsLoading(false)
@@ -197,8 +203,8 @@ function Place(props) {
         >
           <CardActionArea disableRipple="true"
             disableTouchRipple="true">
-            <div className={classes.image} style={{background: `url(${props.place.url.url})`}}>
-      </div>
+            <div className={classes.image} style={{ background: `url(${props.place.url.url})` }}>
+            </div>
             <CardContent
               style={{
                 display: "flex",
@@ -213,7 +219,7 @@ function Place(props) {
               </div>
             </CardContent>
             <CardActions disableSpacing className={classes.cardActions}>
-              {props.place.creatorID===currentUserID?<div>
+              {props.place.creatorID === currentUserID ? <div>
                 <Link to={`/${props.place._id}/update-place`} onClick={handleClick}>
                   <IconButton
                     aria-label="edit"
@@ -231,8 +237,8 @@ function Place(props) {
                 >
                   <MdDelete />
                 </IconButton>
-              </div>:''}
-              
+              </div> : ''}
+
             </CardActions>
           </CardActionArea>
           <Dialog

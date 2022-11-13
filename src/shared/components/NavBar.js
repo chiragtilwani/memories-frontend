@@ -15,7 +15,7 @@ import { GiRiver } from 'react-icons/gi'
 import Sizes from '../../styles/Sizes'
 import { makeStyles } from '@mui/styles'
 import { NavLink, Link, useNavigate } from 'react-router-dom'
-import { DispatchContext } from '../../context/UserContext'
+import { UserDispatchContext } from '../../context/UserContext'
 import { useContext, useEffect } from 'react'
 import axios from 'axios'
 import CircularProgress from '@mui/material/CircularProgress';
@@ -69,7 +69,7 @@ const useStyles = makeStyles({
     }
 })
 
-const NavBar = () => {
+const NavBar = (props) => {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     const [currentUser, setCurrentUser] = React.useState()
@@ -77,17 +77,16 @@ const NavBar = () => {
     const classes = useStyles()
 
     const navigate = useNavigate()
-
-    const { isLoggedIn, logout, currentUserID } = useContext(DispatchContext);
-    console.log(currentUserID)
+    let currentUserID
     useEffect(() => {
-        if(currentUserID){
+        if (localStorage.getItem('userData')) {
+            currentUserID = JSON.parse(localStorage.getItem('userData')).userId
             axios.get(`http://localhost:5000/api/users/user/${currentUserID}`)
                 .then((res) => setCurrentUser(res.data))
                 .catch((err) => console.log(err))
         }
         setIsLoading(false)
-    }, [currentUserID])
+    }, [])
 
 
     const handleOpenNavMenu = (event) => {
@@ -106,8 +105,9 @@ const NavBar = () => {
     };
 
     function handleLogout() {
-        logout();
+        props.logout();
         navigate('/')
+        window.location.reload();
     }
     return (
         <>
@@ -221,7 +221,7 @@ const NavBar = () => {
                         <Box sx={{ flexGrow: 0 }}>
                             <Tooltip title="Open settings">
                                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                    {currentUser && <Avatar alt={currentUser.name ? currentUser.name : ''} src={currentUser.url.url.length>0 ? currentUser.url.url : `https://joeschmoe.io/api/v1/${currentUser.name}`} className={classes.avatar} />}
+                                    {currentUser && <Avatar alt={currentUser.name ? currentUser.name : ''} src={currentUser.url.url.length > 0 ? currentUser.url.url : `https://joeschmoe.io/api/v1/${currentUser.name}`} className={classes.avatar} />}
                                     {!currentUser && <Avatar alt="Chirag Tilwani" src={`https://joeschmoe.io/api/v1/chirag`} className={classes.avatar} />}
                                 </IconButton>
                             </Tooltip>
@@ -241,18 +241,16 @@ const NavBar = () => {
                                 open={Boolean(anchorElUser)}
                                 onClose={handleCloseUserMenu}
                             >
-                                {isLoggedIn && <MenuItem onClick={handleCloseUserMenu}>
-                                    <Link to="/profile" className={classes.Link}><Typography textAlign="center">Profile</Typography></Link>
-                                </MenuItem>}
-                                {!isLoggedIn && <MenuItem onClick={handleCloseUserMenu}>
+                                {!localStorage.getItem('userData') ? <><MenuItem onClick={handleCloseUserMenu}>
                                     <Link to="/login" className={classes.Link}><Typography textAlign="center">Login</Typography></Link>
-                                </MenuItem>}
-                                {!isLoggedIn && <MenuItem onClick={handleCloseUserMenu}>
-                                    <Link to="/signup" className={classes.Link}><Typography textAlign="center">Signup</Typography></Link>
-                                </MenuItem>}
-                                {isLoggedIn && <MenuItem onClick={handleCloseUserMenu}>
-                                    <Link to="" className={classes.Link} onClick={handleLogout}><Typography textAlign="center">Logout</Typography></Link>
-                                </MenuItem>}
+                                </MenuItem><MenuItem onClick={handleCloseUserMenu}>
+                                        <Link to="/signup" className={classes.Link}><Typography textAlign="center">Signup</Typography></Link>
+                                    </MenuItem></> : <><MenuItem onClick={handleCloseUserMenu}>
+                                        <Link to="/profile" className={classes.Link}><Typography textAlign="center">Profile</Typography></Link>
+                                    </MenuItem><MenuItem onClick={handleCloseUserMenu}>
+                                        <Link to="" className={classes.Link} onClick={handleLogout}><Typography textAlign="center">Logout</Typography></Link>
+                                    </MenuItem></>}
+                                {/* {currentUserID && } */}
                             </Menu>
                         </Box>
                     </Toolbar>
