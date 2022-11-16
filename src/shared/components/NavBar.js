@@ -12,13 +12,13 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { GiRiver } from 'react-icons/gi'
-import Sizes from '../../styles/Sizes'
 import { makeStyles } from '@mui/styles'
 import { NavLink, Link, useNavigate } from 'react-router-dom'
-import { UserDispatchContext } from '../../context/UserContext'
-import { useContext, useEffect } from 'react'
+import { useEffect } from 'react'
 import axios from 'axios'
 import CircularProgress from '@mui/material/CircularProgress';
+
+import Sizes from '../../styles/Sizes'
 
 
 const useStyles = makeStyles({
@@ -81,7 +81,7 @@ const NavBar = (props) => {
     useEffect(() => {
         if (localStorage.getItem('userData')) {
             currentUserID = JSON.parse(localStorage.getItem('userData')).userId
-            axios.get(`http://localhost:5000/api/users/user/${currentUserID}`)
+            axios.get(`${process.env.REACT_APP_BACKEND_URL}/users/user/${currentUserID}`)
                 .then((res) => setCurrentUser(res.data))
                 .catch((err) => console.log(err))
         }

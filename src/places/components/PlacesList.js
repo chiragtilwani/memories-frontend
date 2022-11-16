@@ -1,11 +1,12 @@
-import Place from './Place'
 import { makeStyles } from '@mui/styles'
-import placesNotFound from '../../images/placesNotFound.webp'
-import Sizes from '../../styles/Sizes'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
+
+import Place from './Place'
+import placesNotFound from '../../images/placesNotFound.webp'
+import Sizes from '../../styles/Sizes'
 
 const useStyles = makeStyles({
     container: {
@@ -34,7 +35,7 @@ const useStyles = makeStyles({
         color: '#5801ae',
         margin: '0rem',
         [Sizes.down('md')]: {
-            fontSize:'3rem',
+            fontSize: '3rem',
             textAlign: 'center',
         },
     }
@@ -46,8 +47,14 @@ function PlacesList(props) {
     const [placesList, setPlacesList] = useState()
 
     useEffect(() => {
-        axios.get('http://localhost:5000/api/places/')
-            .then(res => setPlacesList(res.data.places))
+        axios.get(`${process.env.REACT_APP_BACKEND_URL}/places/`)
+            .then(res => {
+                if (localStorage.getItem('userData')) {
+                    setPlacesList(res.data.places.filter(place => place.creatorID !== localStorage.getItem('userData').userId))
+                } else {
+                    setPlacesList(res.data.places)
+                }
+            })
             .catch(err => console.log(err))
         setIsLoading(false)
     }, [])
@@ -59,7 +66,7 @@ function PlacesList(props) {
     if (!isLoading && placesList) {
         if (placesList.length === 0) {
             return <div className={classes.noPlace}>
-                <img src={placesNotFound} alt="places not found" style={{width:'100%'}}/>
+                <img src={placesNotFound} alt="places not found" style={{ width: '100%' }} />
                 <h1 className={classes.h1}>No places found !</h1>
             </div>
         } else {

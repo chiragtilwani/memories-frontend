@@ -1,16 +1,16 @@
 import { makeStyles } from '@mui/styles'
-import loginSvg from '../../images/login.webp'
-import { useState, useContext } from 'react'
+import { useState } from 'react'
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom'
-import { UserDispatchContext } from '../../context/UserContext';
 import { useNavigate } from 'react-router-dom'
-import Sizes from '../../styles/Sizes'
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
+
+import loginSvg from '../../images/login.webp'
+import Sizes from '../../styles/Sizes'
 
 const useStyles = makeStyles({
     container: {
@@ -78,7 +78,6 @@ const useStyles = makeStyles({
 function Login(props) {
     const classes = useStyles()
 
-    // const { login } = useContext(UserDispatchContext)
     const navigate = useNavigate()
     const initialValues = {
         name: '',
@@ -95,7 +94,7 @@ function Login(props) {
         evt.preventDefault();
         try {
             setIsLoading(true)
-            const response = await fetch('http://localhost:5000/api/users/login', {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/users/login`, {
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/json"

@@ -1,10 +1,11 @@
-import UserPlacesList from '../../places/components/UserPlacesList'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import { makeStyles } from '@mui/styles'
+
+import UserPlacesList from '../../places/components/UserPlacesList'
 
 const useStyles = makeStyles({
     loader: {
@@ -26,7 +27,7 @@ function UserPlaces(props) {
 
     useEffect(() => {
         setIsLoading(true)
-        axios.get(`http://localhost:5000/api/users/user/${uid}`).then(res => setUser({ ...user, ...res.data })).catch(err => console.error(err))
+        axios.get(`${process.env.REACT_APP_BACKEND_URL}/users/user/${uid}`).then(res => setUser({ ...user, ...res.data })).catch(err => console.error(err))
         setIsLoading(false)
     }, [uid])
     return <>

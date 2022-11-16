@@ -1,6 +1,8 @@
-import User from './User'
 import { makeStyles } from '@mui/styles'
+
+import User from './User'
 import noUserFound from '../../images/noUserFound.webp'
+
 const useStyles = makeStyles({
     container: {
         width: '100%',

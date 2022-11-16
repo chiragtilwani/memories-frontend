@@ -1,20 +1,20 @@
 import * as React from "react";
-import { useState, useContext } from 'react'
+import { useState } from 'react'
 import TextField from "@mui/material/TextField";
 import { makeStyles } from "@mui/styles";
-import svgImg from "../../images/NewPlaceForm.png";
-import Button from "@mui/material/Button";
-import { AiOutlineCamera } from "react-icons/ai";
-import { UserDispatchContext } from '../../context/UserContext'
-import useToggler from "../../customHooks/useToggler";
-import { MdCancel } from 'react-icons/md'
-import Sizes from '../../styles/Sizes'
-import { useNavigate } from 'react-router-dom'
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
+import Button from "@mui/material/Button";
+import { AiOutlineCamera } from "react-icons/ai";
+import { MdCancel } from 'react-icons/md'
+import { useNavigate } from 'react-router-dom'
+
+import svgImg from "../../images/NewPlaceForm.png";
+import useToggler from "../../customHooks/useToggler";
+import Sizes from '../../styles/Sizes'
 
 const useStyles = makeStyles({
   sections: {
@@ -24,7 +24,6 @@ const useStyles = makeStyles({
   left: {
     display: "flex",
     alignItems: "center",
-    // justifyContent: "center",
     flexDirection: "row",
     position: 'relative',
     [Sizes.down('sm')]: {
@@ -164,7 +163,7 @@ export default function NewPlaceForm() {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(null)
 
-  const currentUserID =JSON.parse(localStorage.getItem('userData')).userId
+  const currentUserID = JSON.parse(localStorage.getItem('userData')).userId
   const token = JSON.parse(localStorage.getItem('userData')).token
   const classes = useStyles(isImgSelected);
 
@@ -197,14 +196,13 @@ export default function NewPlaceForm() {
     toggleIsImgSelected()
     setUrl(null)
   }
-
   async function handleSubmit(evt) {
     evt.preventDefault()
     try {
       setIsLoading(true)
-      const response = await fetch('http://localhost:5000/api/places', {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/places`, {
         method: "POST",
-        headers: { 'Content-Type': 'application/json',Authorization: 'Bearer '+ token},
+        headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token },
         body: JSON.stringify({
           name: evt.target.name.value,
           description: evt.target.description.value,

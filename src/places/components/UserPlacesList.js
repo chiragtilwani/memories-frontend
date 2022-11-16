@@ -1,13 +1,12 @@
 import { makeStyles } from "@mui/styles";
-import UserPlacesListItem from "./UserPlacesListItem";
-import placesNotFound from "../../images/placesNotFound.webp";
-import Sizes from "../../styles/Sizes";
-import { DispatchContext } from "../../context/PlaceContext";
-import { UserDispatchContext } from "../../context/UserContext";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import axios from 'axios'
+
+import UserPlacesListItem from "./UserPlacesListItem";
+import placesNotFound from "../../images/placesNotFound.webp";
+import Sizes from "../../styles/Sizes";
 
 
 const useStyles = makeStyles({
@@ -63,7 +62,7 @@ const useStyles = makeStyles({
   },
   noPlace: {
     width: "90vw",
-    margin:'auto',
+    margin: 'auto',
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -106,35 +105,36 @@ function UserPlacesList(props) {
   const [userPlacesID, setUserPlacesID] = useState(props.user.posts);
   const [userPlaces, setUserPlaces] = useState([])
   let token
-  if(localStorage.getItem('userData')){
+  if (localStorage.getItem('userData')) {
     token = JSON.parse(localStorage.getItem('userData')).token
   }
 
 
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/api/places/user/${props.user._id}`)
+    axios.get(`${process.env.REACT_APP_BACKEND_URL}/places/user/${props.user._id}`)
       .then((res) => setUserPlaces(res.data.places))
     setIsLoading(false)
   }, [userPlacesID])
 
   function handleDelete(id) {
-    axios.delete(`http://localhost:5000/api/places/${id}`, {headers: {
+    axios.delete(`${process.env.REACT_APP_BACKEND_URL}/places/${id}`, {
+      headers: {
         Authorization: 'Bearer ' + token
-      }})
-      .then(() => axios.get(`http://localhost:5000/api/places/user/${props.user._id}`,)
+      }
+    })
+      .then(() => axios.get(`${process.env.REACT_APP_BACKEND_URL}/places/user/${props.user._id}`,)
         .then((res) => setUserPlaces(res.data.places))
       )
 
       .catch(err => console.log(err))
   }
-  console.log(props.user.name)
   return <>
     {window.location.pathname === "/profile" ? (
       ""
     ) : (
       <div className={classes.userInfo}>
-        <img className={classes.userImg} src={props.user.url.url.length>0? `${props.user.url.url}`:`https://joeschmoe.io/api/v1/${props.user.name}`} alt={props.user.name}/>
+        <img className={classes.userImg} src={props.user.url.url.length > 0 ? `${props.user.url.url}` : `https://joeschmoe.io/api/v1/${props.user.name}`} alt={props.user.name} />
         <div
           className={classes.userInfoContainer}
           style={{ display: "inline-block", height: "100%", width: "100%" }}
@@ -159,7 +159,7 @@ function UserPlacesList(props) {
       <CircularProgress style={{ color: "#1976d2" }} />
     </Box>}
     {!isLoading && !userPlaces.length ? <div className={classes.noPlace}>
-      <img src={placesNotFound} alt="Memory not uploaded" style={{width:'100%'}}/>
+      <img src={placesNotFound} alt="Memory not uploaded" style={{ width: '100%' }} />
       <h1 className={classes.h1}>No post yet !</h1>
     </div> : ''}
 

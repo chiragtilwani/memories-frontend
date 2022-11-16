@@ -1,12 +1,11 @@
 import { makeStyles } from "@mui/styles";
-import UserPlacesList from '../../places/components/UserPlacesList'
-import { useContext, useEffect, useState } from 'react'
-import { UserDispatchContext } from '../../context/UserContext'
+import { useEffect, useState } from 'react'
 import axios from "axios";
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import { useNavigate } from 'react-router-dom'
-import Backdrop from '@mui/material/Backdrop';
+
+import UserPlacesList from '../../places/components/UserPlacesList'
 
 const useStyles = makeStyles({
   container: {
@@ -70,16 +69,15 @@ const useStyles = makeStyles({
 
 function Profile() {
   const classes = useStyles();
-  // const { currentUserID } = useContext(UserDispatchContext)
   const [currentUser, setCurrentUser] = useState()
   const [isLoading, setIsLoading] = useState(true)
   const navigate = useNavigate()
   const [open, setOpen] = useState(false);
   const [url, setUrl] = useState()
-  const currentUserID=JSON.parse(localStorage.getItem('userData')).userId
-  const token=JSON.parse(localStorage.getItem('userData')).token
+  const currentUserID = JSON.parse(localStorage.getItem('userData')).userId
+  const token = JSON.parse(localStorage.getItem('userData')).token
   useEffect(() => {
-    axios.get(`http://localhost:5000/api/users/user/${currentUserID}`)
+    axios.get(`${process.env.REACT_APP_BACKEND_URL}/users/user/${currentUserID}`)
       .then(res => setCurrentUser(res.data))
       .catch(err => {
         navigate('/')
@@ -107,7 +105,7 @@ function Profile() {
       reader.onload = () => {
         setUrl(reader.result)
       }
-      await axios.patch(`http://localhost:5000/api/users/${currentUserID}`,
+      await axios.patch(`${process.env.REACT_APP_BACKEND_URL}/users/${currentUserID}`,
         { url: url }, {
         headers: {
           Authorization: 'Bearer ' + token
@@ -136,7 +134,7 @@ function Profile() {
           </label>
 
           <div>
-            <h1>{currentUser.name}</h1>
+            <h1 style={{ textTransform: 'capitalize' }}>{currentUser.name}</h1>
             <p style={{ fontSize: '1.2rem', color: 'var(--grey-text)', wordWrap: "break-word" }}>{currentUser.bio}</p>
           </div>
         </div>

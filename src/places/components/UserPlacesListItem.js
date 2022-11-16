@@ -2,7 +2,6 @@ import { makeStyles } from "@mui/styles";
 import * as React from "react";
 import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
-import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
 import IconButton from "@mui/material/IconButton";
@@ -18,8 +17,6 @@ import CloseIcon from "@mui/icons-material/Close";
 import { Link } from 'react-router-dom'
 import DialogActions from '@mui/material/DialogActions';
 import DialogContentText from '@mui/material/DialogContentText';
-import { useContext } from 'react'
-import { UserDispatchContext } from '../../context/UserContext'
 
 const useStyles = makeStyles({
   span: {
@@ -77,10 +74,9 @@ const useStyles = makeStyles({
 });
 
 export default function UserPlacesListItem(props) {
-  // const { currentUserID } = useContext(UserDispatchContext)
   let currentUserID
-  if(localStorage.getItem('userData')){
-   currentUserID=JSON.parse(localStorage.getItem('userData')).userId
+  if (localStorage.getItem('userData')) {
+    currentUserID = JSON.parse(localStorage.getItem('userData')).userId
   }
 
   const [open, setOpen] = React.useState(false);
@@ -133,7 +129,6 @@ export default function UserPlacesListItem(props) {
     onClose: PropTypes.func.isRequired,
   };
 
-  console.log(props)
 
   function handleClick(evt) {
     evt.stopPropagation();
@@ -153,7 +148,7 @@ export default function UserPlacesListItem(props) {
   }
   return (
     <Card sx={{ wordWrap: "break-word" }} className={classes.card}>
-      <div className={classes.image} style={{background: `url(${props.place.url.url})`}}>
+      <div className={classes.image} style={{ background: `url(${props.place.url.url})` }}>
       </div>
       <CardContent>
         <Typography variant="body2" color="text.secondary">
@@ -193,12 +188,12 @@ export default function UserPlacesListItem(props) {
           <BootstrapDialogTitle
             id="customized-dialog-title"
             onClose={handleClose}
-            style={{fontSize:'3rem'}}
+            style={{ fontSize: '3rem' }}
           >
             {props.place.name}
           </BootstrapDialogTitle>
           <DialogContent dividers>
-            <Typography style={{ wordWrap: "break-word", minWidth: '10rem',fontSize:'1.5rem' }}>
+            <Typography style={{ wordWrap: "break-word", minWidth: '10rem', fontSize: '1.5rem' }}>
               {props.place.description}
             </Typography>
           </DialogContent>

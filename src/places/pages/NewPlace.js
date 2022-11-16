@@ -1,8 +1,7 @@
-import NewPlaceForm from '../components/NewPlaceForm'
 import { makeStyles } from '@mui/styles'
-import { useEffect } from 'react'
-import { UserDispatchContext } from '../../context/UserContext'
 import { Navigate } from 'react-router-dom'
+
+import NewPlaceForm from '../components/NewPlaceForm'
 
 const useStyles = makeStyles({
     container: {
@@ -14,14 +13,9 @@ const useStyles = makeStyles({
 
 function NewPlace() {
     const classes = useStyles()
-    
-    let currentUserID;
-    useEffect(() => {
-        if (localStorage.getItem('userData')) {
-            currentUserID = JSON.parse(localStorage.getItem('userData')).userId
-        }
-    },[])
-    if (currentUserID) {
+
+
+    if (localStorage.getItem('userData')) {
         return <div className={classes.container}>
             <NewPlaceForm />
         </div>

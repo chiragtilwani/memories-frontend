@@ -1,4 +1,5 @@
 import { makeStyles } from '@mui/styles'
+
 import PlacesList from '../components/PlacesList'
 import Sizes from '../../styles/Sizes'
 

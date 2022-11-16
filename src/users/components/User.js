@@ -2,6 +2,7 @@ import { makeStyles } from "@mui/styles";
 import Avatar from "@mui/material/Avatar";
 import Paper from "@mui/material/Paper";
 import { Link } from "react-router-dom";
+
 import Sizes from "../../styles/Sizes";
 
 const useStyles = makeStyles({
@@ -10,7 +11,6 @@ const useStyles = makeStyles({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    // justifyContent: "center",
     margin: "1rem auto",
     height: "10vh",
     cursor: "pointer",
@@ -25,7 +25,7 @@ const useStyles = makeStyles({
     },
   },
   innerContainer: {
-    width: "20%",
+    width: "100%",
     display: "flex",
     alignItems: "center",
     [Sizes.down("lg")]: {
@@ -55,6 +55,7 @@ const useStyles = makeStyles({
     margin: "0rem !important",
     wordWrap: "break-word",
     width: "100%",
+    textTransform: 'capitalize'
   },
   span: {
     cursor: "default",
@@ -75,7 +76,7 @@ function User(props) {
     <Link to={`/${props.uid}/places`} style={{ textDecoration: "none" }}>
       <Paper className={classes.container}>
         <div className={classes.innerContainer}>
-          <Avatar src={props.url.url.length>0 ? props.url.url : `https://joeschmoe.io/api/v1/${props.name}`} className={classes.avatar} />
+          <Avatar src={props.url.url.length > 0 ? props.url.url : `https://joeschmoe.io/api/v1/${props.name}`} className={classes.avatar} />
           <div className={classes.nameAndPosts}>
             <p className={classes.paragraph}>{props.name}</p>
             <span className={classes.span}>Posts : {props.posts}</span>

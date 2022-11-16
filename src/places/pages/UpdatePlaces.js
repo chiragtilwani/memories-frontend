@@ -1,5 +1,6 @@
-import UpdatePlaceForm from '../components/UpdatePlaceForm'
 import { makeStyles } from '@mui/styles'
+
+import UpdatePlaceForm from '../components/UpdatePlaceForm'
 
 const useStyles = makeStyles({
     container: {

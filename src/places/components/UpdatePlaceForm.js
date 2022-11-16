@@ -4,8 +4,6 @@ import TextField from "@mui/material/TextField";
 import { makeStyles } from "@mui/styles";
 import Button from "@mui/material/Button";
 import { AiOutlineCamera } from "react-icons/ai";
-import useToggler from "../../customHooks/useToggler";
-import Sizes from "../../styles/Sizes";
 import { useNavigate } from "react-router-dom";
 import Backdrop from "@mui/material/Backdrop";
 import { BiImageAdd } from "react-icons/bi";
@@ -13,8 +11,9 @@ import axios from "axios";
 import { useParams } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
-import { useContext } from 'react'
-import { UserDispatchContext } from '../../context/UserContext'
+
+import useToggler from "../../customHooks/useToggler";
+import Sizes from "../../styles/Sizes";
 
 const useStyles = makeStyles({
   container: {
@@ -154,7 +153,7 @@ export default function UpdatePlaceForm(props) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/api/places/${pid}`)
+    axios.get(`${process.env.REACT_APP_BACKEND_URL}/places/${pid}`)
       .then(res => {
         setFoundPlace(res.data.place)
         setUrl(res.data.place.url.url)
@@ -200,7 +199,7 @@ export default function UpdatePlaceForm(props) {
 
   async function handleSubmit(evt) {
     evt.preventDefault();
-    const res = await axios.patch(`http://localhost:5000/api/places/${foundPlace._id}`, {
+    await axios.patch(`${process.env.REACT_APP_BACKEND_URL}/places/${foundPlace._id}`, {
       name: evt.target.name.value,
       description: evt.target.description.value,
       address: evt.target.address.value,

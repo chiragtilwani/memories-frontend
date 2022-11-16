@@ -1,13 +1,13 @@
-html{
-  font-size:62.5%;
+html {
+  font-size: 62.5%;
   margin: 0;
-  padding:0;
+  padding: 0;
   box-sizing: border-box;
   overflow-x: hidden
 }
 
-html::-webkit-scrollbar{
-  width:0rem
+html::-webkit-scrollbar {
+  width: 0rem
 }
 
 body {

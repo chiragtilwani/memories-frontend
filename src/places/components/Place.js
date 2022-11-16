@@ -2,12 +2,10 @@ import * as React from "react";
 import { makeStyles } from "@mui/styles";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
-import Sizes from "../../styles/Sizes";
 import CardActions from "@mui/material/CardActions";
 import IconButton from "@mui/material/IconButton";
 import { AiFillEdit } from "react-icons/ai";
@@ -21,9 +19,9 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import axios from "axios";
 import CircularProgress from '@mui/material/CircularProgress';
-import { useContext } from 'react'
-import { UserDispatchContext } from "../../context/UserContext";
+import { useEffect, useState } from 'react'
 
+import Sizes from "../../styles/Sizes";
 
 const useStyles = makeStyles({
   container: {
@@ -149,10 +147,11 @@ const useStyles = makeStyles({
 
 function Place(props) {
   const classes = useStyles();
-let currentUserID,token;
-  if(localStorage.getItem('userData')){
-     currentUserID =JSON.parse(localStorage.getItem('userData')).userId
-     token =JSON.parse(localStorage.getItem('userData')).token
+  const [creatorName, setCreatorName] = useState()
+  let currentUserID, token;
+  if (localStorage.getItem('userData')) {
+    currentUserID = JSON.parse(localStorage.getItem('userData')).userId
+    token = JSON.parse(localStorage.getItem('userData')).token
   }
 
   const [open, setOpen] = React.useState(false);
@@ -173,19 +172,22 @@ let currentUserID,token;
   }
   function handleDelete() {
     setIsLoading(true)
-    axios.delete(`http://localhost:5000/api/places/${props.place._id}`, {
+    axios.delete(`${process.env.REACT_APP_BACKEND_URL}/places/${props.place._id}`, {
       headers: {
         Authorization: 'Bearer ' + token
       }
     })
-      .then(() => axios.get('http://localhost:5000/api/places/').then((res) => props.onDelete(res.data.places)))
+      .then(() => axios.get(`${process.env.REACT_APP_BACKEND_URL}/places/`).then((res) => props.onDelete(res.data.places)))
       .then(() => {
         setIsLoading(false)
         handleClose()
       })
   }
 
-
+  useEffect(() => {
+    axios.get(`${process.env.REACT_APP_BACKEND_URL}/users/user/${props.place.creatorID}`)
+      .then(res => setCreatorName(res.data.name))
+  }, [])
   return (
     <>{isLoading && <Box className={classes.Box}>
       <CircularProgress />
@@ -215,7 +217,7 @@ let currentUserID,token;
                 <Typography className={classes.typography}>
                   {props.place.name}
                 </Typography>
-                <span className={classes.span}>Posted By : {props.place.postedBy}</span>
+                <span className={classes.span}>Posted By : {creatorName}</span>
               </div>
             </CardContent>
             <CardActions disableSpacing className={classes.cardActions}>

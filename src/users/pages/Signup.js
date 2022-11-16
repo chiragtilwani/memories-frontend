@@ -1,17 +1,16 @@
 import { makeStyles } from '@mui/styles'
-import loginSvg from '../../images/login.webp'
 import { useState } from 'react'
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
-import { UserDispatchContext } from '../../context/UserContext';
-import { useContext } from 'react'
-import Sizes from '../../styles/Sizes'
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
+
+import loginSvg from '../../images/login.webp'
+import Sizes from '../../styles/Sizes'
 
 const useStyles = makeStyles({
     container: {
@@ -97,13 +96,12 @@ function Signup(props) {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState()
 
-    // const { login } = useContext(UserDispatchContext)
     const navigate = useNavigate()
     async function handleSubmit(evt) {
         evt.preventDefault();
         try {
             setIsLoading(true)
-            const response = await fetch('http://localhost:5000/api/users/signup',
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/users/signup`,
                 {
                     method: 'POST',
                     headers: {
@@ -122,9 +120,8 @@ function Signup(props) {
                 setError(responseData.message)
                 throw new Error(responseData.message)
             }
-            console.log(responseData)
             props.login(responseData.userId, responseData.token)
-            navigate('/users')
+            navigate(`/users`)
             window.location.reload();
             setIsLoading(false)
         } catch (err) {
