@@ -23,7 +23,7 @@ const useStyles = makeStyles({
     left: {
         width: '50%',
         height: '100vh',
-        backgroundColor: "rgb(25 118 210 / 12%)",
+        backgroundColor: "#e3eefa",
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -62,7 +62,7 @@ const useStyles = makeStyles({
             color: 'grey',
         },
         '&:focus': {
-            borderColor: 'rgb(25 118 210 / 12%)'
+            borderColor: '#e3eefa'
         }
     },
     btn: {

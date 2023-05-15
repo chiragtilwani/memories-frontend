@@ -73,7 +73,7 @@ const useStyles = makeStyles({
     width: "100%",
   },
   right: {
-    backgroundColor: "rgb(25 118 210 / 12%) !important",
+    backgroundColor: "#e3eefa !important",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",

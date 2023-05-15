@@ -33,7 +33,7 @@ const useStyles = makeStyles({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: "rgb(25 118 210 / 12%)",
+        backgroundColor: "#e3eefa",
         [Sizes.down('md')]: {
             width: '100%'
         }

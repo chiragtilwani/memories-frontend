@@ -88,7 +88,7 @@ const useStyles = makeStyles({
     wordWrap: "break-word",
     height: "auto !important",
     maxHeight: "15rem",
-    backgroundColor: "rgb(25 118 210 / 12%) !important",
+    backgroundColor: "#e3eefa !important",
     textOverflow: 'ellipsis',
     "&::-webkit-scrollbar": {
       width: "0rem",
